@@ -1,0 +1,429 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		613BAC3917B99AC30006C254 /* Bluekai.m in Sources */ = {isa = PBXBuildFile; fileRef = 613BAC2D17B99AC30006C254 /* Bluekai.m */; };
+		613BAC3A17B99AC30006C254 /* Bluekai_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 613BAC3017B99AC30006C254 /* Bluekai_OpenUDID.m */; };
+		613BAC3B17B99AC30006C254 /* btn-sub-del-op.png in Resources */ = {isa = PBXBuildFile; fileRef = 613BAC3117B99AC30006C254 /* btn-sub-del-op.png */; };
+		613BAC3C17B99AC30006C254 /* chk-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 613BAC3217B99AC30006C254 /* chk-1.png */; };
+		613BAC3D17B99AC30006C254 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 613BAC3417B99AC30006C254 /* Database.m */; };
+		613BAC3E17B99AC30006C254 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 613BAC3617B99AC30006C254 /* Reachability.m */; };
+		613BAC3F17B99AC30006C254 /* unchk-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 613BAC3717B99AC30006C254 /* unchk-1.png */; };
+		613BAC4017B99AC30006C254 /* user_Info.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 613BAC3817B99AC30006C254 /* user_Info.sqlite */; };
+		613BAC4217B9A0960006C254 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 613BAC4117B9A0960006C254 /* Default-568h@2x.png */; };
+		61C8FD9617BC5C47002068E2 /* bk-logo-123x45.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C8FD9517BC5C47002068E2 /* bk-logo-123x45.png */; };
+		B701E7F51759A26F008C3775 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B701E7F41759A26F008C3775 /* UIKit.framework */; };
+		B701E7F71759A26F008C3775 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B701E7F61759A26F008C3775 /* Foundation.framework */; };
+		B701E7F91759A26F008C3775 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B701E7F81759A26F008C3775 /* CoreGraphics.framework */; };
+		B701E7FF1759A26F008C3775 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B701E7FD1759A26F008C3775 /* InfoPlist.strings */; };
+		B701E8011759A26F008C3775 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B701E8001759A26F008C3775 /* main.m */; };
+		B701E8051759A270008C3775 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B701E8041759A270008C3775 /* AppDelegate.m */; };
+		B701E8081759A270008C3775 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B701E8071759A270008C3775 /* TestViewController.m */; };
+		B701E80F1759A270008C3775 /* OptInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B701E80E1759A270008C3775 /* OptInViewController.m */; };
+		B701E8161759A270008C3775 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B701E8141759A270008C3775 /* TestViewController.xib */; };
+		B701E8191759A270008C3775 /* OptInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B701E8171759A270008C3775 /* OptInViewController.xib */; };
+		B701E8351759A8C3008C3775 /* Configurationfile.plist in Resources */ = {isa = PBXBuildFile; fileRef = B701E8331759A8C3008C3775 /* Configurationfile.plist */; };
+		B701E8361759A8C3008C3775 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B701E8341759A8C3008C3775 /* Icon.png */; };
+		B74DA51A1759BB0B00054D1C /* DevSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74DA5181759BB0B00054D1C /* DevSettingsViewController.m */; };
+		B74DA51B1759BB0B00054D1C /* DevSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B74DA5191759BB0B00054D1C /* DevSettingsViewController.xib */; };
+		D7B9B72B177C1199001815D5 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B9B72A177C1199001815D5 /* libsqlite3.0.dylib */; };
+		D7B9B72C177C11A7001815D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B9B728177C1176001815D5 /* SystemConfiguration.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		613BAC2C17B99AC30006C254 /* Bluekai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bluekai.h; sourceTree = "<group>"; };
+		613BAC2D17B99AC30006C254 /* Bluekai.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bluekai.m; sourceTree = "<group>"; };
+		613BAC2E17B99AC30006C254 /* BlueKai.xcodeproj-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BlueKai.xcodeproj-Prefix.pch"; sourceTree = "<group>"; };
+		613BAC2F17B99AC30006C254 /* Bluekai_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bluekai_OpenUDID.h; sourceTree = "<group>"; };
+		613BAC3017B99AC30006C254 /* Bluekai_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bluekai_OpenUDID.m; sourceTree = "<group>"; };
+		613BAC3117B99AC30006C254 /* btn-sub-del-op.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sub-del-op.png"; sourceTree = "<group>"; };
+		613BAC3217B99AC30006C254 /* chk-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chk-1.png"; sourceTree = "<group>"; };
+		613BAC3317B99AC30006C254 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
+		613BAC3417B99AC30006C254 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
+		613BAC3517B99AC30006C254 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		613BAC3617B99AC30006C254 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		613BAC3717B99AC30006C254 /* unchk-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchk-1.png"; sourceTree = "<group>"; };
+		613BAC3817B99AC30006C254 /* user_Info.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = user_Info.sqlite; sourceTree = "<group>"; };
+		613BAC4117B9A0960006C254 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		61C8FD9517BC5C47002068E2 /* bk-logo-123x45.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bk-logo-123x45.png"; sourceTree = "<group>"; };
+		B701E7F01759A26F008C3775 /* BlueKaiSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueKaiSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B701E7F41759A26F008C3775 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B701E7F61759A26F008C3775 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B701E7F81759A26F008C3775 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B701E7FC1759A26F008C3775 /* BlueKaiSampleApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BlueKaiSampleApp-Info.plist"; sourceTree = "<group>"; };
+		B701E7FE1759A26F008C3775 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B701E8001759A26F008C3775 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B701E8021759A270008C3775 /* BlueKaiSampleApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlueKaiSampleApp-Prefix.pch"; sourceTree = "<group>"; };
+		B701E8031759A270008C3775 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B701E8041759A270008C3775 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B701E8061759A270008C3775 /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		B701E8071759A270008C3775 /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		B701E80D1759A270008C3775 /* OptInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptInViewController.h; sourceTree = "<group>"; };
+		B701E80E1759A270008C3775 /* OptInViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptInViewController.m; sourceTree = "<group>"; };
+		B701E8151759A270008C3775 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TestViewController.xib; sourceTree = "<group>"; };
+		B701E8181759A270008C3775 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/OptInViewController.xib; sourceTree = "<group>"; };
+		B701E8311759A896008C3775 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		B701E8331759A8C3008C3775 /* Configurationfile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Configurationfile.plist; sourceTree = "<group>"; };
+		B701E8341759A8C3008C3775 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B74DA5171759BB0B00054D1C /* DevSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevSettingsViewController.h; sourceTree = "<group>"; };
+		B74DA5181759BB0B00054D1C /* DevSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevSettingsViewController.m; sourceTree = "<group>"; };
+		B74DA5191759BB0B00054D1C /* DevSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DevSettingsViewController.xib; sourceTree = "<group>"; };
+		D7B9B728177C1176001815D5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D7B9B72A177C1199001815D5 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B701E7ED1759A26F008C3775 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7B9B72C177C11A7001815D5 /* SystemConfiguration.framework in Frameworks */,
+				D7B9B72B177C1199001815D5 /* libsqlite3.0.dylib in Frameworks */,
+				B701E7F51759A26F008C3775 /* UIKit.framework in Frameworks */,
+				B701E7F71759A26F008C3775 /* Foundation.framework in Frameworks */,
+				B701E7F91759A26F008C3775 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		613BAC2B17B99AC30006C254 /* Bluekai_SDK */ = {
+			isa = PBXGroup;
+			children = (
+				613BAC2C17B99AC30006C254 /* Bluekai.h */,
+				613BAC2D17B99AC30006C254 /* Bluekai.m */,
+				613BAC2E17B99AC30006C254 /* BlueKai.xcodeproj-Prefix.pch */,
+				613BAC2F17B99AC30006C254 /* Bluekai_OpenUDID.h */,
+				613BAC3017B99AC30006C254 /* Bluekai_OpenUDID.m */,
+				613BAC3117B99AC30006C254 /* btn-sub-del-op.png */,
+				613BAC3217B99AC30006C254 /* chk-1.png */,
+				613BAC3317B99AC30006C254 /* Database.h */,
+				613BAC3417B99AC30006C254 /* Database.m */,
+				613BAC3517B99AC30006C254 /* Reachability.h */,
+				613BAC3617B99AC30006C254 /* Reachability.m */,
+				613BAC3717B99AC30006C254 /* unchk-1.png */,
+				613BAC3817B99AC30006C254 /* user_Info.sqlite */,
+			);
+			name = Bluekai_SDK;
+			path = ../sdk/Bluekai_SDK;
+			sourceTree = "<group>";
+		};
+		B701E7E51759A26F008C3775 = {
+			isa = PBXGroup;
+			children = (
+				61C8FD9517BC5C47002068E2 /* bk-logo-123x45.png */,
+				613BAC4117B9A0960006C254 /* Default-568h@2x.png */,
+				613BAC2B17B99AC30006C254 /* Bluekai_SDK */,
+				D7B9B72A177C1199001815D5 /* libsqlite3.0.dylib */,
+				D7B9B728177C1176001815D5 /* SystemConfiguration.framework */,
+				B701E8331759A8C3008C3775 /* Configurationfile.plist */,
+				B701E8341759A8C3008C3775 /* Icon.png */,
+				B701E8311759A896008C3775 /* libsqlite3.dylib */,
+				B701E7FA1759A26F008C3775 /* BlueKaiSampleApp */,
+				B701E7F31759A26F008C3775 /* Frameworks */,
+				B701E7F11759A26F008C3775 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B701E7F11759A26F008C3775 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B701E7F01759A26F008C3775 /* BlueKaiSampleApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B701E7F31759A26F008C3775 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B701E7F41759A26F008C3775 /* UIKit.framework */,
+				B701E7F61759A26F008C3775 /* Foundation.framework */,
+				B701E7F81759A26F008C3775 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B701E7FA1759A26F008C3775 /* BlueKaiSampleApp */ = {
+			isa = PBXGroup;
+			children = (
+				B701E8031759A270008C3775 /* AppDelegate.h */,
+				B701E8041759A270008C3775 /* AppDelegate.m */,
+				B701E8061759A270008C3775 /* TestViewController.h */,
+				B701E8071759A270008C3775 /* TestViewController.m */,
+				B701E8141759A270008C3775 /* TestViewController.xib */,
+				B701E80D1759A270008C3775 /* OptInViewController.h */,
+				B701E80E1759A270008C3775 /* OptInViewController.m */,
+				B701E8171759A270008C3775 /* OptInViewController.xib */,
+				B74DA5171759BB0B00054D1C /* DevSettingsViewController.h */,
+				B74DA5181759BB0B00054D1C /* DevSettingsViewController.m */,
+				B74DA5191759BB0B00054D1C /* DevSettingsViewController.xib */,
+				B701E7FB1759A26F008C3775 /* Supporting Files */,
+			);
+			name = BlueKaiSampleApp;
+			path = Bluekai;
+			sourceTree = "<group>";
+		};
+		B701E7FB1759A26F008C3775 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B701E7FC1759A26F008C3775 /* BlueKaiSampleApp-Info.plist */,
+				B701E7FD1759A26F008C3775 /* InfoPlist.strings */,
+				B701E8001759A26F008C3775 /* main.m */,
+				B701E8021759A270008C3775 /* BlueKaiSampleApp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B701E7EF1759A26F008C3775 /* BlueKaiSampleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B701E81C1759A270008C3775 /* Build configuration list for PBXNativeTarget "BlueKaiSampleApp" */;
+			buildPhases = (
+				B701E7EC1759A26F008C3775 /* Sources */,
+				B701E7ED1759A26F008C3775 /* Frameworks */,
+				B701E7EE1759A26F008C3775 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BlueKaiSampleApp;
+			productName = Bluekai;
+			productReference = B701E7F01759A26F008C3775 /* BlueKaiSampleApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B701E7E71759A26F008C3775 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = BlueKai;
+			};
+			buildConfigurationList = B701E7EA1759A26F008C3775 /* Build configuration list for PBXProject "BlueKaiSampleApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B701E7E51759A26F008C3775;
+			productRefGroup = B701E7F11759A26F008C3775 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B701E7EF1759A26F008C3775 /* BlueKaiSampleApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B701E7EE1759A26F008C3775 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B701E7FF1759A26F008C3775 /* InfoPlist.strings in Resources */,
+				B701E8161759A270008C3775 /* TestViewController.xib in Resources */,
+				B701E8191759A270008C3775 /* OptInViewController.xib in Resources */,
+				B701E8351759A8C3008C3775 /* Configurationfile.plist in Resources */,
+				B701E8361759A8C3008C3775 /* Icon.png in Resources */,
+				B74DA51B1759BB0B00054D1C /* DevSettingsViewController.xib in Resources */,
+				613BAC3B17B99AC30006C254 /* btn-sub-del-op.png in Resources */,
+				613BAC3C17B99AC30006C254 /* chk-1.png in Resources */,
+				613BAC3F17B99AC30006C254 /* unchk-1.png in Resources */,
+				613BAC4017B99AC30006C254 /* user_Info.sqlite in Resources */,
+				613BAC4217B9A0960006C254 /* Default-568h@2x.png in Resources */,
+				61C8FD9617BC5C47002068E2 /* bk-logo-123x45.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B701E7EC1759A26F008C3775 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B701E8011759A26F008C3775 /* main.m in Sources */,
+				B701E8051759A270008C3775 /* AppDelegate.m in Sources */,
+				B701E8081759A270008C3775 /* TestViewController.m in Sources */,
+				B701E80F1759A270008C3775 /* OptInViewController.m in Sources */,
+				B74DA51A1759BB0B00054D1C /* DevSettingsViewController.m in Sources */,
+				613BAC3917B99AC30006C254 /* Bluekai.m in Sources */,
+				613BAC3A17B99AC30006C254 /* Bluekai_OpenUDID.m in Sources */,
+				613BAC3D17B99AC30006C254 /* Database.m in Sources */,
+				613BAC3E17B99AC30006C254 /* Reachability.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B701E7FD1759A26F008C3775 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B701E7FE1759A26F008C3775 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B701E8141759A270008C3775 /* TestViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B701E8151759A270008C3775 /* en */,
+			);
+			name = TestViewController.xib;
+			sourceTree = "<group>";
+		};
+		B701E8171759A270008C3775 /* OptInViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B701E8181759A270008C3775 /* en */,
+			);
+			name = OptInViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B701E81A1759A270008C3775 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B701E81B1759A270008C3775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B701E81D1759A270008C3775 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jason Walsh (JN3P22QM9Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jason Walsh (JN3P22QM9Q)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Desktop\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Bluekai/BlueKaiSampleApp-Prefix.pch";
+				INFOPLIST_FILE = "Bluekai/BlueKaiSampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = BlueKaiSampleApp;
+				PROVISIONING_PROFILE = "470C9EE3-73A5-42EE-A707-69755AA13AEA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "470C9EE3-73A5-42EE-A707-69755AA13AEA";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv6 armv7";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B701E81E1759A270008C3775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jason Walsh (JN3P22QM9Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jason Walsh (JN3P22QM9Q)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Desktop\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Bluekai/BlueKaiSampleApp-Prefix.pch";
+				INFOPLIST_FILE = "Bluekai/BlueKaiSampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = BlueKaiSampleApp;
+				PROVISIONING_PROFILE = "470C9EE3-73A5-42EE-A707-69755AA13AEA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "470C9EE3-73A5-42EE-A707-69755AA13AEA";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv6 armv7";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B701E7EA1759A26F008C3775 /* Build configuration list for PBXProject "BlueKaiSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B701E81A1759A270008C3775 /* Debug */,
+				B701E81B1759A270008C3775 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B701E81C1759A270008C3775 /* Build configuration list for PBXNativeTarget "BlueKaiSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B701E81D1759A270008C3775 /* Debug */,
+				B701E81E1759A270008C3775 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B701E7E71759A26F008C3775 /* Project object */;
+}
