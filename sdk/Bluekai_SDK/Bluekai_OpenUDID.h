@@ -1,9 +1,27 @@
+//
+//  Bluekai_OpenUDID.h
+//  openudid
+//
+//  initiated by Yann Lechelle (cofounder @Appsfire) on 8/28/11.
+//  Copyright 2011 Bluekai_OpenUDID.org
+//
+//  Main branches
+//      iOS code: https://github.com/ylechelle/Bluekai_OpenUDID
+//
+
 /*
+ !!! IMPORTANT !!!
+ 
+ IF YOU ARE GOING TO INTEGRATE Bluekai_OpenUDID INSIDE A (STATIC) LIBRARY,
+ PLEASE MAKE SURE YOU REFACTOR THE Bluekai_OpenUDID CLASS WITH A PREFIX OF YOUR OWN,
+ E.G. ACME_OpenUDID. THIS WILL AVOID CONFUSION BY DEVELOPERS WHO ARE ALSO
+ USING Bluekai_OpenUDID IN THEIR OWN CODE.
+ 
+ !!! IMPORTANT !!!
+ 
+ */
 
- Initiated by Yann Lechelle (cofounder @Appsfire) on 8/28/11.
- Copyright 2011 OpenUDID.org
- https://github.com/ylechelle/OpenUDID
-
+/*
  http://en.wikipedia.org/wiki/Zlib_License
  
  This software is provided 'as-is', without any express or implied

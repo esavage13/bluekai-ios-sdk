@@ -1,0 +1,521 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00677794177ACD8F00C943BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00677793177ACD8F00C943BB /* SystemConfiguration.framework */; };
+		D71EF5ED173B6CF200B90918 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EC173B6CF200B90918 /* UIKit.framework */; };
+		D71EF5EF173B6E3E00B90918 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EE173B6E3E00B90918 /* QuartzCore.framework */; };
+		D72F135A18180CF900393432 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F134D18180CF800393432 /* SBJsonParser.m */; };
+		D72F135B18180CF900393432 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F134D18180CF800393432 /* SBJsonParser.m */; };
+		D72F135C18180CF900393432 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135018180CF900393432 /* NSObject+SBJSON.m */; };
+		D72F135D18180CF900393432 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135018180CF900393432 /* NSObject+SBJSON.m */; };
+		D72F135E18180CF900393432 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135218180CF900393432 /* NSString+SBJSON.m */; };
+		D72F135F18180CF900393432 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135218180CF900393432 /* NSString+SBJSON.m */; };
+		D72F136018180CF900393432 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135418180CF900393432 /* SBJSON.m */; };
+		D72F136118180CF900393432 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135418180CF900393432 /* SBJSON.m */; };
+		D72F136218180CF900393432 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135618180CF900393432 /* SBJsonBase.m */; };
+		D72F136318180CF900393432 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135618180CF900393432 /* SBJsonBase.m */; };
+		D72F136418180CF900393432 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135918180CF900393432 /* SBJsonWriter.m */; };
+		D72F136518180CF900393432 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D72F135918180CF900393432 /* SBJsonWriter.m */; };
+		D74FF32E173CC2F900C34EE0 /* btn-sub-del-op.png in Resources */ = {isa = PBXBuildFile; fileRef = D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */; };
+		D74FF337173CC43200C34EE0 /* chk-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D74FF335173CC43200C34EE0 /* chk-1.png */; };
+		D74FF338173CC43200C34EE0 /* unchk-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D74FF336173CC43200C34EE0 /* unchk-1.png */; };
+		D791D7721771E062004E5D93 /* Bluekai_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = D791D7711771E061004E5D93 /* Bluekai_OpenUDID.m */; };
+		D791D7731771E062004E5D93 /* Bluekai_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = D791D7711771E061004E5D93 /* Bluekai_OpenUDID.m */; };
+		D79AF75B173A1AA7002E0A0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF75A173A1AA7002E0A0B /* Foundation.framework */; };
+		D79AF760173A1AA7002E0A0B /* BlueKai.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D79AF75F173A1AA7002E0A0B /* BlueKai.h */; };
+		D79AF762173A1AA7002E0A0B /* BlueKai.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF761173A1AA7002E0A0B /* BlueKai.m */; };
+		D79AF76A173A1AA8002E0A0B /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF769173A1AA8002E0A0B /* SenTestingKit.framework */; };
+		D79AF76D173A1AA8002E0A0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF75A173A1AA7002E0A0B /* Foundation.framework */; };
+		D79AF770173A1AA8002E0A0B /* libBlueKai.xcodeproj.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF757173A1AA7002E0A0B /* libBlueKai.xcodeproj.a */; };
+		D79AF776173A1AA8002E0A0B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D79AF774173A1AA8002E0A0B /* InfoPlist.strings */; };
+		D79AF779173A1AA8002E0A0B /* BluekaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF778173A1AA8002E0A0B /* BluekaiTests.m */; };
+		D79AF792173A2151002E0A0B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF791173A2151002E0A0B /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D79AF793173A2151002E0A0B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF791173A2151002E0A0B /* Reachability.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D79AF76E173A1AA8002E0A0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D79AF74E173A1AA7002E0A0B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D79AF756173A1AA7002E0A0B;
+			remoteInfo = Bluekai_SDK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D79AF755173A1AA7002E0A0B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				D79AF760173A1AA7002E0A0B /* BlueKai.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		00677793177ACD8F00C943BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D71EF5EC173B6CF200B90918 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D71EF5EE173B6E3E00B90918 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D72F134D18180CF800393432 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		D72F134E18180CF800393432 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		D72F134F18180CF900393432 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		D72F135018180CF900393432 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		D72F135118180CF900393432 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		D72F135218180CF900393432 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		D72F135318180CF900393432 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		D72F135418180CF900393432 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		D72F135518180CF900393432 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		D72F135618180CF900393432 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		D72F135718180CF900393432 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		D72F135818180CF900393432 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		D72F135918180CF900393432 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sub-del-op.png"; sourceTree = "<group>"; };
+		D74FF335173CC43200C34EE0 /* chk-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chk-1.png"; sourceTree = "<group>"; };
+		D74FF336173CC43200C34EE0 /* unchk-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchk-1.png"; sourceTree = "<group>"; };
+		D791D7701771E061004E5D93 /* Bluekai_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bluekai_OpenUDID.h; sourceTree = "<group>"; };
+		D791D7711771E061004E5D93 /* Bluekai_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bluekai_OpenUDID.m; sourceTree = "<group>"; };
+		D79AF757173A1AA7002E0A0B /* libBlueKai.xcodeproj.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBlueKai.xcodeproj.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D79AF75A173A1AA7002E0A0B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D79AF75E173A1AA7002E0A0B /* BlueKai.xcodeproj-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlueKai.xcodeproj-Prefix.pch"; sourceTree = "<group>"; };
+		D79AF75F173A1AA7002E0A0B /* BlueKai.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlueKai.h; sourceTree = "<group>"; };
+		D79AF761173A1AA7002E0A0B /* BlueKai.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlueKai.m; sourceTree = "<group>"; };
+		D79AF768173A1AA8002E0A0B /* BlueKai.xcodeprojTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueKai.xcodeprojTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D79AF769173A1AA8002E0A0B /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		D79AF773173A1AA8002E0A0B /* Bluekai-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bluekai-Info.plist"; sourceTree = "<group>"; };
+		D79AF775173A1AA8002E0A0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D79AF777173A1AA8002E0A0B /* BluekaiTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BluekaiTests.h; sourceTree = "<group>"; };
+		D79AF778173A1AA8002E0A0B /* BluekaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BluekaiTests.m; sourceTree = "<group>"; };
+		D79AF790173A2151002E0A0B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		D79AF791173A2151002E0A0B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		D7AD8C84178164FE005BAFD6 /* user_Info.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = user_Info.sqlite; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D79AF754173A1AA7002E0A0B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00677794177ACD8F00C943BB /* SystemConfiguration.framework in Frameworks */,
+				D71EF5EF173B6E3E00B90918 /* QuartzCore.framework in Frameworks */,
+				D71EF5ED173B6CF200B90918 /* UIKit.framework in Frameworks */,
+				D79AF75B173A1AA7002E0A0B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D79AF764173A1AA8002E0A0B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D79AF76A173A1AA8002E0A0B /* SenTestingKit.framework in Frameworks */,
+				D79AF76D173A1AA8002E0A0B /* Foundation.framework in Frameworks */,
+				D79AF770173A1AA8002E0A0B /* libBlueKai.xcodeproj.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D79AF74C173A1AA7002E0A0B = {
+			isa = PBXGroup;
+			children = (
+				00677793177ACD8F00C943BB /* SystemConfiguration.framework */,
+				D71EF5EE173B6E3E00B90918 /* QuartzCore.framework */,
+				D71EF5EC173B6CF200B90918 /* UIKit.framework */,
+				D79AF75C173A1AA7002E0A0B /* BlueKai */,
+				D79AF771173A1AA8002E0A0B /* Bluekai Tests */,
+				D79AF759173A1AA7002E0A0B /* Frameworks */,
+				D79AF758173A1AA7002E0A0B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D79AF758173A1AA7002E0A0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D79AF757173A1AA7002E0A0B /* libBlueKai.xcodeproj.a */,
+				D79AF768173A1AA8002E0A0B /* BlueKai.xcodeprojTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D79AF759173A1AA7002E0A0B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D79AF75A173A1AA7002E0A0B /* Foundation.framework */,
+				D79AF769173A1AA8002E0A0B /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D79AF75C173A1AA7002E0A0B /* BlueKai */ = {
+			isa = PBXGroup;
+			children = (
+				D72F134D18180CF800393432 /* SBJsonParser.m */,
+				D72F134E18180CF800393432 /* JSON.h */,
+				D72F134F18180CF900393432 /* NSObject+SBJSON.h */,
+				D72F135018180CF900393432 /* NSObject+SBJSON.m */,
+				D72F135118180CF900393432 /* NSString+SBJSON.h */,
+				D72F135218180CF900393432 /* NSString+SBJSON.m */,
+				D72F135318180CF900393432 /* SBJSON.h */,
+				D72F135418180CF900393432 /* SBJSON.m */,
+				D72F135518180CF900393432 /* SBJsonBase.h */,
+				D72F135618180CF900393432 /* SBJsonBase.m */,
+				D72F135718180CF900393432 /* SBJsonParser.h */,
+				D72F135818180CF900393432 /* SBJsonWriter.h */,
+				D72F135918180CF900393432 /* SBJsonWriter.m */,
+				D791D7701771E061004E5D93 /* Bluekai_OpenUDID.h */,
+				D791D7711771E061004E5D93 /* Bluekai_OpenUDID.m */,
+				D79AF790173A2151002E0A0B /* Reachability.h */,
+				D79AF75F173A1AA7002E0A0B /* BlueKai.h */,
+				D79AF75D173A1AA7002E0A0B /* Supporting Files */,
+				D79AF791173A2151002E0A0B /* Reachability.m */,
+				D79AF761173A1AA7002E0A0B /* BlueKai.m */,
+			);
+			name = BlueKai;
+			path = Bluekai_SDK;
+			sourceTree = "<group>";
+		};
+		D79AF75D173A1AA7002E0A0B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D7AD8C84178164FE005BAFD6 /* user_Info.sqlite */,
+				D74FF335173CC43200C34EE0 /* chk-1.png */,
+				D74FF336173CC43200C34EE0 /* unchk-1.png */,
+				D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */,
+				D79AF75E173A1AA7002E0A0B /* BlueKai.xcodeproj-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D79AF771173A1AA8002E0A0B /* Bluekai Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D79AF777173A1AA8002E0A0B /* BluekaiTests.h */,
+				D79AF778173A1AA8002E0A0B /* BluekaiTests.m */,
+				D79AF772173A1AA8002E0A0B /* Supporting Files */,
+			);
+			name = "Bluekai Tests";
+			path = Bluekai_SDKTests;
+			sourceTree = "<group>";
+		};
+		D79AF772173A1AA8002E0A0B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D79AF773173A1AA8002E0A0B /* Bluekai-Info.plist */,
+				D79AF774173A1AA8002E0A0B /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D79AF756173A1AA7002E0A0B /* BlueKai */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D79AF77C173A1AA8002E0A0B /* Build configuration list for PBXNativeTarget "BlueKai" */;
+			buildPhases = (
+				D79AF753173A1AA7002E0A0B /* Sources */,
+				D79AF754173A1AA7002E0A0B /* Frameworks */,
+				D79AF755173A1AA7002E0A0B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BlueKai;
+			productName = Bluekai_SDK;
+			productReference = D79AF757173A1AA7002E0A0B /* libBlueKai.xcodeproj.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D79AF767173A1AA8002E0A0B /* BlueKai Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D79AF77F173A1AA8002E0A0B /* Build configuration list for PBXNativeTarget "BlueKai Tests" */;
+			buildPhases = (
+				D79AF763173A1AA8002E0A0B /* Sources */,
+				D79AF764173A1AA8002E0A0B /* Frameworks */,
+				D79AF765173A1AA8002E0A0B /* Resources */,
+				D79AF766173A1AA8002E0A0B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D79AF76F173A1AA8002E0A0B /* PBXTargetDependency */,
+			);
+			name = "BlueKai Tests";
+			productName = Bluekai_SDKTests;
+			productReference = D79AF768173A1AA8002E0A0B /* BlueKai.xcodeprojTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D79AF74E173A1AA7002E0A0B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = wifin;
+			};
+			buildConfigurationList = D79AF751173A1AA7002E0A0B /* Build configuration list for PBXProject "BlueKai" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D79AF74C173A1AA7002E0A0B;
+			productRefGroup = D79AF758173A1AA7002E0A0B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D79AF756173A1AA7002E0A0B /* BlueKai */,
+				D79AF767173A1AA8002E0A0B /* BlueKai Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D79AF765173A1AA8002E0A0B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D79AF776173A1AA8002E0A0B /* InfoPlist.strings in Resources */,
+				D74FF32E173CC2F900C34EE0 /* btn-sub-del-op.png in Resources */,
+				D74FF337173CC43200C34EE0 /* chk-1.png in Resources */,
+				D74FF338173CC43200C34EE0 /* unchk-1.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D79AF766173A1AA8002E0A0B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D79AF753173A1AA7002E0A0B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D79AF762173A1AA7002E0A0B /* BlueKai.m in Sources */,
+				D79AF792173A2151002E0A0B /* Reachability.m in Sources */,
+				D791D7721771E062004E5D93 /* Bluekai_OpenUDID.m in Sources */,
+				D72F135A18180CF900393432 /* SBJsonParser.m in Sources */,
+				D72F135C18180CF900393432 /* NSObject+SBJSON.m in Sources */,
+				D72F135E18180CF900393432 /* NSString+SBJSON.m in Sources */,
+				D72F136018180CF900393432 /* SBJSON.m in Sources */,
+				D72F136218180CF900393432 /* SBJsonBase.m in Sources */,
+				D72F136418180CF900393432 /* SBJsonWriter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D79AF763173A1AA8002E0A0B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D79AF779173A1AA8002E0A0B /* BluekaiTests.m in Sources */,
+				D79AF793173A2151002E0A0B /* Reachability.m in Sources */,
+				D791D7731771E062004E5D93 /* Bluekai_OpenUDID.m in Sources */,
+				D72F135B18180CF900393432 /* SBJsonParser.m in Sources */,
+				D72F135D18180CF900393432 /* NSObject+SBJSON.m in Sources */,
+				D72F135F18180CF900393432 /* NSString+SBJSON.m in Sources */,
+				D72F136118180CF900393432 /* SBJSON.m in Sources */,
+				D72F136318180CF900393432 /* SBJsonBase.m in Sources */,
+				D72F136518180CF900393432 /* SBJsonWriter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D79AF76F173A1AA8002E0A0B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D79AF756173A1AA7002E0A0B /* BlueKai */;
+			targetProxy = D79AF76E173A1AA8002E0A0B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D79AF774173A1AA8002E0A0B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D79AF775173A1AA8002E0A0B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D79AF77A173A1AA8002E0A0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D79AF77B173A1AA8002E0A0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D79AF77D173A1AA8002E0A0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				DSTROOT = /tmp/Bluekai_SDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Desktop\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Bluekai_SDK/BlueKai.xcodeproj-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = BlueKai.xcodeproj;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D79AF77E173A1AA8002E0A0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				DSTROOT = /tmp/Bluekai_SDK.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Desktop\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Bluekai_SDK/BlueKai.xcodeproj-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = BlueKai.xcodeproj;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		D79AF780173A1AA8002E0A0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Bluekai_SDK/Bluekai_SDK-Prefix.pch";
+				INFOPLIST_FILE = "Bluekai_SDKTests/BluekaiTests-Info.plist";
+				PRODUCT_NAME = BlueKai.xcodeprojTests;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D79AF781173A1AA8002E0A0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Bluekai_SDK/Bluekai_SDK-Prefix.pch";
+				INFOPLIST_FILE = "Bluekai_SDKTests/BluekaiTests-Info.plist";
+				PRODUCT_NAME = BlueKai.xcodeprojTests;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D79AF751173A1AA7002E0A0B /* Build configuration list for PBXProject "BlueKai" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D79AF77A173A1AA8002E0A0B /* Debug */,
+				D79AF77B173A1AA8002E0A0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D79AF77C173A1AA8002E0A0B /* Build configuration list for PBXNativeTarget "BlueKai" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D79AF77D173A1AA8002E0A0B /* Debug */,
+				D79AF77E173A1AA8002E0A0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D79AF77F173A1AA8002E0A0B /* Build configuration list for PBXNativeTarget "BlueKai Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D79AF780173A1AA8002E0A0B /* Debug */,
+				D79AF781173A1AA8002E0A0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D79AF74E173A1AA7002E0A0B /* Project object */;
+}

@@ -1,14 +1,19 @@
+//
+//  Bluekai_OpenUDID.m
+//  openudid
+//
+//  initiated by Yann Lechelle (cofounder @Appsfire) on 8/28/11.
+//  Copyright 2011, 2012 Bluekai_OpenUDID.org
+//
+//  Initiators/root branches
+//      iOS code: https://github.com/ylechelle/Bluekai_OpenUDID
+//      Android code: https://github.com/vieux/Bluekai_OpenUDID
+//
+//  Contributors:
+//      https://github.com/ylechelle/Bluekai_OpenUDID/contributors
+//
+
 /*
- Initiated by Yann Lechelle (cofounder @Appsfire) on 8/28/11.
- Copyright 2011, 2012 Bluekai_OpenUDID.org
-
- Initiators/root branches
-     iOS code: https://github.com/ylechelle/Bluekai_OpenUDID
-     Android code: https://github.com/vieux/Bluekai_OpenUDID
-
- Contributors:
-     https://github.com/ylechelle/Bluekai_OpenUDID/contributors
-
  http://en.wikipedia.org/wiki/Zlib_License
  
  This software is provided 'as-is', without any express or implied
