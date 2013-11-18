@@ -21,7 +21,7 @@ choose the option that fits your environment.
 
 ## Add Dependencies 
 
-Add `libsqlite3.0.dylib`, `SystemConfiguration.framework` to your
+Add `SystemConfiguration.framework` to your
 project. To do so, please follow these steps.
 
 +	Select "Targets" from your project
@@ -29,16 +29,12 @@ project. To do so, please follow these steps.
     ![Screenshot](http://199.204.23.142/bk-mobile/ios/image005.png)
 +	Select "Build Phases"
 +	Click on "+" symbol in "Link Binary With Libraries" panel
-+	Type "libsqli" in the search box
-+	Select "`libsqlite3.dylib`" from the list
-+	Click on the "Add" button
++	Type "system" in the search box
     
-    ![Screenshot](http://199.204.23.142/bk-mobile/ios/image007.png)
-+ Repeat this process to add SystemConfiguration.framework. Type "system" in the search box
+    ![Screenshot](http://199.204.23.142/bk-mobile/ios/image009.png)
 +	Select "SystemConfiguration.framework" from the list
 +	Click on the "Add" button
 
-    ![Screenshot](http://199.204.23.142/bk-mobile/ios/image009.png)
 
 ## Import SDK 
 
