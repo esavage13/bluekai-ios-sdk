@@ -1,7 +1,15 @@
 # Integrating the BlueKai SDK
-## Download the BlueKai SDK for iOs
 
-http://199.204.23.142/bk-mobile/BlueKai_iOS_SDK-20130806.zip
+## Download the BlueKai SDK for iOS
+
+- [Full SDK](http://199.204.23.142/bk-mobile/BlueKai_iOS_SDK-20130806.zip)
+
+The current version of the SDK is 1.0.0. 
+
+## Updating the SDK 
+
+Update, unless otherwise indicated, can be done by just copying over
+the previous version. 
 
 ## Obtain BlueKai site ID
 
@@ -40,9 +48,9 @@ project. To do so, please follow these steps.
 
 In `ViewController.h` file or the header file of your view, add 
 
-
+```objectivec
     #import "BlueKai.h" 
-
+```
 
 ## Create Instance 
 
@@ -66,8 +74,11 @@ the delegate for BlueKai SDK.
 obj_SDK=[[BlueKai alloc]initWithArgs:NO withSiteId:@"2" withAppVersion:version withView:self]; 
 ```
 
-The first argument indicates whether you want developer mode. In this mode, a webview overlay will be displayed 
-with response from the BluaKai server. You should turn this feature off in your production code.
+The first argument indicates whether you want developer mode. In this
+mode, a webview overlay will be displayed with response from the
+BluaKai server. You should turn this feature off in your production
+code.
+
 The second argument is site id, which you would get from BlueKai. The
 third argument is app version and is not necessarily the
 application version of the calling application. This is a value by
@@ -77,15 +88,17 @@ name-version_number" format.
 
 ####Alternative, convenience constructor
 
-Alternatively, the convenience constructor with limited arguments can be used to initialize the instance 
-of the SDK by passing just `siteId` and `appVersion`.
+Alternatively, the convenience constructor with limited arguments can
+be used to initialize the instance  of the SDK by passing just
+`siteId` and `appVersion`.
+
 
 ```objectivec
 obj_SDK=[[BlueKai alloc]initWithSiteId:@"2.0" withAppVersion:version];
 ```
 
-The first argument is site id, which you would get from BlueKai. The second argument is app version 
-and is not necessarily the
+The first argument is site id, which you would get from BlueKai. The
+second argument is app version and is not necessarily the
 application version of the calling application. This is a value by
 which BlueKai can uniquely indentify the application from which the
 request originated. A suggested approach is to use "app
@@ -100,7 +113,8 @@ To pass a single key value pair to BlueKai SDK, use the below code
 
 ## Passing Multiple Values 
 
-To pass multiple of key value pairs to BlueKai SDK, create an NSDictionary with key/value pairs and use the below method
+To pass multiple of key value pairs to BlueKai SDK, create an
+NSDictionary with key/value pairs and use the below method
 
     [obj_SDK put:dictionary];
 
@@ -109,8 +123,9 @@ To pass multiple of key value pairs to BlueKai SDK, create an NSDictionary with 
 The `resume()` method in BlueKai SDK should be invoked from the
 calling view controller’s `appCameToForeGround()` method. This should be
 done in order to send out any queued data, which may not have been sent
-because either the application was closed while data upload was in progress or due to network issues. Create a
-notification in viewDidLoad method or wherever you deem fit.
+because either the application was closed while data upload was in
+progress or due to network issues. Create a notification in
+viewDidLoad method or wherever you deem fit.
 
 ```objectivec
 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeGround) name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -130,7 +145,6 @@ Define a method appCameToForeGround and call `resume()`:
 Declare the BlueKai SDK delegate in `ViewController.h`. This step is
 optional and is needed only if you need a notification when data is posted
 to BlueKai server.
-
 
 ```objectivec
 @interface ViewController : UIViewController<OnDataPostedListener>
@@ -181,7 +195,3 @@ addition to the site id:
 |  Set BlueKai site id     | (void)setSiteId:(int)siteid  | 
 
 
-# Updating the SDK 
-
-Update, unless otherwise indicated, can be done by just copying over
-the previous version. 
