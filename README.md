@@ -75,7 +75,21 @@ which BlueKai can uniquely indentify the application from which the
 request originated. A suggested approach is to use "app
 name-version_number" format. 
 
+####Alternative, convenience constructor
 
+Alternatively, the convenience constructor with limited arguments can be used to initialize the instance 
+of the SDK by passing just `siteId` and `appVersion`.
+
+```objectivec
+obj_SDK=[[BlueKai alloc]initWithSiteId:@"2.0" withAppVersion:version];
+```
+
+The first argument is site id, which you would get from BlueKai. The second argument is app version 
+and is not necessarily the
+application version of the calling application. This is a value by
+which BlueKai can uniquely indentify the application from which the
+request originated. A suggested approach is to use "app
+name-version_number" format. 
 
 ## Passing a Value 
 
@@ -156,6 +170,7 @@ addition to the site id:
 | Definition        | Method           | 
 | ------------- | ------------- | 
 |  Create the instance for Bluekai SDK with required arguments     | (id)initWithArgs:(BOOL)devMode withSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view  | 
+|  Convenience constructor to initialize and get instance of BlueKai with limited arguments      | (id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version;  | 
 |  Convenience constructor to initialize and get instance of BlueKai without arguments      | (id)init  | 
 |  Method to show BlueKai in-built opt-in or opt-out screen     | (void)showSettingsScreen  | 
 |  Method to resume BlueKai process after calling application resumes or comes to foreground. To use in onResume() of the calling activity foreground.     | (void)resume  | 
