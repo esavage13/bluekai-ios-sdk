@@ -23,6 +23,7 @@
 }
 @property (nonatomic,assign) id<OnDataPostedListener> delegate;
 -(id)initWithArgs:(BOOL)value withSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view;
+-(id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version;
 -(void)put:(NSString *)key:(NSString *)value;
 -(void)put:(NSDictionary *)dictionary;
 -(void)showSettingsScreen;

@@ -174,74 +174,103 @@ NSUInteger numberOfRunningRequests ;
         main_View=view;
         web=nil;
         cncl_Btn=nil;
-        web_URL=[[NSMutableString alloc]init];
-        nonLoadkeyVal_dict=[[NSMutableDictionary alloc]init];
-        remainkeyVal_dict=[[NSMutableDictionary alloc]init];
-        web_Loaded=NO;
-        web=[[UIWebView alloc]init];
-        web.delegate=self;
-        web.layer.cornerRadius=5.0f;
-        web.layer.borderColor=[[UIColor grayColor] CGColor];
-        web.layer.borderWidth=4.0f;
-        [main_View.view addSubview:web];
-        
-        if(devMode)
-        {
-            web.frame=CGRectMake(10, 10, 300,390);
-            cncl_Btn=[UIButton buttonWithType:UIButtonTypeCustom];
-            cncl_Btn.frame=CGRectMake(281, 9, 30,30);
-            cncl_Btn.tag=10;
-            [cncl_Btn setImage:[UIImage imageNamed:@"btn-sub-del-op.png"] forState:UIControlStateNormal];
-            [cncl_Btn addTarget:self action:@selector(Cancel:) forControlEvents:UIControlEventTouchUpInside];
-            cncl_Btn.hidden=YES;
-            [main_View.view addSubview:cncl_Btn];
-        }
-        else{
-            web.frame=CGRectMake(10, 10, 1,1);
-        }
-        if([[NSUserDefaults standardUserDefaults] objectForKey:@"settings"] != nil) {
-        }
-        else{
-            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"settings"];
-        }
-        web.hidden=YES;
-        /*
-         //check the database for previous values
-         */
-        NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString* fileName = @"user_data.bk";
-        NSString* fileAtPath = [filePath stringByAppendingPathComponent:fileName];
-        
-        if (![[NSFileManager defaultManager] fileExistsAtPath:fileAtPath]) {
-            [[NSFileManager defaultManager] createFileAtPath:fileAtPath contents:nil attributes:nil];
-        }
-        NSString* atmt_filePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString* atmt_fileName = @"attempts.bk";
-        NSString* atmt_fileAtPath = [atmt_filePath stringByAppendingPathComponent:atmt_fileName];
-        
-        if (![[NSFileManager defaultManager] fileExistsAtPath:atmt_fileAtPath]) {
-            [[NSFileManager defaultManager] createFileAtPath:atmt_fileAtPath contents:nil attributes:nil];
-        }
-        keyVal_dict=[[NSMutableDictionary alloc]initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
-        if([[keyVal_dict allKeys] count]>1)
-        {
-            numberOfRunningRequests=-1;
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-            Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
-            NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-            if (networkStatus != NotReachable) {
-                web_Loaded=YES;
-                web.tag=1;
-                [self startDataUpload];
-            }
-            else{
-                alertShowBool=YES;
-                [self webView:nil didFailLoadWithError:nil];
-            }
-        }
-        // [db_obj release];
+        [self initialiseValues];
+               // [db_obj release];
     }
     return self;
+}
+-(id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version
+{
+    if(self=[super init])
+    {
+        //        [Database copyDataBaseIfNeeded];
+        //        [Database openDataBase:[Database getDBPath]];
+        
+        appVersion=version;
+        devMode=false;
+        siteId=nil;
+        siteId=siteID;
+        main_View=nil;
+        main_View=nil;
+        web=nil;
+        cncl_Btn=nil;
+        [self initialiseValues];// [db_obj release];
+    }
+    return self;
+}
+-(void)initialiseValues
+{
+    web_URL=[[NSMutableString alloc]init];
+    nonLoadkeyVal_dict=[[NSMutableDictionary alloc]init];
+    remainkeyVal_dict=[[NSMutableDictionary alloc]init];
+    web_Loaded=NO;
+    web=[[UIWebView alloc]init];
+    web.delegate=self;
+    web.layer.cornerRadius=5.0f;
+    web.layer.borderColor=[[UIColor grayColor] CGColor];
+    web.layer.borderWidth=4.0f;
+    
+    
+    if(devMode)
+    {
+        web.frame=CGRectMake(10, 10, 300,390);
+        [main_View.view addSubview:web];
+        cncl_Btn=[UIButton buttonWithType:UIButtonTypeCustom];
+        cncl_Btn.frame=CGRectMake(281, 9, 30,30);
+        cncl_Btn.tag=10;
+        [cncl_Btn setImage:[UIImage imageNamed:@"btn-sub-del-op.png"] forState:UIControlStateNormal];
+        [cncl_Btn addTarget:self action:@selector(Cancel:) forControlEvents:UIControlEventTouchUpInside];
+        cncl_Btn.hidden=YES;
+        [main_View.view addSubview:cncl_Btn];
+    }
+    else{
+        web.frame=CGRectMake(10, 10, 1,1);
+    }
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"settings"] != nil) {
+    }
+    else{
+        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"settings"];
+    }
+    web.hidden=YES;
+    /*
+     //check the database for previous values
+     */
+    NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* fileName = @"user_data.bk";
+    NSString* fileAtPath = [filePath stringByAppendingPathComponent:fileName];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:fileAtPath]) {
+        [[NSFileManager defaultManager] createFileAtPath:fileAtPath contents:nil attributes:nil];
+    }
+    NSString* atmt_filePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* atmt_fileName = @"attempts.bk";
+    NSString* atmt_fileAtPath = [atmt_filePath stringByAppendingPathComponent:atmt_fileName];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:atmt_fileAtPath]) {
+        [[NSFileManager defaultManager] createFileAtPath:atmt_fileAtPath contents:nil attributes:nil];
+    }
+    keyVal_dict=[[NSMutableDictionary alloc]initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
+    if([[keyVal_dict allKeys] count]>1)
+    {
+        numberOfRunningRequests=-1;
+        NSString *user_value=[[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
+        if([user_value isEqualToString:@"YES"])
+        {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+        NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+        if (networkStatus != NotReachable) {
+            web_Loaded=YES;
+            web.tag=1;
+            [self startDataUpload];
+        }
+        else{
+            alertShowBool=YES;
+            [self webView:nil didFailLoadWithError:nil];
+        }
+        }
+    }
+    
 }
 -(id)init
 {
@@ -291,10 +320,11 @@ NSUInteger numberOfRunningRequests ;
         web.layer.cornerRadius=5.0f;
         web.layer.borderColor=[[UIColor grayColor] CGColor];
         web.layer.borderWidth=4.0f;
-        [main_View.view addSubview:web];
+        
         if(devMode)
         {
             web.frame=CGRectMake(10, 10, 300,390);
+            [main_View.view addSubview:web];
             cncl_Btn=[UIButton buttonWithType:UIButtonTypeCustom];
             cncl_Btn.frame=CGRectMake(281, 9, 30,30);
             cncl_Btn.tag=10;
@@ -578,10 +608,11 @@ NSUInteger numberOfRunningRequests ;
             web.layer.borderColor=[[UIColor grayColor] CGColor];
             web.layer.borderWidth=4.0f;
             web.hidden=YES;
-            [main_View.view addSubview:web];
+            
             if(devMode)
             {
                 web.frame=CGRectMake(10, 10, 300,390);
+                [main_View.view addSubview:web];
                 cncl_Btn=[UIButton buttonWithType:UIButtonTypeCustom];
                 cncl_Btn.frame=CGRectMake(281, 9, 30,30);
                 cncl_Btn.tag=10;
@@ -652,10 +683,11 @@ NSUInteger numberOfRunningRequests ;
         web.layer.borderWidth=4.0f;
         web.tag=1;
         web.hidden=YES;
-        [main_View.view addSubview:web];
+      
         if(devMode)
         {
             web.frame=CGRectMake(10, 10, 300,390);
+            [main_View.view addSubview:web];
             cncl_Btn=[UIButton buttonWithType:UIButtonTypeCustom];
             cncl_Btn.frame=CGRectMake(281, 9, 30,30);
             cncl_Btn.tag=10;
@@ -906,8 +938,12 @@ NSUInteger numberOfRunningRequests ;
     [usrcheck_image release];
     [tccheck_image release];
     //[db release];
+    if(devMode)
+    {
     [main_View.view addSubview:web];
     [main_View.view addSubview:cncl_Btn];
+    }
+    
 }
 -(void)userData_Change:(UITapGestureRecognizer *)recognizer
 {
@@ -1024,52 +1060,11 @@ NSUInteger numberOfRunningRequests ;
     {
         if(siteId!=nil)
         {
-            if(appVersion!=nil)
+            if(appVersion==nil)
             {
-                [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:keyVal_dict];
+                appVersion=[NSString stringWithFormat:@"1.0"];
             }
-            else{
-                NSLog(@"appVersion parameter is nil");
-                
-                for(int i=0;i<[[keyVal_dict allKeys] count];i++)
-                {
-                    if(![remainkeyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]])
-                    {
-                        //int attempts=[db_Obj checkForAttempts:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]];
-                        NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
-                        NSMutableDictionary *atmt_dictionary=[[NSMutableDictionary alloc]initWithDictionary:[self getAttempsDictionary:[self readStringFromAttemptsFile]]];
-                        int attempts=[[atmt_dictionary objectForKey:[[keyVal_dict allKeys] objectAtIndex:i]] intValue];
-                        if(attempts==0)
-                        {
-                            [dictionary setObject:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]] forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                            [atmt_dictionary setObject:@"1" forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                            // [self writeStringToFile:[self createjson:dictionary]];
-                            //[db_Obj insertUserDetails:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]:flag:1];
-                        }
-                        else
-                        {
-                            //NSLog(@"%d",attempts);
-                            if(attempts<5)
-                            {
-                                [atmt_dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                                [atmt_dictionary setObject:[NSString stringWithFormat:@"%d",attempts+1] forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                                //[self writeStringToFile:[self createjson:dictionary]];
-                                //[db_Obj updateUserDetails:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]:attempts+1];
-                            }
-                            else{
-                                [dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                                [atmt_dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                                //[db_Obj deleteKeyValue:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]];
-                            }
-                        }
-                        [self writeStringToKeyValueFile:[self getKeyValueJSON:dictionary]];
-                        [self writeStringToAttemptsFile:[self getAttemptsJSON:atmt_dictionary]];
-                        [dictionary release];
-                        [atmt_dictionary release];
-                    }
-                }
-                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            }
+            [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:keyVal_dict];
         }
         else{
             if(appVersion!=nil)
@@ -1079,44 +1074,7 @@ NSUInteger numberOfRunningRequests ;
             else{
                 NSLog(@"siteId and appVersion parameters are nil");
             }
-            
-            for(int i=0;i<[[keyVal_dict allKeys] count];i++)
-            {
-                if(![remainkeyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]])
-                {
-                    //int attempts=[db_Obj checkForAttempts:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]];
-                    NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
-                    NSMutableDictionary *atmt_dictionary=[[NSMutableDictionary alloc]initWithDictionary:[self getAttempsDictionary:[self readStringFromAttemptsFile]]];
-                    int attempts=[[atmt_dictionary objectForKey:[[keyVal_dict allKeys] objectAtIndex:i]] intValue];
-                    if(attempts==0)
-                    {
-                        [dictionary setObject:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]] forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                        [atmt_dictionary setObject:@"1" forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                        // [self writeStringToFile:[self createjson:dictionary]];
-                        //[db_Obj insertUserDetails:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]:flag:1];
-                    }
-                    else
-                    {
-                        //NSLog(@"%d",attempts);
-                        if(attempts<5)
-                        {
-                            [atmt_dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                            [atmt_dictionary setObject:[NSString stringWithFormat:@"%d",attempts+1] forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                            //[self writeStringToFile:[self createjson:dictionary]];
-                            //[db_Obj updateUserDetails:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]:attempts+1];
-                        }
-                        else{
-                            [dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                            [atmt_dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                            //[db_Obj deleteKeyValue:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]];
-                        }
-                    }
-                    [self writeStringToKeyValueFile:[self getKeyValueJSON:dictionary]];
-                    [self writeStringToAttemptsFile:[self getAttemptsJSON:atmt_dictionary]];
-                    [dictionary release];
-                    [atmt_dictionary release];
-                }
-            }           [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            [self prepareFiles];
         }
     }
     else
@@ -1124,70 +1082,75 @@ NSUInteger numberOfRunningRequests ;
         if(siteId!=nil && appVersion!=nil)
         {
             NSLog(@"view parameter is nil");
+            //[self prepareFiles];
+            [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:keyVal_dict];
         }
         else
         {
             if(siteId!=nil)
             {
-                if(appVersion!=nil)
+                if(appVersion==nil)
                 {
-                    NSLog(@"view parameter is nil");
+                    appVersion=[NSString stringWithFormat:@"1.0"];
                 }
-                else{
-                    NSLog(@"view and appVersion parameters are nil");
-                }
+                [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:keyVal_dict];
             }
             else{
-                if(appVersion!=nil)
-                {
-                    NSLog(@"siteId and view parameters are nil");
-                }
-                else{
-                    NSLog(@"siteId,view and appVersion parameters are nil");
-                }
+//                if(appVersion!=nil)
+//                {
+//                    NSLog(@"siteId and view parameters are nil");
+//                }
+//                else{
+//                    NSLog(@"siteId,view and appVersion parameters are nil");
+//                }
+                [self prepareFiles];
             }
         }
         // int flag=1;
-        for(int i=0;i<[[keyVal_dict allKeys] count];i++)
-        {
-            if(![remainkeyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]])
-            {
-                //int attempts=[db_Obj checkForAttempts:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]];
-                NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
-                NSMutableDictionary *atmt_dictionary=[[NSMutableDictionary alloc]initWithDictionary:[self getAttempsDictionary:[self readStringFromAttemptsFile]]];
-                int attempts=[[atmt_dictionary objectForKey:[[keyVal_dict allKeys] objectAtIndex:i]] intValue];
-                if(attempts==0)
-                {
-                    [dictionary setObject:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]] forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                    [atmt_dictionary setObject:@"1" forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                    // [self writeStringToFile:[self createjson:dictionary]];
-                    //[db_Obj insertUserDetails:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]:flag:1];
-                }
-                else
-                {
-                    //NSLog(@"%d",attempts);
-                    if(attempts<5)
-                    {
-                        [atmt_dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                        [atmt_dictionary setObject:[NSString stringWithFormat:@"%d",attempts+1] forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                        //[self writeStringToFile:[self createjson:dictionary]];
-                        //[db_Obj updateUserDetails:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]:attempts+1];
-                    }
-                    else{
-                        [dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                        [atmt_dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
-                        //[db_Obj deleteKeyValue:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]];
-                    }
-                }
-                [self writeStringToKeyValueFile:[self getKeyValueJSON:dictionary]];
-                [self writeStringToAttemptsFile:[self getAttemptsJSON:atmt_dictionary]];
-                [dictionary release];
-                [atmt_dictionary release];
-            }
-        }        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
     }
     //[db_Obj release];
+}
+-(void)prepareFiles
+{
+    for(int i=0;i<[[keyVal_dict allKeys] count];i++)
+    {
+        if(![remainkeyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]])
+        {
+            //int attempts=[db_Obj checkForAttempts:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]];
+            NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
+            NSMutableDictionary *atmt_dictionary=[[NSMutableDictionary alloc]initWithDictionary:[self getAttempsDictionary:[self readStringFromAttemptsFile]]];
+            int attempts=[[atmt_dictionary objectForKey:[[keyVal_dict allKeys] objectAtIndex:i]] intValue];
+            if(attempts==0)
+            {
+                [dictionary setObject:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]] forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
+                [atmt_dictionary setObject:@"1" forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
+                // [self writeStringToFile:[self createjson:dictionary]];
+                //[db_Obj insertUserDetails:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]:flag:1];
+            }
+            else
+            {
+                //NSLog(@"%d",attempts);
+                if(attempts<5)
+                {
+                    [atmt_dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
+                    [atmt_dictionary setObject:[NSString stringWithFormat:@"%d",attempts+1] forKey:[[keyVal_dict allKeys] objectAtIndex:i]];
+                    //[self writeStringToFile:[self createjson:dictionary]];
+                    //[db_Obj updateUserDetails:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]:attempts+1];
+                }
+                else{
+                    [dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
+                    [atmt_dictionary removeObjectForKey:[[keyVal_dict allKeys] objectAtIndex:i]];
+                    //[db_Obj deleteKeyValue:[[keyVal_dict allKeys] objectAtIndex:i]:[keyVal_dict valueForKey:[[keyVal_dict allKeys] objectAtIndex:i]]];
+                }
+            }
+            [self writeStringToKeyValueFile:[self getKeyValueJSON:dictionary]];
+            [self writeStringToAttemptsFile:[self getAttemptsJSON:atmt_dictionary]];
+            [dictionary release];
+            [atmt_dictionary release];
+        }
+    }
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
 }
 -(void)resume
 {
