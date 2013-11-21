@@ -21,7 +21,7 @@
 #include <QuartzCore/QuartzCore.h>
 #import "Bluekai_OpenUDID.h"
 
-NSString const *server_URL = @"http://199.204.23.142/m/";
+NSString const *server_URL = @"http://199.204.23.142/m.html";
 
 @implementation BlueKai
 @synthesize delegate;
@@ -589,7 +589,7 @@ NSUInteger numberOfRunningRequests ;
     }
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     //send the dictinary details to blluekai server
-    NSMutableString *url_string=[[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"%@%@?",server_URL,siteId]];
+    NSMutableString *url_string=[[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"%@?site=%@&",server_URL,siteId]];
     [url_string appendString:[NSString stringWithFormat:@"appVersion=%@",appVersion]];
     [url_string appendString:[NSString stringWithFormat:@"&identifierForVendor=%@",[NSString stringWithFormat:@"%@",[self getVendorID]]]];
     urlStringCount=url_string.length;
