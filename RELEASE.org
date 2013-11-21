@@ -1,0 +1,14 @@
+* v1.0.0
+
+Initial SDK release. 
+
+- Initial release
+- Pass individual hints or collections 
+
+* v1.0.1
+
+No change should be required from v1.0.0 implementations. 
+
+- Code cleanup 
+- When using the settings screen don't require ViewController
+
