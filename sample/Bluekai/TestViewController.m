@@ -1,29 +1,15 @@
-/*
- * Copyright 2013-present BlueKai, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 #import "TestViewController.h"
 #import "Bluekai.h"
+
 
 @implementation TestViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    [obj_SDK put:@"void":@"initWithNibName"];
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        //self.title = NSLocalizedString(@"BlueKai", @"BlueKai");
         self.tabBarItem.title=@"BlueKai";
     }
     return self;
@@ -32,7 +18,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [obj_SDK put:@"void":@"viewDidLoad"];
     // Do any additional setup after loading the view, typically from a nib.
 }
 -(IBAction)sendKeyValuePair:(id)sender
@@ -62,7 +47,6 @@
 -(void)appCameToForeGround
 {
     NSLog(@"Application opened");
-    [obj_SDK put:@"void":@"appCameToForeGround"];
     [obj_SDK resume];
 }
 -(void)onDataPosted:(BOOL)status
@@ -91,29 +75,18 @@
 }
 -(IBAction)cancelBtn:(id)sender
 {
-    NSDictionary *infoPList = [[NSBundle mainBundle] infoDictionary];
-    NSString *appName = [infoPList objectForKey:@"CFBundleDisplayName"];
-    
-    NSDictionary *dictionary = @{
-                                @"foo" : @"11",
-                                @"bar" : @"22",
-                                @"baz" : @"33",
-                                @"displayName": appName,
-                                };
-    [obj_SDK put:dictionary];
-    
-    
+    key_Txtfld.text=@"";
+    value_Txtfld.text=@"";
 }
 -(void)viewWillAppear:(BOOL)animated
 {
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeGround) name:UIApplicationWillEnterForegroundNotification object:nil];
     self.tabBarController.delegate=self;
-    [obj_SDK put:@"void":@"viewWillAppear"];
    // [obj_SDK release];
     //[config_dict release];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *plistPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Configurationfile.plist"];
     
     BOOL success = [fileManager fileExistsAtPath:plistPath];
@@ -124,7 +97,23 @@
     }
     config_dict=[[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
     
-
+//    if(![[config_dict objectForKey:@"devMode"] boolValue])
+//    {
+//        NSArray *subviews=[self.view subviews];
+//        for (UIView *view in subviews) {
+//            if([view isKindOfClass:[UIWebView class]])
+//            {
+//                [view removeFromSuperview];
+//            }
+//            if([view isKindOfClass:[UIButton class]])
+//            {
+//                if(view.tag==10)
+//                {
+//                     [view removeFromSuperview];
+//                }
+//            }
+//        }
+//    }
     NSLog(@"%@",[config_dict objectForKey:@"devMode"]);
 if([[config_dict objectForKey:@"devMode"]boolValue])
 {
@@ -140,7 +129,6 @@ else{
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [obj_SDK put:@"void":@"viewDidUnload"];
     [obj_SDK release];
     [config_dict release];
    
