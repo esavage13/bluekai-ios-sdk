@@ -11,4 +11,5 @@ No change should be required from v1.0.0 implementations.
 
 - Code cleanup 
 - When using the settings screen don't require ViewController
-
+- Host static resource through GitHub
+- New mobile proxy through GitHub
