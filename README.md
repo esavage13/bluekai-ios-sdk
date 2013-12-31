@@ -1,7 +1,7 @@
 # Integrating the BlueKai SDK
 ## Download the BlueKai SDK for iOs
 
-http://199.204.23.142/bk-mobile/BlueKai_iOS_SDK-20130806.zip
+http://bluekai.github.io/BlueKai_iOS_SDK-20130806.zip
 
 ## Obtain BlueKai site ID
 
@@ -11,13 +11,13 @@ For any demo projects a site id of "2" can be used.
 
 In XCode, drag the BlueKai_SDK folder into the project directory as shown. 
 
-   ![Screenshot](http://199.204.23.142/bk-mobile/ios/image001.png)
+   ![Screenshot](http://bluekai.github.io/images/ios/image001.png)
 
 When you do so you will get a prompt like the one below. Choose the
 option shown in the screen. This is a suggested mechanism and you can
 choose the option that fits your environment.
 
-   ![Screenshot](http://199.204.23.142/bk-mobile/ios/image003.png)
+   ![Screenshot](http://bluekai.github.io/images/ios/image003.png)
 
 ## Add Dependencies 
 
@@ -26,19 +26,19 @@ project. To do so, please follow these steps.
 
 +	Select "Targets" from your project
 
-    ![Screenshot](http://199.204.23.142/bk-mobile/ios/image005.png)
+    ![Screenshot](http://bluekai.github.io/images/ios/image005.png)
 +	Select "Build Phases"
 +	Click on "+" symbol in "Link Binary With Libraries" panel
 +	Type "libsqli" in the search box
 +	Select "`libsqlite3.dylib`" from the list
 +	Click on the "Add" button
     
-    ![Screenshot](http://199.204.23.142/bk-mobile/ios/image007.png)
+    ![Screenshot](http://bluekai.github.io/images/ios/image007.png)
 + Repeat this process to add SystemConfiguration.framework. Type "system" in the search box
 +	Select "SystemConfiguration.framework" from the list
 +	Click on the "Add" button
 
-    ![Screenshot](http://199.204.23.142/bk-mobile/ios/image009.png)
+    ![Screenshot](http://bluekai.github.io/images/ios/image009.png)
 
 ## Import SDK 
 
