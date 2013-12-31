@@ -21,7 +21,7 @@
 #include <QuartzCore/QuartzCore.h>
 #import "Bluekai_OpenUDID.h"
 
-NSString const *server_URL = @"http://199.204.23.142/m.html";
+NSString const *server_URL = @"http://bluekai.github.io/m.html";
 
 @implementation BlueKai
 @synthesize delegate;
