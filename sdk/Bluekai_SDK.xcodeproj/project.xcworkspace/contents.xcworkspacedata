@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:BlueKai.xcodeproj">
+      location = "self:Bluekai_SDK.xcodeproj">
    </FileRef>
 </Workspace>
