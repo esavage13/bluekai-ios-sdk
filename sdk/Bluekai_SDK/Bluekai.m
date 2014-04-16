@@ -1,12 +1,11 @@
-
-
 #import "BlueKai.h"
 #import "Reachability.h"
 #include <QuartzCore/QuartzCore.h>
 #import "Bluekai_OpenUDID.h"
 #import "SBJSON.h"
 
-NSString const *server_URL = @"http://199.204.23.142/m/";
+//NSString const *server_URL = @"http://199.204.23.142/m/";
+NSString const *server_URL = @"http://bluekai.github.io/m.html";
 
 @implementation BlueKai
 @synthesize delegate;
@@ -306,7 +305,7 @@ NSUInteger numberOfRunningRequests ;
     }
 }
 
--(void)put:(NSString *)key:(NSString *)value
+-(void)put:(NSString *)key withValue:(NSString *)value
 {
     if(!web_Loaded)
     {
@@ -731,10 +730,11 @@ NSUInteger numberOfRunningRequests ;
     }
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     //send the dictinary details to blluekai server
-    NSMutableString *url_string=[[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"%@%@?",server_URL,siteId]];
+    NSMutableString *url_string=[[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"%@?site=%@&",server_URL,siteId]];
     [url_string appendString:[NSString stringWithFormat:@"appVersion=%@",appVersion]];
     [url_string appendString:[NSString stringWithFormat:@"&identifierForVendor=%@",[NSString stringWithFormat:@"%@",[self getVendorID]]]];
-    urlStringCount=url_string.length;
+    urlStringCount = url_string.length;
+
     for(int i=0;i<[[keyVal_dict allKeys] count];i++)
     {
         NSString *key=[NSString stringWithFormat:@"%@",[[keyVal_dict allKeys] objectAtIndex:i]];

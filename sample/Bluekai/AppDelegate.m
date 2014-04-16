@@ -1,36 +1,26 @@
-
-
 #import "AppDelegate.h"
-
 #import "TestViewController.h"
-
 #import "OptInViewController.h"
 #import "DevSettingsViewController.h"
 
 @implementation AppDelegate
-@synthesize window,tabBarController;
+@synthesize window, tabBarController;
 
-- (void)dealloc
-{
-    [window release];
-    [tabBarController release];
-    [super dealloc];
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-  //  [Database copyDatabaseIfNeeded];
-    //[Database getDatabasePath:[Database getDBPath]];
-    UIViewController *viewController1 = [[[TestViewController alloc] initWithNibName:@"TestViewController" bundle:nil] autorelease];
-    UIViewController *viewController2 = [[[OptInViewController alloc] initWithNibName:@"OptInViewController" bundle:nil] autorelease];
-    UIViewController *viewController3 = [[[DevSettingsViewController alloc] initWithNibName:@"DevSettingsViewController" bundle:nil] autorelease];
-    self.tabBarController = [[[UITabBarController alloc] init] autorelease];
-    [self.tabBarController setViewControllers:[NSArray arrayWithObjects:viewController1,viewController2,viewController3, nil]];
+    // [Database copyDatabaseIfNeeded];
+    // [Database getDatabasePath:[Database getDBPath]];
+    UIViewController *viewController1 = [[TestViewController alloc] initWithNibName:@"TestViewController" bundle:nil];
+    UIViewController *viewController2 = [[OptInViewController alloc] initWithNibName:@"OptInViewController" bundle:nil];
+    UIViewController *viewController3 = [[DevSettingsViewController alloc] initWithNibName:@"DevSettingsViewController" bundle:nil];
+    tabBarController = [[UITabBarController alloc] init];
+    [tabBarController setViewControllers:@[viewController1, viewController2, viewController3]];
     
-    self.window.rootViewController = self.tabBarController;
-    [self.window makeKeyAndVisible];
+    window.rootViewController = tabBarController;
+    [window makeKeyAndVisible];
     return YES;
 }
 

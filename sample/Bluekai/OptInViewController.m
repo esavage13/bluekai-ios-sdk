@@ -1,5 +1,3 @@
-
-
 #import "OptInViewController.h"
 
 @interface OptInViewController ()
@@ -38,7 +36,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *plistPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Configurationfile.plist"];
+    NSString *plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
     
     BOOL success = [fileManager fileExistsAtPath:plistPath];
     if(!success){
@@ -47,12 +45,12 @@
         [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
     }
     config_dict=[[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
-    if([[config_dict objectForKey:@"devMode"] boolValue])
+    if([config_dict[@"devMode"] boolValue])
     {
-        Obj_bluekai=[[BlueKai alloc]initWithArgs:YES withSiteId:[config_dict objectForKey:@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
+        Obj_bluekai=[[BlueKai alloc]initWithArgs:YES withSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
     }
     else{
-        Obj_bluekai=[[BlueKai alloc]initWithArgs:NO withSiteId:[config_dict objectForKey:@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
+        Obj_bluekai=[[BlueKai alloc]initWithArgs:NO withSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
     }
 
     Obj_bluekai.delegate=self;
@@ -69,12 +67,10 @@
     {
         alert=[[UIAlertView alloc]initWithTitle:nil message:@"\n\nData sent successfully" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
     }
     else {
         alert=[[UIAlertView alloc]initWithTitle:nil message:@"\n\nData could not be sent" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
     }
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(removeAlert:) userInfo:nil repeats:NO];
 }
@@ -86,8 +82,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [Obj_bluekai release];
-    [config_dict release];
     // Release any retained subviews of the main view.
 }
 
