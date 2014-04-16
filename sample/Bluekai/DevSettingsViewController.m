@@ -1,5 +1,3 @@
-
-
 #import "DevSettingsViewController.h"
 #import "TestViewController.h"
 @interface DevSettingsViewController ()
@@ -27,7 +25,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *plistPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Configurationfile.plist"];
+    NSString *plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
    BOOL success = [fileManager fileExistsAtPath:plistPath];
     if(!success){
         //file does not exist. So look into mainBundle
@@ -35,20 +33,19 @@
       [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
     }
     config_dict=[[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
-   if([[config_dict objectForKey:@"devMode"] boolValue])
+   if([config_dict[@"devMode"] boolValue])
      {
          [dev_btn setImage:[UIImage imageNamed:@"chk-1.png"] forState:UIControlStateNormal];
      }else{
          [dev_btn setImage:[UIImage imageNamed:@"unchk-1.png"] forState:UIControlStateNormal];
      }
-   siteId_Txtfield.text=[config_dict objectForKey:@"siteId"];
-   [config_dict release];
+   siteId_Txtfield.text=config_dict[@"siteId"];
 
 }
 -(IBAction)changeDevMode:(id)sender
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentsDirectory = paths[0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
     config_dict=[[NSMutableDictionary alloc]initWithContentsOfFile:filePath];
         
@@ -60,7 +57,7 @@
     {
         [dev_btn setImage:[UIImage imageNamed:@"chk-1.png"] forState:UIControlStateNormal];
         //update the plist file
-        [config_dict setObject:@"YES" forKey:@"devMode"];
+        config_dict[@"devMode"] = @"YES";
         
     }
     else
@@ -71,7 +68,6 @@
         [config_dict setValue:@"NO" forKey:@"devMode"];
     }
     [config_dict writeToFile:filePath atomically:YES];
-    [config_dict release];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -80,13 +76,12 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 { NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentsDirectory = paths[0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
     config_dict=[[NSMutableDictionary alloc]initWithContentsOfFile:filePath];
     [config_dict setValue:textField.text forKey:@"ServerURL"];
     NSLog(@"%@",config_dict);
     [config_dict writeToFile:filePath atomically:YES];
-    [config_dict release];
 }
 
 - (void)viewDidUnload
