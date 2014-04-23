@@ -3,6 +3,7 @@
 ## Download the BlueKai SDK for iOS
 
 - [Full SDK](http://bluekai.github.io/BlueKai_iOS_SDK-20131122.zip)
+- [Static Library Files](http://bluekai.github.io/bluekai-ios-sdk-static-libs.zip)
 
 The current version of the SDK is 1.0.0. 
 
