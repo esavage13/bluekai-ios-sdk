@@ -8,19 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		00677794177ACD8F00C943BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00677793177ACD8F00C943BB /* SystemConfiguration.framework */; };
-		24DBFE5318FDD78F0069F878 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4818FDD78F0069F878 /* NSObject+SBJSON.m */; };
-		24DBFE5418FDD78F0069F878 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4A18FDD78F0069F878 /* NSString+SBJSON.m */; };
-		24DBFE5518FDD78F0069F878 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4C18FDD78F0069F878 /* SBJSON.m */; };
-		24DBFE5618FDD78F0069F878 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4E18FDD78F0069F878 /* SBJsonBase.m */; };
-		24DBFE5718FDD78F0069F878 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5018FDD78F0069F878 /* SBJsonParser.m */; };
-		24DBFE5818FDD78F0069F878 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5218FDD78F0069F878 /* SBJsonWriter.m */; };
+		24DBFE5318FDD78F0069F878 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4818FDD78F0069F878 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5418FDD78F0069F878 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4A18FDD78F0069F878 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5518FDD78F0069F878 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4C18FDD78F0069F878 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5618FDD78F0069F878 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4E18FDD78F0069F878 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5718FDD78F0069F878 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5018FDD78F0069F878 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5818FDD78F0069F878 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5218FDD78F0069F878 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D71EF5ED173B6CF200B90918 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EC173B6CF200B90918 /* UIKit.framework */; };
 		D71EF5EF173B6E3E00B90918 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EE173B6E3E00B90918 /* QuartzCore.framework */; };
 		D74FF32E173CC2F900C34EE0 /* btn-sub-del-op.png in Resources */ = {isa = PBXBuildFile; fileRef = D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */; };
 		D74FF337173CC43200C34EE0 /* chk-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D74FF335173CC43200C34EE0 /* chk-1.png */; };
 		D74FF338173CC43200C34EE0 /* unchk-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D74FF336173CC43200C34EE0 /* unchk-1.png */; };
-		D791D7721771E062004E5D93 /* Bluekai_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = D791D7711771E061004E5D93 /* Bluekai_OpenUDID.m */; };
-		D791D7731771E062004E5D93 /* Bluekai_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = D791D7711771E061004E5D93 /* Bluekai_OpenUDID.m */; };
+		D791D7721771E062004E5D93 /* BlueKai_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = D791D7711771E061004E5D93 /* BlueKai_OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D791D7731771E062004E5D93 /* BlueKai_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = D791D7711771E061004E5D93 /* BlueKai_OpenUDID.m */; };
 		D79AF75B173A1AA7002E0A0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF75A173A1AA7002E0A0B /* Foundation.framework */; };
 		D79AF760173A1AA7002E0A0B /* BlueKai.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D79AF75F173A1AA7002E0A0B /* BlueKai.h */; };
 		D79AF762173A1AA7002E0A0B /* BlueKai.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF761173A1AA7002E0A0B /* BlueKai.m */; };
@@ -29,8 +29,8 @@
 		D79AF770173A1AA8002E0A0B /* libBlueKai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF757173A1AA7002E0A0B /* libBlueKai.a */; };
 		D79AF776173A1AA8002E0A0B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D79AF774173A1AA8002E0A0B /* InfoPlist.strings */; };
 		D79AF779173A1AA8002E0A0B /* BluekaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF778173A1AA8002E0A0B /* BluekaiTests.m */; };
-		D79AF792173A2151002E0A0B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF791173A2151002E0A0B /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D79AF793173A2151002E0A0B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF791173A2151002E0A0B /* Reachability.m */; };
+		D79AF792173A2151002E0A0B /* BlueKai_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF791173A2151002E0A0B /* BlueKai_Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D79AF793173A2151002E0A0B /* BlueKai_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF791173A2151002E0A0B /* BlueKai_Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,8 +75,8 @@
 		D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sub-del-op.png"; sourceTree = "<group>"; };
 		D74FF335173CC43200C34EE0 /* chk-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chk-1.png"; sourceTree = "<group>"; };
 		D74FF336173CC43200C34EE0 /* unchk-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchk-1.png"; sourceTree = "<group>"; };
-		D791D7701771E061004E5D93 /* Bluekai_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bluekai_OpenUDID.h; sourceTree = "<group>"; };
-		D791D7711771E061004E5D93 /* Bluekai_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bluekai_OpenUDID.m; sourceTree = "<group>"; };
+		D791D7701771E061004E5D93 /* BlueKai_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_OpenUDID.h; sourceTree = "<group>"; };
+		D791D7711771E061004E5D93 /* BlueKai_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_OpenUDID.m; sourceTree = "<group>"; };
 		D79AF757173A1AA7002E0A0B /* libBlueKai.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBlueKai.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D79AF75A173A1AA7002E0A0B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D79AF75E173A1AA7002E0A0B /* BlueKai.xcodeproj-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlueKai.xcodeproj-Prefix.pch"; sourceTree = "<group>"; };
@@ -88,8 +88,8 @@
 		D79AF775173A1AA8002E0A0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D79AF777173A1AA8002E0A0B /* BluekaiTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BluekaiTests.h; sourceTree = "<group>"; };
 		D79AF778173A1AA8002E0A0B /* BluekaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BluekaiTests.m; sourceTree = "<group>"; };
-		D79AF790173A2151002E0A0B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		D79AF791173A2151002E0A0B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		D79AF790173A2151002E0A0B /* BlueKai_Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_Reachability.h; sourceTree = "<group>"; };
+		D79AF791173A2151002E0A0B /* BlueKai_Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,8 +120,8 @@
 		24DBFE4618FDD77A0069F878 /* Third Party Libs */ = {
 			isa = PBXGroup;
 			children = (
-				D79AF790173A2151002E0A0B /* Reachability.h */,
-				D79AF791173A2151002E0A0B /* Reachability.m */,
+				D79AF790173A2151002E0A0B /* BlueKai_Reachability.h */,
+				D79AF791173A2151002E0A0B /* BlueKai_Reachability.m */,
 				24DBFE4718FDD78F0069F878 /* NSObject+SBJSON.h */,
 				24DBFE4818FDD78F0069F878 /* NSObject+SBJSON.m */,
 				24DBFE4918FDD78F0069F878 /* NSString+SBJSON.h */,
@@ -172,8 +172,8 @@
 		D79AF75C173A1AA7002E0A0B /* BlueKai */ = {
 			isa = PBXGroup;
 			children = (
-				D791D7701771E061004E5D93 /* Bluekai_OpenUDID.h */,
-				D791D7711771E061004E5D93 /* Bluekai_OpenUDID.m */,
+				D791D7701771E061004E5D93 /* BlueKai_OpenUDID.h */,
+				D791D7711771E061004E5D93 /* BlueKai_OpenUDID.m */,
 				D79AF75F173A1AA7002E0A0B /* BlueKai.h */,
 				D79AF761173A1AA7002E0A0B /* BlueKai.m */,
 				24DBFE4618FDD77A0069F878 /* Third Party Libs */,
@@ -260,7 +260,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0440;
-				ORGANIZATIONNAME = wifin;
+				ORGANIZATIONNAME = BlueKai;
 			};
 			buildConfigurationList = D79AF751173A1AA7002E0A0B /* Build configuration list for PBXProject "Bluekai_SDK" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -320,10 +320,10 @@
 				D79AF762173A1AA7002E0A0B /* BlueKai.m in Sources */,
 				24DBFE5618FDD78F0069F878 /* SBJsonBase.m in Sources */,
 				24DBFE5818FDD78F0069F878 /* SBJsonWriter.m in Sources */,
-				D79AF792173A2151002E0A0B /* Reachability.m in Sources */,
+				D79AF792173A2151002E0A0B /* BlueKai_Reachability.m in Sources */,
 				24DBFE5718FDD78F0069F878 /* SBJsonParser.m in Sources */,
 				24DBFE5318FDD78F0069F878 /* NSObject+SBJSON.m in Sources */,
-				D791D7721771E062004E5D93 /* Bluekai_OpenUDID.m in Sources */,
+				D791D7721771E062004E5D93 /* BlueKai_OpenUDID.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,8 +332,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D79AF779173A1AA8002E0A0B /* BluekaiTests.m in Sources */,
-				D79AF793173A2151002E0A0B /* Reachability.m in Sources */,
-				D791D7731771E062004E5D93 /* Bluekai_OpenUDID.m in Sources */,
+				D79AF793173A2151002E0A0B /* BlueKai_Reachability.m in Sources */,
+				D791D7731771E062004E5D93 /* BlueKai_OpenUDID.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +366,15 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -376,11 +385,21 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "arm64 armv7 armv7s i386";
 			};
@@ -393,14 +412,33 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s i386";
@@ -411,8 +449,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
 				DSTROOT = /tmp/Bluekai_SDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -420,7 +460,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bluekai_SDK/BlueKai.xcodeproj-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = BlueKai;
 				SDKROOT = iphoneos;
@@ -432,8 +477,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
 				DSTROOT = /tmp/Bluekai_SDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -441,7 +488,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bluekai_SDK/BlueKai.xcodeproj-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = BlueKai;
 				SDKROOT = iphoneos;
@@ -489,7 +541,7 @@
 				D79AF77B173A1AA8002E0A0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D79AF77C173A1AA8002E0A0B /* Build configuration list for PBXNativeTarget "BlueKai" */ = {
 			isa = XCConfigurationList;
@@ -498,7 +550,7 @@
 				D79AF77E173A1AA8002E0A0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D79AF77F173A1AA8002E0A0B /* Build configuration list for PBXNativeTarget "BlueKai Tests" */ = {
 			isa = XCConfigurationList;
@@ -507,7 +559,7 @@
 				D79AF781173A1AA8002E0A0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

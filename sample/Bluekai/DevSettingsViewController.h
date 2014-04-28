@@ -5,9 +5,9 @@
     IBOutlet UIButton    *dev_btn;
     IBOutlet UITextField *siteId_Txtfield;
 
-    NSString *plist_path;
-    UITapGestureRecognizer *dev_tap;
     NSMutableDictionary    *config_dict;
+    NSString               *plist_path;
+    UITapGestureRecognizer *dev_tap;
 }
 
 @end

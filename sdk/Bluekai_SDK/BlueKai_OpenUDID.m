@@ -1,16 +1,16 @@
 //
-//  Bluekai_OpenUDID.m
+//  BlueKai_OpenUDID.m
 //  openudid
 //
 //  initiated by Yann Lechelle (cofounder @Appsfire) on 8/28/11.
-//  Copyright 2011, 2012 Bluekai_OpenUDID.org
+//  Copyright 2011, 2012 BlueKai_OpenUDID.org
 //
 //  Initiators/root branches
-//      iOS code: https://github.com/ylechelle/Bluekai_OpenUDID
-//      Android code: https://github.com/vieux/Bluekai_OpenUDID
+//      iOS code: https://github.com/ylechelle/BlueKai_OpenUDID
+//      Android code: https://github.com/vieux/BlueKai_OpenUDID
 //
 //  Contributors:
-//      https://github.com/ylechelle/Bluekai_OpenUDID/contributors
+//      https://github.com/ylechelle/BlueKai_OpenUDID/contributors
 //
 
 /*
@@ -44,7 +44,7 @@
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
-#import "Bluekai_OpenUDID.h"
+#import "BlueKai_OpenUDID.h"
 #import <CommonCrypto/CommonDigest.h> // Need to import for CC_MD5 access
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 #import <UIKit/UIPasteboard.h>
@@ -58,22 +58,22 @@
 //#define OpenUDIDLog(fmt, ...) NSLog((@"[Line %d] " fmt), __LINE__, ##__VA_ARGS__);
 
 static NSString * kOpenUDIDSessionCache = nil;
-static NSString * const kOpenUDIDKey = @"Bluekai_OpenUDID";
+static NSString * const kOpenUDIDKey = @"BlueKai_OpenUDID";
 static NSString * const kOpenUDIDSlotKey = @"OpenUDID_slot";
 static NSString * const kOpenUDIDAppUIDKey = @"OpenUDID_appUID";
 static NSString * const kOpenUDIDTSKey = @"OpenUDID_createdTS";
 static NSString * const kOpenUDIDOOTSKey = @"OpenUDID_optOutTS";
-static NSString * const kOpenUDIDDomain = @"org.Bluekai_OpenUDID";
-static NSString * const kOpenUDIDSlotPBPrefix = @"org.Bluekai_OpenUDID.slot.";
+static NSString * const kOpenUDIDDomain = @"org.BlueKai_OpenUDID";
+static NSString * const kOpenUDIDSlotPBPrefix = @"org.BlueKai_OpenUDID.slot.";
 static int const kOpenUDIDRedundancySlots = 100;
 
-@interface Bluekai_OpenUDID (Private)
+@interface BlueKai_OpenUDID (Private)
 + (void) _setDict:(id)dict forPasteboard:(id)pboard;
 + (NSMutableDictionary*) _getDictFromPasteboard:(id)pboard;
 + (NSString*) _generateFreshOpenUDID;
 @end
 
-@implementation Bluekai_OpenUDID
+@implementation BlueKai_OpenUDID
 
 // Archive a NSDictionary inside a pasteboard of a given type
 // Convenience method to support iOS & Mac OS X
@@ -108,9 +108,9 @@ static int const kOpenUDIDRedundancySlots = 100;
     return [NSMutableDictionary dictionaryWithDictionary:(item == nil || [item isKindOfClass:[NSDictionary class]]) ? item : nil];
 }
 
-// Private method to create and return a new Bluekai_OpenUDID
-// Theoretically, this function is called once ever per application when calling [Bluekai_OpenUDID value] for the first time.
-// After that, the caching/pasteboard/redundancy mechanism inside [Bluekai_OpenUDID value] returns a persistent and cross application Bluekai_OpenUDID
+// Private method to create and return a new BlueKai_OpenUDID
+// Theoretically, this function is called once ever per application when calling [BlueKai_OpenUDID value] for the first time.
+// After that, the caching/pasteboard/redundancy mechanism inside [BlueKai_OpenUDID value] returns a persistent and cross application BlueKai_OpenUDID
 //
 + (NSString*) _generateFreshOpenUDID {
     
@@ -130,7 +130,7 @@ static int const kOpenUDIDRedundancySlots = 100;
     //
     // August 2012: iOS 6 introduces new APIs that help us deal with the now deprecated [UIDevice uniqueIdentifier]
     // Since iOS 6 is still pre-release and under NDA, the following piece of code is meant to produce an error at
-    // compile time. Accredited developers integrating Bluekai_OpenUDID are expected to review the iOS 6 release notes and
+    // compile time. Accredited developers integrating BlueKai_OpenUDID are expected to review the iOS 6 release notes and
     // documentation, and replace the underscore ______ in the last part of the selector below with the right
     // selector syntax as described here (make sure to use the right one! last word starts with the letter "A"):
     // https://developer.apple.com/library/prerelease/ios/#documentation/UIKit/Reference/UIDevice_Class/Reference/UIDevice.html
@@ -141,9 +141,9 @@ static int const kOpenUDIDRedundancySlots = 100;
     //
     // WHAT IS THE SIGNIFICANCE OF THIS CHANGE?
     //
-    // Essentially, this means that Bluekai_OpenUDID will keep on behaving the same way as before for existing users or
+    // Essentially, this means that BlueKai_OpenUDID will keep on behaving the same way as before for existing users or
     // new users in iOS 5 and before. For new users on iOS 6 and after, the new official public APIs will take over.
-    // Bluekai_OpenUDID will therefore be obsoleted when iOS reaches significant adoption, anticipated around mid-2013.
+    // BlueKai_OpenUDID will therefore be obsoleted when iOS reaches significant adoption, anticipated around mid-2013.
 
     /*
 
@@ -201,13 +201,13 @@ static int const kOpenUDIDRedundancySlots = 100;
 }
 
 
-// Main public method that returns the Bluekai_OpenUDID
-// This method will generate and store the Bluekai_OpenUDID if it doesn't exist, typically the first time it is called
+// Main public method that returns the BlueKai_OpenUDID
+// This method will generate and store the BlueKai_OpenUDID if it doesn't exist, typically the first time it is called
 // It will return the null udid (forty zeros) if the user has somehow opted this app out (this is subject to 3rd party implementation)
-// Otherwise, it will register the current app and return the Bluekai_OpenUDID
+// Otherwise, it will register the current app and return the BlueKai_OpenUDID
 //
 + (NSString*) value {
-    return [Bluekai_OpenUDID valueWithError:nil];
+    return [BlueKai_OpenUDID valueWithError:nil];
 }
 
 + (NSString*) valueWithError:(NSError **)error {
@@ -216,7 +216,7 @@ static int const kOpenUDIDRedundancySlots = 100;
         if (error!=nil)
             *error = [NSError errorWithDomain:kOpenUDIDDomain
                                          code:kOpenUDIDErrorNone
-                                     userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Bluekai_OpenUDID in cache from first call",@"description", nil]];
+                                     userInfo:@{@"description": @"BlueKai_OpenUDID in cache from first call"}];
         return kOpenUDIDSessionCache;
     }
     
@@ -241,15 +241,15 @@ static int const kOpenUDIDRedundancySlots = 100;
     BOOL saveLocalDictToDefaults = NO;
     BOOL isCompromised = NO;
     
-    // Do we have a local copy of the Bluekai_OpenUDID dictionary?
+    // Do we have a local copy of the BlueKai_OpenUDID dictionary?
     // This local copy contains a copy of the openUDID, myRedundancySlotPBid (and unused in this block, the local bundleid, and the timestamp)
     //
     id localDict = [defaults objectForKey:kOpenUDIDKey];
     if ([localDict isKindOfClass:[NSDictionary class]]) {
         localDict = [NSMutableDictionary dictionaryWithDictionary:localDict]; // we might need to set/overwrite the redundancy slot
-        openUDID = [localDict objectForKey:kOpenUDIDKey];
-        myRedundancySlotPBid = [localDict objectForKey:kOpenUDIDSlotKey];
-        optedOutDate = [localDict objectForKey:kOpenUDIDOOTSKey];
+        openUDID = localDict[kOpenUDIDKey];
+        myRedundancySlotPBid = localDict[kOpenUDIDSlotKey];
+        optedOutDate = localDict[kOpenUDIDOOTSKey];
         optedOut = optedOutDate!=nil;
         OpenUDIDLog(@"localDict = %@",localDict);
     }
@@ -271,8 +271,8 @@ static int const kOpenUDIDRedundancySlots = 100;
             // assign availableSlotPBid to be the first one available
             if (availableSlotPBid==nil) availableSlotPBid = slotPBid;
         } else {
-            NSDictionary* dict = [Bluekai_OpenUDID _getDictFromPasteboard:slotPB];
-            NSString* oudid = [dict objectForKey:kOpenUDIDKey];
+            NSDictionary* dict = [BlueKai_OpenUDID _getDictFromPasteboard:slotPB];
+            NSString* oudid = dict[kOpenUDIDKey];
             OpenUDIDLog(@"SlotPB dict = %@",dict);
             if (oudid==nil) {
                 // availableSlotPBid could inside a non null slot where no oudid can be found
@@ -280,23 +280,23 @@ static int const kOpenUDIDRedundancySlots = 100;
             } else {
                 // increment the frequency of this oudid key
                 int count = [[frequencyDict valueForKey:oudid] intValue];
-                [frequencyDict setObject:[NSNumber numberWithInt:++count] forKey:oudid];
+                frequencyDict[oudid] = @(++count);
             }
             // if we have a match with the app unique id,
             // then let's look if the external UIPasteboard representation marks this app as OptedOut
-            NSString* gid = [dict objectForKey:kOpenUDIDAppUIDKey];
+            NSString* gid = dict[kOpenUDIDAppUIDKey];
             if (gid!=nil && [gid isEqualToString:appUID]) {
                 myRedundancySlotPBid = slotPBid;
                 // the local dictionary is prime on the opt-out subject, so ignore if already opted-out locally
                 if (optedOut) {
-                    optedOutDate = [dict objectForKey:kOpenUDIDOOTSKey];
+                    optedOutDate = dict[kOpenUDIDOOTSKey];
                     optedOut = optedOutDate!=nil;   
                 }
             }
         }
     }
     
-    // sort the Frequency dict with highest occurence count of the same Bluekai_OpenUDID (redundancy, failsafe)
+    // sort the Frequency dict with highest occurence count of the same BlueKai_OpenUDID (redundancy, failsafe)
     // highest is last in the list
     //
     NSArray* arrayOfUDIDs = [frequencyDict keysSortedByValueUsingSelector:@selector(compare:)];
@@ -307,12 +307,12 @@ static int const kOpenUDIDRedundancySlots = 100;
     //
     if (openUDID==nil) {        
         if (mostReliableOpenUDID==nil) {
-            // this is the case where this app instance is likely to be the first one to use Bluekai_OpenUDID on this device
-            // we create the Bluekai_OpenUDID, legacy or semi-random (i.e. most certainly unique)
+            // this is the case where this app instance is likely to be the first one to use BlueKai_OpenUDID on this device
+            // we create the BlueKai_OpenUDID, legacy or semi-random (i.e. most certainly unique)
             //
-            openUDID = [Bluekai_OpenUDID _generateFreshOpenUDID];
+            openUDID = [BlueKai_OpenUDID _generateFreshOpenUDID];
         } else {
-            // or we leverage the Bluekai_OpenUDID shared by other apps that have already gone through the process
+            // or we leverage the BlueKai_OpenUDID shared by other apps that have already gone through the process
             // 
             openUDID = mostReliableOpenUDID;
         }
@@ -320,10 +320,10 @@ static int const kOpenUDIDRedundancySlots = 100;
         //
         if (localDict==nil) { 
             localDict = [NSMutableDictionary dictionaryWithCapacity:4];
-            [localDict setObject:openUDID forKey:kOpenUDIDKey];
-            [localDict setObject:appUID forKey:kOpenUDIDAppUIDKey];
-            [localDict setObject:[NSDate date] forKey:kOpenUDIDTSKey];
-            if (optedOut) [localDict setObject:optedOutDate forKey:kOpenUDIDTSKey];
+            localDict[kOpenUDIDKey] = openUDID;
+            localDict[kOpenUDIDAppUIDKey] = appUID;
+            localDict[kOpenUDIDTSKey] = [NSDate date];
+            if (optedOut) localDict[kOpenUDIDTSKey] = optedOutDate;
             saveLocalDictToDefaults = YES;
         }
     }
@@ -348,14 +348,14 @@ static int const kOpenUDIDRedundancySlots = 100;
         // save slotPBid to the defaults, and remember to save later
         //
         if (localDict) {
-            [localDict setObject:availableSlotPBid forKey:kOpenUDIDSlotKey];
+            localDict[kOpenUDIDSlotKey] = availableSlotPBid;
             saveLocalDictToDefaults = YES;
         }
         
         // Save the local dictionary to the corresponding UIPasteboard slot
         //
         if (openUDID && localDict)
-            [Bluekai_OpenUDID _setDict:localDict forPasteboard:slotPB];
+            [BlueKai_OpenUDID _setDict:localDict forPasteboard:slotPB];
     }
 
     // Save the dictionary locally if applicable
@@ -363,7 +363,7 @@ static int const kOpenUDIDRedundancySlots = 100;
     if (localDict && saveLocalDictToDefaults)
         [defaults setObject:localDict forKey:kOpenUDIDKey];
 
-    // If the UIPasteboard external representation marks this app as opted-out, then to respect privacy, we return the ZERO Bluekai_OpenUDID, a sequence of 40 zeros...
+    // If the UIPasteboard external representation marks this app as opted-out, then to respect privacy, we return the ZERO BlueKai_OpenUDID, a sequence of 40 zeros...
     // This is a *new* case that developers have to deal with. Unlikely, statistically low, but still.
     // To circumvent this and maintain good tracking (conversion ratios, etc.), developers are invited to calculate how many of their users have opted-out from the full set of users.
     // This ratio will let them extrapolate convertion ratios more accurately.
@@ -371,7 +371,7 @@ static int const kOpenUDIDRedundancySlots = 100;
     if (optedOut) {
         if (error!=nil) *error = [NSError errorWithDomain:kOpenUDIDDomain
                                                      code:kOpenUDIDErrorOptedOut
-                                                 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Application with unique id %@ is opted-out from Bluekai_OpenUDID as of %@",appUID,optedOutDate],@"description", nil]];
+                                                 userInfo:@{@"description": [NSString stringWithFormat:@"Application with unique id %@ is opted-out from BlueKai_OpenUDID as of %@",appUID,optedOutDate]}];
             
         kOpenUDIDSessionCache = [[NSString stringWithFormat:@"%040x",0] retain];
         return kOpenUDIDSessionCache;
@@ -383,11 +383,11 @@ static int const kOpenUDIDRedundancySlots = 100;
         if (isCompromised)
             *error = [NSError errorWithDomain:kOpenUDIDDomain
                                          code:kOpenUDIDErrorCompromised
-                                     userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Found a discrepancy between stored Bluekai_OpenUDID (reliable) and redundant copies; one of the apps on the device is most likely corrupting the Bluekai_OpenUDID protocol",@"description", nil]];
+                                     userInfo:@{@"description": @"Found a discrepancy between stored BlueKai_OpenUDID (reliable) and redundant copies; one of the apps on the device is most likely corrupting the BlueKai_OpenUDID protocol"}];
         else
             *error = [NSError errorWithDomain:kOpenUDIDDomain
                                          code:kOpenUDIDErrorNone
-                                     userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Bluekai_OpenUDID succesfully retrieved",@"description", nil]];
+                                     userInfo:@{@"description": @"BlueKai_OpenUDID succesfully retrieved"}];
     }
     kOpenUDIDSessionCache = [openUDID retain];
     return kOpenUDIDSessionCache;
@@ -396,7 +396,7 @@ static int const kOpenUDIDRedundancySlots = 100;
 + (void) setOptOut:(BOOL)optOutValue {
 
     // init call
-    [Bluekai_OpenUDID value];
+    [BlueKai_OpenUDID value];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -410,7 +410,7 @@ static int const kOpenUDIDRedundancySlots = 100;
 
     // set the opt-out date or remove key, according to parameter
     if (optOutValue)
-        [dict setObject:[NSDate date] forKey:kOpenUDIDOOTSKey];
+        dict[kOpenUDIDOOTSKey] = [NSDate date];
     else
         [dict removeObjectForKey:kOpenUDIDOOTSKey];
 

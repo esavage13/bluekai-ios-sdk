@@ -9,7 +9,7 @@
     
     IBOutlet UITextField *keyTextfield;
     IBOutlet UITextField *valueTextfield;
-//    IBOutlet UIView      *view;
+    IBOutlet UIView      *view;
 }
 
 -(IBAction)cancelBtn:(id)sender;

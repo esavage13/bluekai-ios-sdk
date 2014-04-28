@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24E5FB2518FE18AB0012549C /* libBlueKai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E5FB2418FE18AB0012549C /* libBlueKai.a */; };
+		24606FE4190990FE000BABDD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24606FE3190990FE000BABDD /* Images.xcassets */; };
+		24606FF0190AEF74000BABDD /* libBlueKai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24606FEF190AEF74000BABDD /* libBlueKai.a */; };
 		61C3BCA9182324420029963C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C3BCA8182324420029963C /* Default-568h@2x.png */; };
 		B701E7F51759A26F008C3775 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B701E7F41759A26F008C3775 /* UIKit.framework */; };
 		B701E7F71759A26F008C3775 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B701E7F61759A26F008C3775 /* Foundation.framework */; };
@@ -30,7 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		24E5FB2418FE18AB0012549C /* libBlueKai.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBlueKai.a; sourceTree = "<group>"; };
+		24606FE3190990FE000BABDD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BlueKaiSampleApp/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		24606FEF190AEF74000BABDD /* libBlueKai.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBlueKai.a; sourceTree = "<group>"; };
 		61C3BCA8182324420029963C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B701E7F01759A26F008C3775 /* BlueKaiSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueKaiSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B701E7F41759A26F008C3775 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -65,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24E5FB2518FE18AB0012549C /* libBlueKai.a in Frameworks */,
+				24606FF0190AEF74000BABDD /* libBlueKai.a in Frameworks */,
 				D7B9B72C177C11A7001815D5 /* SystemConfiguration.framework in Frameworks */,
 				B701E7F51759A26F008C3775 /* UIKit.framework in Frameworks */,
 				B701E7F71759A26F008C3775 /* Foundation.framework in Frameworks */,
@@ -122,6 +124,7 @@
 				B74DA5171759BB0B00054D1C /* DevSettingsViewController.h */,
 				B74DA5181759BB0B00054D1C /* DevSettingsViewController.m */,
 				B74DA5191759BB0B00054D1C /* DevSettingsViewController.xib */,
+				24606FE3190990FE000BABDD /* Images.xcassets */,
 				B701E7FB1759A26F008C3775 /* Supporting Files */,
 			);
 			name = BlueKaiSampleApp;
@@ -142,7 +145,7 @@
 		B701E8231759A82C008C3775 /* BlueKai_SDK Library */ = {
 			isa = PBXGroup;
 			children = (
-				24E5FB2418FE18AB0012549C /* libBlueKai.a */,
+				24606FEF190AEF74000BABDD /* libBlueKai.a */,
 				D794ACE5181A51D70066A531 /* BlueKai.h */,
 				D794ACE6181A51D70066A531 /* chk-1.png */,
 				D794ACE7181A51D70066A531 /* unchk-1.png */,
@@ -211,6 +214,7 @@
 				B701E8161759A270008C3775 /* TestViewController.xib in Resources */,
 				B701E8191759A270008C3775 /* OptInViewController.xib in Resources */,
 				61C3BCA9182324420029963C /* Default-568h@2x.png in Resources */,
+				24606FE4190990FE000BABDD /* Images.xcassets in Resources */,
 				B701E8351759A8C3008C3775 /* Configurationfile.plist in Resources */,
 				B701E8361759A8C3008C3775 /* Icon.png in Resources */,
 				B74DA51B1759BB0B00054D1C /* DevSettingsViewController.xib in Resources */,
@@ -271,6 +275,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -295,6 +300,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -317,7 +323,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bluekai/BlueKaiSampleApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -331,6 +339,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = BlueKaiSampleApp;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv6 armv7 i386";
@@ -344,7 +353,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bluekai/BlueKaiSampleApp-Prefix.pch";
 				GCC_VERSION = "";
@@ -357,6 +368,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = BlueKaiSampleApp;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv6 armv7 i386";
@@ -374,7 +386,7 @@
 				B701E81B1759A270008C3775 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		B701E81C1759A270008C3775 /* Build configuration list for PBXNativeTarget "BlueKaiSampleApp" */ = {
 			isa = XCConfigurationList;
@@ -383,7 +395,7 @@
 				B701E81E1759A270008C3775 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

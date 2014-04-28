@@ -1,6 +1,6 @@
 /*
  
- File: Reachability.h
+ File: BlueKai_Reachability.h
  Abstract: Basic demonstration of how to use the SystemConfiguration Reachablity APIs.
  
  Version: 2.2
@@ -59,24 +59,24 @@ typedef enum {
 
 #define kReachabilityChangedNotification @"kNetworkReachabilityChangedNotification"
 
-@interface Reachability: NSObject
+@interface BlueKai_Reachability: NSObject
 {
 	BOOL localWiFiRef;
 	SCNetworkReachabilityRef reachabilityRef;
 }
 
 //reachabilityWithHostName- Use to check the reachability of a particular host name.
-+ (Reachability*) reachabilityWithHostName: (NSString*) hostName;
++ (BlueKai_Reachability*) reachabilityWithHostName: (NSString*) hostName;
 
 //reachabilityWithAddress- Use to check the reachability of a particular IP address.
-+ (Reachability*) reachabilityWithAddress: (const struct sockaddr_in*) hostAddress;
++ (BlueKai_Reachability*) reachabilityWithAddress: (const struct sockaddr_in*) hostAddress;
 
 //reachabilityForInternetConnection- checks whether the default route is available.
 //  Should be used by applications that do not connect to a particular host
-+ (Reachability*) reachabilityForInternetConnection;
++ (BlueKai_Reachability*) reachabilityForInternetConnection;
 
 //reachabilityForLocalWiFi- checks whether a local wifi connection is available.
-+ (Reachability*) reachabilityForLocalWiFi;
++ (BlueKai_Reachability*) reachabilityForLocalWiFi;
 
 //Start listening for reachability notifications on the current run loop
 - (BOOL) startNotifier;
