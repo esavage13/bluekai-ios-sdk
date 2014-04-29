@@ -42,13 +42,10 @@
 }
 
 - (void)onDataPosted:(BOOL)status {
-    if (status) {
-        alert = [[UIAlertView alloc] initWithTitle:nil message:@"\n\nData sent successfully" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [alert show];
-    } else {
-        alert = [[UIAlertView alloc] initWithTitle:nil message:@"\n\nData could not be sent" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [alert show];
-    }
+    NSString *msg = status ? @"\n\nData sent successfully" : @"\n\nData could not be sent";
+
+    alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    [alert show];
 
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(removeAlert:) userInfo:nil repeats:NO];
 }
@@ -70,8 +67,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeGround) name:UIApplicationWillEnterForegroundNotification object:nil];
     self.tabBarController.delegate = self;
-    // [blueKaiSDK release];
-    //[configDict release];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
