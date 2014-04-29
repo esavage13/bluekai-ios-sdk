@@ -47,36 +47,39 @@
 
 #import <sys/socket.h>
 #import <netinet/in.h>
-#import <netinet6/in6.h>
+//#import <netinet6/in6.h>
 #import <arpa/inet.h>
-#import <ifaddrs.h>
-#import <netdb.h>
-#import <CoreFoundation/CoreFoundation.h>
+//#import <ifaddrs.h>
+//#import <netdb.h>
+//#import <CoreFoundation/CoreFoundation.h>
 
 #import "BlueKai_Reachability.h"
 
 #define kShouldPrintReachabilityFlags 1
 
-static void PrintReachabilityFlags(SCNetworkReachabilityFlags flags, const char* comment)
-{
-//#if kShouldPrintReachabilityFlags
-//    NSLog(@"BlueKai_Reachability Flag Status: %c%c %c%c%c%c%c%c%c %s\n",
-//              (flags & kSCNetworkReachabilityFlagsIsWWAN)				? 'W' : '-',
-//              (flags & kSCNetworkReachabilityFlagsReachable)            ? 'R' : '-',
-//              (flags & kSCNetworkReachabilityFlagsTransientConnection)  ? 't' : '-',
-//              (flags & kSCNetworkReachabilityFlagsConnectionRequired)   ? 'c' : '-',
-//              (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic)  ? 'C' : '-',
-//              (flags & kSCNetworkReachabilityFlagsInterventionRequired) ? 'i' : '-',
-//              (flags & kSCNetworkReachabilityFlagsConnectionOnDemand)   ? 'D' : '-',
-//              (flags & kSCNetworkReachabilityFlagsIsLocalAddress)       ? 'l' : '-',
-//              (flags & kSCNetworkReachabilityFlagsIsDirect)             ? 'd' : '-',
-//              comment
-//         );
-//#endif
-}
-
+@interface BlueKai_Reachability()
+@end
 
 @implementation BlueKai_Reachability
+
+static void PrintReachabilityFlags(SCNetworkReachabilityFlags flags, const char* comment)
+{
+#if kShouldPrintReachabilityFlags
+    NSLog(@"BlueKai_Reachability Flag Status: %c%c %c%c%c%c%c%c%c %s\n",
+              (flags & kSCNetworkReachabilityFlagsIsWWAN)				? 'W' : '-',
+              (flags & kSCNetworkReachabilityFlagsReachable)            ? 'R' : '-',
+              (flags & kSCNetworkReachabilityFlagsTransientConnection)  ? 't' : '-',
+              (flags & kSCNetworkReachabilityFlagsConnectionRequired)   ? 'c' : '-',
+              (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic)  ? 'C' : '-',
+              (flags & kSCNetworkReachabilityFlagsInterventionRequired) ? 'i' : '-',
+              (flags & kSCNetworkReachabilityFlagsConnectionOnDemand)   ? 'D' : '-',
+              (flags & kSCNetworkReachabilityFlagsIsLocalAddress)       ? 'l' : '-',
+              (flags & kSCNetworkReachabilityFlagsIsDirect)             ? 'd' : '-',
+              comment
+         );
+#endif
+}
+
 static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info)
 {
 #pragma unused (target, flags)
@@ -98,7 +101,8 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 {
 	BOOL retVal = NO;
 	SCNetworkReachabilityContext	context = {0, self, NULL, NULL, NULL};
-	if(SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context))
+
+    if(SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context))
 	{
 		if(SCNetworkReachabilityScheduleWithRunLoop(reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
 		{
@@ -130,7 +134,8 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 {
 	BlueKai_Reachability* retVal = NULL;
 	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, [hostName UTF8String]);
-	if(reachability!= NULL)
+
+    if(reachability!= NULL)
 	{
 		retVal= [[[self alloc] init] autorelease];
 		if(retVal!= NULL)
@@ -146,6 +151,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 {
 	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr*)hostAddress);
 	BlueKai_Reachability* retVal = NULL;
+
 	if(reachability!= NULL)
 	{
 		retVal= [[[self alloc] init] autorelease];
@@ -176,6 +182,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	// IN_LINKLOCALNETNUM is defined in <netinet/in.h> as 169.254.0.0
 	localWifiAddress.sin_addr.s_addr = htonl(IN_LINKLOCALNETNUM);
 	BlueKai_Reachability* retVal = [self reachabilityWithAddress: &localWifiAddress];
+
 	if(retVal!= NULL)
 	{
 		retVal->localWiFiRef = YES;
@@ -187,19 +194,33 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 - (NetworkStatus) localWiFiStatusForFlags: (SCNetworkReachabilityFlags) flags
 {
-	PrintReachabilityFlags(flags, "localWiFiStatusForFlags");
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+
+    if ([configDict[@"devMode"] boolValue]) {
+	    PrintReachabilityFlags(flags, "localWiFiStatusForFlags");
+    }
     
 	BOOL retVal = NotReachable;
 	if((flags & kSCNetworkReachabilityFlagsReachable) && (flags & kSCNetworkReachabilityFlagsIsDirect))
 	{
 		retVal = ReachableViaWiFi;
 	}
+
+    [configDict release];
 	return retVal;
 }
 
 - (NetworkStatus) networkStatusForFlags: (SCNetworkReachabilityFlags) flags
 {
-	PrintReachabilityFlags(flags, "networkStatusForFlags");
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+
+    if ([configDict[@"devMode"] boolValue]) {
+	    PrintReachabilityFlags(flags, "networkStatusForFlags");
+    }
 	if ((flags & kSCNetworkReachabilityFlagsReachable) == 0)
 	{
 		// if target host is not reachable
@@ -235,6 +256,8 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 		//     is using the CFNetwork (CFSocketStream?) APIs.
 		retVal = ReachableViaWWAN;
 	}
+
+    [configDict release];
 	return retVal;
 }
 

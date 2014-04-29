@@ -62,6 +62,7 @@ typedef enum {
 @interface BlueKai_Reachability: NSObject
 {
 	BOOL localWiFiRef;
+    NSDictionary *configDict;
 	SCNetworkReachabilityRef reachabilityRef;
 }
 
