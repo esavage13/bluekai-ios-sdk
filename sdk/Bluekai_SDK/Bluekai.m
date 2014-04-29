@@ -2,40 +2,40 @@
 #import "BlueKai.h"
 #import "BlueKai_Reachability.h"
 #import "BlueKai_OpenUDID.h"
-#import "SBJSON.h"
+#import "BlueKai_SBJSON.h"
 
 NSString *const server_URL = @"http://bluekai.github.io/m.html";
 
 @implementation BlueKai
 @synthesize delegate;
 
-BOOL alertShowBool;
+BOOL bluekai_alertShowBool;
 BOOL devMode;
-BOOL loadFailedBool;
-BOOL web_Loaded;
-int urlStringCount;
-int numberOfRunningRequests;
+BOOL bluekai_loadFailedBool;
+BOOL bluekai_webLoaded;
+int bluekai_urlStringCount;
+int bluekai_numberOfRunningRequests;
 
-UIAlertView *alert_View;
-UIButton    *cncl_Btn;
-UIImageView *usrcheck_image,
-            *tccheck_image;
+UIAlertView *bluekai_alertView;
+UIButton    *bluekai_cancelButton;
+UIImageView *bluekai_userCheckImage,
+            *bluekai_TCCheckImage;
 
-UITapGestureRecognizer *tap;
-UIWebView              *web;
-UIViewController *main_View;
+UITapGestureRecognizer *bluekai_tap;
+UIWebView              *bluekai_webView;
+UIViewController *bluekai_mainView;
 
-NSArray         *checkimage;
-NSMutableString *web_URL;
+NSArray         *bluekai_checkimage;
+NSMutableString *bluekai_webUrl;
 
-NSString *appVersion,
-         *key_str,
-         *siteId,
-         *value_str;
+NSString *bluekai_appVersion,
+         *bluekai_keyString,
+         *bluekai_siteId,
+         *bluekai_valueString;
 
-NSMutableDictionary *keyVal_dict,
-                    *nonLoadkeyVal_dict,
-                    *remainkeyVal_dict;
+NSMutableDictionary *bluekai_keyValDict,
+                    *bluekai_nonLoadkeyValDict,
+                    *bluekai_remainkeyValDict;
 
 NSUserDefaults *user_defaults;
 
@@ -72,7 +72,7 @@ NSUserDefaults *user_defaults;
 - (NSString *)getKeyValueJSON:(NSMutableDictionary *)keyvalues {
     @try {
         NSMutableDictionary *dict3 = [[NSMutableDictionary alloc] initWithDictionary:keyvalues];
-        SBJsonWriter *sb = [[SBJsonWriter alloc] init];
+        BlueKai_SBJsonWriter *sb = [[BlueKai_SBJsonWriter alloc] init];
         NSString *jsonString = [sb stringWithObject:dict3];
 
         return jsonString;
@@ -85,7 +85,7 @@ NSUserDefaults *user_defaults;
 }
 
 - (NSDictionary *)getKeyValueDictionary:(NSString *)jsonString {
-    SBJSON *sparser = [[SBJSON alloc] init];
+    BlueKai_SBJSON *sparser = [[BlueKai_SBJSON alloc] init];
     NSDictionary *realdata = (NSDictionary *) [sparser objectWithString:jsonString error:nil];
     return realdata;
 }
@@ -121,7 +121,7 @@ NSUserDefaults *user_defaults;
 
     @try {
         NSMutableDictionary *dict3 = [[NSMutableDictionary alloc] initWithDictionary:keyValues];
-        SBJsonWriter *sb = [[SBJsonWriter alloc] init];
+        BlueKai_SBJsonWriter *sb = [[BlueKai_SBJsonWriter alloc] init];
         NSString *jsonString = [sb stringWithObject:dict3];
         return jsonString;
     }
@@ -134,7 +134,7 @@ NSUserDefaults *user_defaults;
 
 - (NSDictionary *)getAttemptsDictionary:(NSString *)jsonString {
     [self blueKaiLogger:devMode withString:@"getAttemptsDictionary: " withObject:jsonString];
-    SBJSON *sparser = [[SBJSON alloc] init];
+    BlueKai_SBJSON *sparser = [[BlueKai_SBJSON alloc] init];
     NSDictionary *realData = (NSDictionary *) [sparser objectWithString:jsonString error:nil];
     return realData;
 }
@@ -146,29 +146,29 @@ NSUserDefaults *user_defaults;
     [self blueKaiLogger:devMode withString:@"initWithArgs view " withObject:view];
 
     if (self = [super init]) {
-        appVersion = version;
+        bluekai_appVersion = version;
         devMode = value;
-        siteId = nil;
-        siteId = siteID;
-        main_View = nil;
-        main_View = view;
-        web = nil;
-        cncl_Btn = nil;
-        web_URL = [[NSMutableString alloc] init];
-        nonLoadkeyVal_dict = [[NSMutableDictionary alloc] init];
-        remainkeyVal_dict = [[NSMutableDictionary alloc] init];
-        web_Loaded = NO;
-        web = [[UIWebView alloc] init];
-        web.delegate = self;
-        web.layer.cornerRadius = 5.0f;
-        web.layer.borderColor = [[UIColor grayColor] CGColor];
-        web.layer.borderWidth = 4.0f;
-        [main_View.view addSubview:web];
+        bluekai_siteId = nil;
+        bluekai_siteId = siteID;
+        bluekai_mainView = nil;
+        bluekai_mainView = view;
+        bluekai_webView = nil;
+        bluekai_cancelButton = nil;
+        bluekai_webUrl = [[NSMutableString alloc] init];
+        bluekai_nonLoadkeyValDict = [[NSMutableDictionary alloc] init];
+        bluekai_remainkeyValDict = [[NSMutableDictionary alloc] init];
+        bluekai_webLoaded = NO;
+        bluekai_webView = [[UIWebView alloc] init];
+        bluekai_webView.delegate = self;
+        bluekai_webView.layer.cornerRadius = 5.0f;
+        bluekai_webView.layer.borderColor = [[UIColor grayColor] CGColor];
+        bluekai_webView.layer.borderWidth = 4.0f;
+        [bluekai_mainView.view addSubview:bluekai_webView];
 
         if (devMode) {
-            [self drawWebFrame:web];
+            [self drawWebFrame:bluekai_webView];
         } else {
-            web.frame = CGRectMake(10, 10, 1, 1);
+            bluekai_webView.frame = CGRectMake(10, 10, 1, 1);
         }
 
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"settings"] != nil) {
@@ -177,7 +177,7 @@ NSUserDefaults *user_defaults;
             [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"settings"];
         }
 
-        web.hidden = YES;
+        bluekai_webView.hidden = YES;
         /*
          //check the database for previous values
          */
@@ -197,19 +197,19 @@ NSUserDefaults *user_defaults;
             [[NSFileManager defaultManager] createFileAtPath:atmt_fileAtPath contents:nil attributes:nil];
         }
 
-        keyVal_dict = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
+        bluekai_keyValDict = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
 
-        if ([[keyVal_dict allKeys] count] > 1) {
-            numberOfRunningRequests = -1;
+        if ([[bluekai_keyValDict allKeys] count] > 1) {
+            bluekai_numberOfRunningRequests = -1;
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
             NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
             if (networkStatus != NotReachable) {
-                web_Loaded = YES;
-                web.tag = 1;
+                bluekai_webLoaded = YES;
+                bluekai_webView.tag = 1;
                 [self startDataUpload];
             } else {
-                alertShowBool = YES;
+                bluekai_alertShowBool = YES;
                 [self webView:nil didFailLoadWithError:nil];
             }
         }
@@ -219,10 +219,10 @@ NSUserDefaults *user_defaults;
 
 - (id)init {
     if (self = [super init]) {
-        appVersion = nil;
+        bluekai_appVersion = nil;
         devMode = FALSE;
-        main_View = nil;
-        siteId = nil;
+        bluekai_mainView = nil;
+        bluekai_siteId = nil;
     }
 
     return self;
@@ -231,15 +231,15 @@ NSUserDefaults *user_defaults;
 - (void)setDevMode:(BOOL)mode {
     devMode = mode;
 
-    if (main_View != nil && siteId != nil && appVersion != nil) {
+    if (bluekai_mainView != nil && bluekai_siteId != nil && bluekai_appVersion != nil) {
         [self resume];
     }
 }
 
 - (void)setAppVersion:(NSString *)version {
-    appVersion = version;
+    bluekai_appVersion = version;
 
-    if (main_View != nil && siteId != nil) {
+    if (bluekai_mainView != nil && bluekai_siteId != nil) {
         [self resume];
     }
 }
@@ -247,32 +247,32 @@ NSUserDefaults *user_defaults;
 - (void)setViewController:(UIViewController *)view {
     [self blueKaiLogger:devMode withString:@"setViewController" withObject:view];
 
-    main_View = view;
+    bluekai_mainView = view;
 
-    if (siteId != nil) {
-        web = nil;
-        cncl_Btn = nil;
+    if (bluekai_siteId != nil) {
+        bluekai_webView = nil;
+        bluekai_cancelButton = nil;
 
-        if (web_URL == nil) {
-            web_URL = [[NSMutableString alloc] init];
+        if (bluekai_webUrl == nil) {
+            bluekai_webUrl = [[NSMutableString alloc] init];
         } else {
-            [web_URL replaceCharactersInRange:NSMakeRange(0, [web_URL length]) withString:@""];
+            [bluekai_webUrl replaceCharactersInRange:NSMakeRange(0, [bluekai_webUrl length]) withString:@""];
         }
 
-        web = [[UIWebView alloc] init];
-        web.delegate = self;
-        web.layer.cornerRadius = 5.0f;
-        web.layer.borderColor = [[UIColor grayColor] CGColor];
-        web.layer.borderWidth = 4.0f;
-        [main_View.view addSubview:web];
+        bluekai_webView = [[UIWebView alloc] init];
+        bluekai_webView.delegate = self;
+        bluekai_webView.layer.cornerRadius = 5.0f;
+        bluekai_webView.layer.borderColor = [[UIColor grayColor] CGColor];
+        bluekai_webView.layer.borderWidth = 4.0f;
+        [bluekai_mainView.view addSubview:bluekai_webView];
 
         if(devMode) {
-            [self drawWebFrame:web];
+            [self drawWebFrame:bluekai_webView];
         } else {
-            web.frame = CGRectMake(1, 1, 1, 1);
+            bluekai_webView.frame = CGRectMake(1, 1, 1, 1);
         }
 
-        web.hidden = YES;
+        bluekai_webView.hidden = YES;
         [self resume];
     }
 }
@@ -280,9 +280,9 @@ NSUserDefaults *user_defaults;
 - (void)setSiteId:(int)siteId {
     [self blueKaiLogger:devMode withString:@"setSiteId" withObject:[NSString stringWithFormat:@"%i", siteId]];
 
-    siteId = [NSString stringWithFormat:@"%d", siteId];
+    bluekai_siteId = [NSString stringWithFormat:@"%d", siteId];
 
-    if (main_View != nil) {
+    if (bluekai_mainView != nil) {
         [self resume];
     }
 }
@@ -291,32 +291,32 @@ NSUserDefaults *user_defaults;
     [self blueKaiLogger:devMode withString:@"put:key:value => key" withObject:key];
     [self blueKaiLogger:devMode withString:@"put:key:value => value" withObject:value];
 
-    if (!web_Loaded) {
-        if (web_URL == nil) {
-            web_URL = [[NSMutableString alloc] init];
+    if (!bluekai_webLoaded) {
+        if (bluekai_webUrl == nil) {
+            bluekai_webUrl = [[NSMutableString alloc] init];
         } else {
-            [web_URL replaceCharactersInRange:NSMakeRange(0, [web_URL length]) withString:@""];
+            [bluekai_webUrl replaceCharactersInRange:NSMakeRange(0, [bluekai_webUrl length]) withString:@""];
         }
 
-        key_str = nil;
-        value_str = nil;
-        key_str = [key copy];
-        value_str = [value copy];
+        bluekai_keyString = nil;
+        bluekai_valueString = nil;
+        bluekai_keyString = [key copy];
+        bluekai_valueString = [value copy];
 
         //Check the settings page to find the use data is allowed to send to server or not
-        if (keyVal_dict != nil) {
-            [keyVal_dict removeAllObjects];
+        if (bluekai_keyValDict != nil) {
+            [bluekai_keyValDict removeAllObjects];
         } else {
-            keyVal_dict = [[NSMutableDictionary alloc] init];
+            bluekai_keyValDict = [[NSMutableDictionary alloc] init];
         }
 
-        [keyVal_dict setValue:value_str forKey:key_str];
+        [bluekai_keyValDict setValue:bluekai_valueString forKey:bluekai_keyString];
 
         NSString *user_value = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
 
         if ([user_value isEqualToString:@"YES"]) {
-            numberOfRunningRequests = -1;
-            web_Loaded = YES;
+            bluekai_numberOfRunningRequests = -1;
+            bluekai_webLoaded = YES;
 
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
@@ -329,49 +329,49 @@ NSUserDefaults *user_defaults;
             }
 
         } else {
-            if (!web.hidden) {
-                web.hidden = YES;
+            if (!bluekai_webView.hidden) {
+                bluekai_webView.hidden = YES;
             }
         }
     } else {
-        [nonLoadkeyVal_dict setValue:value forKey:key];
+        [bluekai_nonLoadkeyValDict setValue:value forKey:key];
     }
 
 }
 
 - (void)updateWebview:(NSString *)url {
-    [web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    [bluekai_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    if (numberOfRunningRequests != 0) {
-        numberOfRunningRequests = 0;
+    if (bluekai_numberOfRunningRequests != 0) {
+        bluekai_numberOfRunningRequests = 0;
 
         // to avoid the "Weak receiver may be unpredictably null in ARC mode" warning
         id <OnDataPostedListener> localDelegate = delegate;
 
-        if ([localDelegate respondsToSelector:@selector(onDataPosted:)]) {
+        if ([localDelegate respondsToSelector:@selector(onDabluekai_taposted:)]) {
             [localDelegate onDataPosted:FALSE];
         }
 
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-        for (int i = 0; i < [[keyVal_dict allKeys] count]; i++) {
-            if (![remainkeyVal_dict valueForKey:[keyVal_dict allKeys][i]]) {
+        for (int i = 0; i < [[bluekai_keyValDict allKeys] count]; i++) {
+            if (![bluekai_remainkeyValDict valueForKey:[bluekai_keyValDict allKeys][i]]) {
                 NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
                 NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
-                int attempts = [atmt_dictionary[[keyVal_dict allKeys][i]] intValue];
+                int attempts = [atmt_dictionary[[bluekai_keyValDict allKeys][i]] intValue];
 
                 if (attempts == 0) {
-                    dictionary[[keyVal_dict allKeys][i]] = [keyVal_dict valueForKey:[keyVal_dict allKeys][i]];
-                    atmt_dictionary[[keyVal_dict allKeys][i]] = @"1";
+                    dictionary[[bluekai_keyValDict allKeys][i]] = [bluekai_keyValDict valueForKey:[bluekai_keyValDict allKeys][i]];
+                    atmt_dictionary[[bluekai_keyValDict allKeys][i]] = @"1";
                 } else {
                     if (attempts < 5) {
-                        [atmt_dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
-                        atmt_dictionary[[keyVal_dict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
+                        [atmt_dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
+                        atmt_dictionary[[bluekai_keyValDict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
                     } else {
-                        [dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
-                        [atmt_dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
+                        [dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
+                        [atmt_dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
                     }
                 }
 
@@ -380,10 +380,10 @@ NSUserDefaults *user_defaults;
             }
         }
 
-        web_Loaded = NO;
+        bluekai_webLoaded = NO;
 
-        if (remainkeyVal_dict != nil || nonLoadkeyVal_dict != nil) {
-            if ([remainkeyVal_dict count] != 0 || [nonLoadkeyVal_dict count] != 0) {
+        if (bluekai_remainkeyValDict != nil || bluekai_nonLoadkeyValDict != nil) {
+            if ([bluekai_remainkeyValDict count] != 0 || [bluekai_nonLoadkeyValDict count] != 0) {
                 [self loadAnotherRequest];
             }
         }
@@ -391,36 +391,36 @@ NSUserDefaults *user_defaults;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    if (numberOfRunningRequests == 0) {
-        numberOfRunningRequests = numberOfRunningRequests + 1;
+    if (bluekai_numberOfRunningRequests == 0) {
+        bluekai_numberOfRunningRequests = bluekai_numberOfRunningRequests + 1;
     } else {
-        if (numberOfRunningRequests == -1) {
-            numberOfRunningRequests = 0;
-            numberOfRunningRequests = numberOfRunningRequests + 1;
+        if (bluekai_numberOfRunningRequests == -1) {
+            bluekai_numberOfRunningRequests = 0;
+            bluekai_numberOfRunningRequests = bluekai_numberOfRunningRequests + 1;
         } else {
-            numberOfRunningRequests = numberOfRunningRequests + 1;
+            bluekai_numberOfRunningRequests = bluekai_numberOfRunningRequests + 1;
         }
     }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    numberOfRunningRequests = numberOfRunningRequests - 1;
+    bluekai_numberOfRunningRequests = bluekai_numberOfRunningRequests - 1;
     // to avoid the "Weak receiver may be unpredictably null in ARC mode" warning
     id <OnDataPostedListener> localDelegate = delegate;
 
-    if (numberOfRunningRequests == 0) {
-        if (!alertShowBool) {
-            if (web.tag == 1) {
+    if (bluekai_numberOfRunningRequests == 0) {
+        if (!bluekai_alertShowBool) {
+            if (bluekai_webView.tag == 1) {
                 //Delete the key and value pairs from database after sent to server.
-                for (int k = 0; k < [keyVal_dict count]; k++) {
-                    if (![remainkeyVal_dict valueForKey:[keyVal_dict allKeys][k]]) {
+                for (int k = 0; k < [bluekai_keyValDict count]; k++) {
+                    if (![bluekai_remainkeyValDict valueForKey:[bluekai_keyValDict allKeys][k]]) {
                         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
                         NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
-                        int attempts = [atmt_dictionary[[keyVal_dict allKeys][k]] intValue];
+                        int attempts = [atmt_dictionary[[bluekai_keyValDict allKeys][k]] intValue];
 
                         if (attempts != 0) {
-                            [dictionary removeObjectForKey:[keyVal_dict allKeys][k]];
-                            [atmt_dictionary removeObjectForKey:[keyVal_dict allKeys][k]];
+                            [dictionary removeObjectForKey:[bluekai_keyValDict allKeys][k]];
+                            [atmt_dictionary removeObjectForKey:[bluekai_keyValDict allKeys][k]];
                             [self writeStringToKeyValueFile:[self getKeyValueJSON:dictionary]];
                             [self writeStringToAttemptsFile:[self getAttemptsJSON:atmt_dictionary]];
                         }
@@ -429,27 +429,27 @@ NSUserDefaults *user_defaults;
             }
 
             if (devMode) {
-                web.hidden = NO;
-                cncl_Btn.hidden = NO;
+                bluekai_webView.hidden = NO;
+                bluekai_cancelButton.hidden = NO;
             }
 
-            web_Loaded = NO;
+            bluekai_webLoaded = NO;
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
             if ([localDelegate respondsToSelector:@selector(onDataPosted:)]) {
                 [localDelegate onDataPosted:TRUE];
             }
 
-            [self blueKaiLogger:devMode withString:@"Passed " withObject:webView.request.URL];
-            alertShowBool = YES;
+            [self blueKaiLogger:devMode withString:@"URL Passed" withObject:webView.request.URL];
+            bluekai_alertShowBool = YES;
 
-            if (remainkeyVal_dict != nil || nonLoadkeyVal_dict != nil) {
-                if ([remainkeyVal_dict count] != 0 || [nonLoadkeyVal_dict count] != 0) {
+            if (bluekai_remainkeyValDict != nil || bluekai_nonLoadkeyValDict != nil) {
+                if ([bluekai_remainkeyValDict count] != 0 || [bluekai_nonLoadkeyValDict count] != 0) {
                     [self loadAnotherRequest];
                 }
             }
 
-            NSArray *webviews = [main_View.view subviews];
+            NSArray *webviews = [bluekai_mainView.view subviews];
             int web_count = 0;
             int btn_count = 0;
 
@@ -495,97 +495,97 @@ NSUserDefaults *user_defaults;
 - (void)loadAnotherRequest {
     [self blueKaiLogger:devMode withString:@"loadAnotherRequest" withObject:nil];
 
-    if ([remainkeyVal_dict count] == 0) {
-        if ([nonLoadkeyVal_dict count] != 0) {
-            web = [[UIWebView alloc] init];
-            web.delegate = self;
-            web.layer.cornerRadius = 5.0f;
-            web.layer.borderColor = [[UIColor grayColor] CGColor];
-            web.layer.borderWidth = 4.0f;
-            web.hidden = YES;
-            [main_View.view addSubview:web];
+    if ([bluekai_remainkeyValDict count] == 0) {
+        if ([bluekai_nonLoadkeyValDict count] != 0) {
+            bluekai_webView = [[UIWebView alloc] init];
+            bluekai_webView.delegate = self;
+            bluekai_webView.layer.cornerRadius = 5.0f;
+            bluekai_webView.layer.borderColor = [[UIColor grayColor] CGColor];
+            bluekai_webView.layer.borderWidth = 4.0f;
+            bluekai_webView.hidden = YES;
+            [bluekai_mainView.view addSubview:bluekai_webView];
 
             [self blueKaiLogger:devMode withString:@"3.1" withObject:nil];
 
             if (devMode) {
-                [self drawWebFrame:web];
+                [self drawWebFrame:bluekai_webView];
             } else {
-                web.frame = CGRectMake(10, 10, 1, 1);
+                bluekai_webView.frame = CGRectMake(10, 10, 1, 1);
             }
 
-            web_Loaded = NO;
+            bluekai_webLoaded = NO;
 
-            if (keyVal_dict != nil) {
-                [keyVal_dict removeAllObjects];
+            if (bluekai_keyValDict != nil) {
+                [bluekai_keyValDict removeAllObjects];
             } else {
-                keyVal_dict = [[NSMutableDictionary alloc] init];
+                bluekai_keyValDict = [[NSMutableDictionary alloc] init];
             }
 
-            numberOfRunningRequests = -1;
+            bluekai_numberOfRunningRequests = -1;
 
-            if (web_URL == nil) {
-                web_URL = [[NSMutableString alloc] init];
+            if (bluekai_webUrl == nil) {
+                bluekai_webUrl = [[NSMutableString alloc] init];
             } else {
-                [web_URL replaceCharactersInRange:NSMakeRange(0, [web_URL length]) withString:@""];
+                [bluekai_webUrl replaceCharactersInRange:NSMakeRange(0, [bluekai_webUrl length]) withString:@""];
             }
 
             //Code to send the multiple values for every request.
 
-            for (int i = 0; i < [[nonLoadkeyVal_dict allKeys] count]; i++) {
-                NSString *key = [NSString stringWithFormat:@"%@", [nonLoadkeyVal_dict allKeys][i]];
-                NSString *value = [NSString stringWithFormat:@"%@", nonLoadkeyVal_dict[[nonLoadkeyVal_dict allKeys][i]]];
+            for (int i = 0; i < [[bluekai_nonLoadkeyValDict allKeys] count]; i++) {
+                NSString *key = [NSString stringWithFormat:@"%@", [bluekai_nonLoadkeyValDict allKeys][i]];
+                NSString *value = [NSString stringWithFormat:@"%@", bluekai_nonLoadkeyValDict[[bluekai_nonLoadkeyValDict allKeys][i]]];
 
-                if ((urlStringCount + key.length + value.length + 2) <= 255) {
-                    [keyVal_dict setValue:[nonLoadkeyVal_dict valueForKey:[nonLoadkeyVal_dict allKeys][i]] forKey:[nonLoadkeyVal_dict allKeys][i]];
-                    urlStringCount = urlStringCount + key.length + value.length + 2;
+                if ((bluekai_urlStringCount + key.length + value.length + 2) <= 255) {
+                    [bluekai_keyValDict setValue:[bluekai_nonLoadkeyValDict valueForKey:[bluekai_nonLoadkeyValDict allKeys][i]] forKey:[bluekai_nonLoadkeyValDict allKeys][i]];
+                    bluekai_urlStringCount = bluekai_urlStringCount + key.length + value.length + 2;
                 }
             }
 
-            for (int j = 0; j < [[keyVal_dict allKeys] count]; j++) {
-                [nonLoadkeyVal_dict removeObjectForKey:[keyVal_dict allKeys][j]];
+            for (int j = 0; j < [[bluekai_keyValDict allKeys] count]; j++) {
+                [bluekai_nonLoadkeyValDict removeObjectForKey:[bluekai_keyValDict allKeys][j]];
             }
 
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self startDataUpload];
         } else {
-            nonLoadkeyVal_dict = nil;
-            remainkeyVal_dict = nil;
-            keyVal_dict = nil;
-            web_URL = nil;
+            bluekai_nonLoadkeyValDict = nil;
+            bluekai_remainkeyValDict = nil;
+            bluekai_keyValDict = nil;
+            bluekai_webUrl = nil;
         }
     } else {
-        web = [[UIWebView alloc] init];
-        web.delegate = self;
-        web.layer.cornerRadius = 5.0f;
-        web.layer.borderColor = [[UIColor grayColor] CGColor];
-        web.layer.borderWidth = 4.0f;
-        web.tag = 1;
-        web.hidden = YES;
-        [main_View.view addSubview:web];
+        bluekai_webView = [[UIWebView alloc] init];
+        bluekai_webView.delegate = self;
+        bluekai_webView.layer.cornerRadius = 5.0f;
+        bluekai_webView.layer.borderColor = [[UIColor grayColor] CGColor];
+        bluekai_webView.layer.borderWidth = 4.0f;
+        bluekai_webView.tag = 1;
+        bluekai_webView.hidden = YES;
+        [bluekai_mainView.view addSubview:bluekai_webView];
 
         [self blueKaiLogger:devMode withString:@"3.2" withObject:nil];
 
         if (devMode) {
-            [self drawWebFrame:web];
+            [self drawWebFrame:bluekai_webView];
         } else {
-            web.frame = CGRectMake(10, 10, 1, 1);
+            bluekai_webView.frame = CGRectMake(10, 10, 1, 1);
         }
 
-        if (keyVal_dict != nil) {
-            [keyVal_dict removeAllObjects];
+        if (bluekai_keyValDict != nil) {
+            [bluekai_keyValDict removeAllObjects];
         } else {
-            keyVal_dict = [[NSMutableDictionary alloc] init];
+            bluekai_keyValDict = [[NSMutableDictionary alloc] init];
         }
 
-        [keyVal_dict setValuesForKeysWithDictionary:remainkeyVal_dict];
+        [bluekai_keyValDict setValuesForKeysWithDictionary:bluekai_remainkeyValDict];
 
-        if (web_URL == nil) {
-            web_URL = [[NSMutableString alloc] init];
+        if (bluekai_webUrl == nil) {
+            bluekai_webUrl = [[NSMutableString alloc] init];
         } else {
-            [web_URL replaceCharactersInRange:NSMakeRange(0, [web_URL length]) withString:@""];
+            [bluekai_webUrl replaceCharactersInRange:NSMakeRange(0, [bluekai_webUrl length]) withString:@""];
         }
 
-        numberOfRunningRequests = -1;
+        bluekai_numberOfRunningRequests = -1;
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         [self startDataUpload];
     }
@@ -594,26 +594,26 @@ NSUserDefaults *user_defaults;
 - (void)put:(NSDictionary *)dictionary {
     [self blueKaiLogger:devMode withString:@"put:dictionary" withObject:dictionary];
 
-    if (web_URL == nil) {
-        web_URL = [[NSMutableString alloc] init];
+    if (bluekai_webUrl == nil) {
+        bluekai_webUrl = [[NSMutableString alloc] init];
     }
     else {
-        [web_URL replaceCharactersInRange:NSMakeRange(0, [web_URL length]) withString:@""];
+        [bluekai_webUrl replaceCharactersInRange:NSMakeRange(0, [bluekai_webUrl length]) withString:@""];
     }
 
-    if (keyVal_dict != nil) {
-        [keyVal_dict removeAllObjects];
+    if (bluekai_keyValDict != nil) {
+        [bluekai_keyValDict removeAllObjects];
     } else {
-        keyVal_dict = [[NSMutableDictionary alloc] init];
+        bluekai_keyValDict = [[NSMutableDictionary alloc] init];
     }
 
-    [keyVal_dict setValuesForKeysWithDictionary:dictionary];
+    [bluekai_keyValDict setValuesForKeysWithDictionary:dictionary];
 
     //Check the settings page to find the use data is allowed to send to server or not
     NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
 
     if ([value isEqualToString:@"YES"]) {
-        numberOfRunningRequests = -1;
+        bluekai_numberOfRunningRequests = -1;
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
         NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
@@ -624,41 +624,41 @@ NSUserDefaults *user_defaults;
             [self webView:nil didFailLoadWithError:nil];
         }
     } else {
-        if (!web.hidden) {
-            web.hidden = YES;
+        if (!bluekai_webView.hidden) {
+            bluekai_webView.hidden = YES;
         }
     }
 }
 
 - (void)startBackgroundJob:(NSDictionary *)dictionary {
-    if (remainkeyVal_dict != nil) {
-        [remainkeyVal_dict removeAllObjects];
+    if (bluekai_remainkeyValDict != nil) {
+        [bluekai_remainkeyValDict removeAllObjects];
     }
 
     @autoreleasepool {
         //send the dictionary details to BlueKai server
-        NSMutableString *url_string = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@?site=%@&", server_URL, siteId]];
-        [url_string appendString:[NSString stringWithFormat:@"appVersion=%@", appVersion]];
+        NSMutableString *url_string = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@?site=%@&", server_URL, bluekai_siteId]];
+        [url_string appendString:[NSString stringWithFormat:@"appVersion=%@", bluekai_appVersion]];
         [url_string appendString:[NSString stringWithFormat:@"&identifierForVendor=%@", [NSString stringWithFormat:@"%@", [self getVendorID]]]];
-        urlStringCount = url_string.length;
+        bluekai_urlStringCount = url_string.length;
 
-        for (int i = 0; i < [[keyVal_dict allKeys] count]; i++) {
-            NSString *key = [NSString stringWithFormat:@"%@", [keyVal_dict allKeys][i]];
-            NSString *value = [NSString stringWithFormat:@"%@", keyVal_dict[[keyVal_dict allKeys][i]]];
+        for (int i = 0; i < [[bluekai_keyValDict allKeys] count]; i++) {
+            NSString *key = [NSString stringWithFormat:@"%@", [bluekai_keyValDict allKeys][i]];
+            NSString *value = [NSString stringWithFormat:@"%@", bluekai_keyValDict[[bluekai_keyValDict allKeys][i]]];
 
             if ((url_string.length + key.length + value.length + 2) > 255) {
-                [remainkeyVal_dict setValue:value forKey:key];
+                [bluekai_remainkeyValDict setValue:value forKey:key];
             } else {
-                [url_string appendString:[NSString stringWithFormat:@"&%@=%@", [self urlEncode:[keyVal_dict allKeys][i]], [self urlEncode:keyVal_dict[[keyVal_dict allKeys][i]]]]];
+                [url_string appendString:[NSString stringWithFormat:@"&%@=%@", [self urlEncode:[bluekai_keyValDict allKeys][i]], [self urlEncode:bluekai_keyValDict[[bluekai_keyValDict allKeys][i]]]]];
             }
         }
 
         [self blueKaiLogger:devMode withString:@"Encoded URL: " withObject:url_string];
-        [web_URL appendString:url_string];
+        [bluekai_webUrl appendString:url_string];
     }
-    alertShowBool = NO;
+    bluekai_alertShowBool = NO;
 
-    [self updateWebview:web_URL];
+    [self updateWebview:bluekai_webUrl];
 }
 
 - (NSString *)urlEncode:(NSString *)string {
@@ -691,7 +691,7 @@ NSUserDefaults *user_defaults;
 }
 
 - (void)showSettingsScreen {
-    //    NSArray *array=[main_View.view subviews];
+    //    NSArray *array=[bluekai_mainView.view subviews];
     //    for (UIView *view in array) {
     //        if(![view isKindOfClass:[UIWebView class]])
     //        {
@@ -699,30 +699,30 @@ NSUserDefaults *user_defaults;
     //        }
     //    }
     user_defaults = [NSUserDefaults standardUserDefaults];
-    usrcheck_image = [[UIImageView alloc] initWithFrame:CGRectMake(25, 100, 40, 40)];
-    checkimage = @[@"chk-1.png", @"unchk-1.png"];
+    bluekai_userCheckImage = [[UIImageView alloc] initWithFrame:CGRectMake(25, 100, 40, 40)];
+    bluekai_checkimage = @[@"chk-1.png", @"unchk-1.png"];
 
-    UIGraphicsBeginImageContext(usrcheck_image.frame.size);
+    UIGraphicsBeginImageContext(bluekai_userCheckImage.frame.size);
     NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
 
     if ([value isEqualToString:@"YES"]) {
-        [[UIImage imageNamed:@"chk-1.png"] drawInRect:usrcheck_image.bounds];
+        [[UIImage imageNamed:@"chk-1.png"] drawInRect:bluekai_userCheckImage.bounds];
         [user_defaults setObject:@"YES" forKey:@"KeyTouserData"];
-        usrcheck_image.tag = 0;
+        bluekai_userCheckImage.tag = 0;
     } else {
-        [[UIImage imageNamed:@"unchk-1.png"] drawInRect:usrcheck_image.bounds];
+        [[UIImage imageNamed:@"unchk-1.png"] drawInRect:bluekai_userCheckImage.bounds];
         [user_defaults setObject:@"NO" forKey:@"KeyTouserData"];
-        usrcheck_image.tag = 1;
+        bluekai_userCheckImage.tag = 1;
     }
 
     UIImage *lblimage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    usrcheck_image.image = lblimage;
-    usrcheck_image.userInteractionEnabled = YES;
-    tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userData_Change:)];
-    tap.delegate = self;
-    [usrcheck_image addGestureRecognizer:tap];
-    [main_View.view addSubview:usrcheck_image];
+    bluekai_userCheckImage.image = lblimage;
+    bluekai_userCheckImage.userInteractionEnabled = YES;
+    bluekai_tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userData_Change:)];
+    bluekai_tap.delegate = self;
+    [bluekai_userCheckImage addGestureRecognizer:bluekai_tap];
+    [bluekai_mainView.view addSubview:bluekai_userCheckImage];
 
     UILabel *usrData_lbl = [[UILabel alloc] initWithFrame:CGRectMake(75, 95, 240, 50)];
     usrData_lbl.textColor = [UIColor blackColor];
@@ -732,7 +732,7 @@ NSUserDefaults *user_defaults;
     usrData_lbl.lineBreakMode = NSLineBreakByWordWrapping;
     usrData_lbl.font = [UIFont systemFontOfSize:14];
     usrData_lbl.text = @"Allow Bluekai to receive my data";
-    [main_View.view addSubview:usrData_lbl];
+    [bluekai_mainView.view addSubview:usrData_lbl];
 
     UILabel *tclbl = [[UILabel alloc] initWithFrame:CGRectMake(25, 235, 280, 50)];
     tclbl.textColor = [UIColor blackColor];
@@ -742,7 +742,7 @@ NSUserDefaults *user_defaults;
     tclbl.lineBreakMode = NSLineBreakByWordWrapping;
     tclbl.font = [UIFont systemFontOfSize:14];
     tclbl.text = @"The BlueKai privacy policy is available";
-    [main_View.view addSubview:tclbl];
+    [bluekai_mainView.view addSubview:tclbl];
 
     UIButton *Here = [UIButton buttonWithType:UIButtonTypeCustom];
     Here.frame = CGRectMake(256, 253, 50, 14);
@@ -750,7 +750,7 @@ NSUserDefaults *user_defaults;
     Here.titleLabel.font = [UIFont systemFontOfSize:14];
     [Here addTarget:self action:@selector(termsConditions:) forControlEvents:UIControlEventTouchUpInside];
     [Here setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [main_View.view addSubview:Here];
+    [bluekai_mainView.view addSubview:Here];
 
     UIButton *savebtn = [UIButton buttonWithType:UIButtonTypeCustom];
     savebtn.frame = CGRectMake(75, 290, 80, 35);
@@ -760,7 +760,7 @@ NSUserDefaults *user_defaults;
     [savebtn.layer setCornerRadius:5.0f];
     [savebtn addTarget:self action:@selector(saveSettings:) forControlEvents:UIControlEventTouchUpInside];
     [savebtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [main_View.view addSubview:savebtn];
+    [bluekai_mainView.view addSubview:savebtn];
 
     UIButton *Cnclbtn = [UIButton buttonWithType:UIButtonTypeCustom];
     Cnclbtn.frame = CGRectMake(175, 290, 80, 35);
@@ -770,28 +770,28 @@ NSUserDefaults *user_defaults;
     [Cnclbtn.layer setCornerRadius:5.0f];
     [Cnclbtn addTarget:self action:@selector(Cancelbtn:) forControlEvents:UIControlEventTouchUpInside];
     [Cnclbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [main_View.view addSubview:Cnclbtn];
-    [main_View.view addSubview:web];
-    [main_View.view addSubview:cncl_Btn];
+    [bluekai_mainView.view addSubview:Cnclbtn];
+    [bluekai_mainView.view addSubview:bluekai_webView];
+    [bluekai_mainView.view addSubview:bluekai_cancelButton];
 }
 
 - (void)userData_Change:(UITapGestureRecognizer *)recognizer {
-    if (usrcheck_image.tag == 1) {
-        UIGraphicsBeginImageContext(usrcheck_image.frame.size);
-        [[UIImage imageNamed:@"chk-1.png"] drawInRect:usrcheck_image.bounds];
+    if (bluekai_userCheckImage.tag == 1) {
+        UIGraphicsBeginImageContext(bluekai_userCheckImage.frame.size);
+        [[UIImage imageNamed:@"chk-1.png"] drawInRect:bluekai_userCheckImage.bounds];
         UIImage *appsimage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        usrcheck_image.image = appsimage;
+        bluekai_userCheckImage.image = appsimage;
         [user_defaults setObject:@"YES" forKey:@"KeyTouserData"];
-        usrcheck_image.tag = 0;
+        bluekai_userCheckImage.tag = 0;
     } else {
-        UIGraphicsBeginImageContext(usrcheck_image.frame.size);
-        [[UIImage imageNamed:@"unchk-1.png"] drawInRect:usrcheck_image.bounds];
+        UIGraphicsBeginImageContext(bluekai_userCheckImage.frame.size);
+        [[UIImage imageNamed:@"unchk-1.png"] drawInRect:bluekai_userCheckImage.bounds];
         UIImage *appsimage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        usrcheck_image.image = appsimage;
+        bluekai_userCheckImage.image = appsimage;
         [user_defaults setObject:@"NO" forKey:@"KeyTouserData"];
-        usrcheck_image.tag = 1;
+        bluekai_userCheckImage.tag = 1;
     }
 }
 
@@ -809,8 +809,8 @@ NSUserDefaults *user_defaults;
 }
 
 - (IBAction)Cancel:(id)sender {
-    web.hidden = YES;
-    cncl_Btn.hidden = YES;
+    bluekai_webView.hidden = YES;
+    bluekai_cancelButton.hidden = YES;
 }
 
 - (void)setPreference:(BOOL)optIn {
@@ -835,24 +835,24 @@ NSUserDefaults *user_defaults;
 }
 
 - (void)updateServer {
-    //web_URL=nil;
+    //bluekai_webUrl=nil;
 
-    if (web_URL == nil) {
-        web_URL = [[NSMutableString alloc] init];
+    if (bluekai_webUrl == nil) {
+        bluekai_webUrl = [[NSMutableString alloc] init];
     } else {
-        [web_URL replaceCharactersInRange:NSMakeRange(0, [web_URL length]) withString:@""];
+        [bluekai_webUrl replaceCharactersInRange:NSMakeRange(0, [bluekai_webUrl length]) withString:@""];
     }
 
-    keyVal_dict = [[NSMutableDictionary alloc] init];
+    bluekai_keyValDict = [[NSMutableDictionary alloc] init];
 
     if ([[user_defaults objectForKey:@"KeyTouserData"] isEqualToString:@"YES"]) {
-        value_str = @"1";
+        bluekai_valueString = @"1";
     } else {
-        value_str = @"0";
+        bluekai_valueString = @"0";
     }
 
-    [keyVal_dict setValue:value_str forKey:[NSString stringWithFormat:@"TC"]];
-    numberOfRunningRequests = -1;
+    [bluekai_keyValDict setValue:bluekai_valueString forKey:[NSString stringWithFormat:@"TC"]];
+    bluekai_numberOfRunningRequests = -1;
     BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
 
@@ -864,29 +864,29 @@ NSUserDefaults *user_defaults;
 }
 
 - (void)startDataUpload {
-    if (main_View != nil) {
-        if (siteId != nil) {
-            if (appVersion != nil) {
-                [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:keyVal_dict];
+    if (bluekai_mainView != nil) {
+        if (bluekai_siteId != nil) {
+            if (bluekai_appVersion != nil) {
+                [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:bluekai_keyValDict];
             } else {
                 [self blueKaiLogger:devMode withString:@"appVersion parameter is nil" withObject:nil];
 
-                for (int i = 0; i < [[keyVal_dict allKeys] count]; i++) {
-                    if (![remainkeyVal_dict valueForKey:[keyVal_dict allKeys][i]]) {
+                for (int i = 0; i < [[bluekai_keyValDict allKeys] count]; i++) {
+                    if (![bluekai_remainkeyValDict valueForKey:[bluekai_keyValDict allKeys][i]]) {
                         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
                         NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
-                        int attempts = [atmt_dictionary[[keyVal_dict allKeys][i]] intValue];
+                        int attempts = [atmt_dictionary[[bluekai_keyValDict allKeys][i]] intValue];
 
                         if (attempts == 0) {
-                            dictionary[[keyVal_dict allKeys][i]] = [keyVal_dict valueForKey:[keyVal_dict allKeys][i]];
-                            atmt_dictionary[[keyVal_dict allKeys][i]] = @"1";
+                            dictionary[[bluekai_keyValDict allKeys][i]] = [bluekai_keyValDict valueForKey:[bluekai_keyValDict allKeys][i]];
+                            atmt_dictionary[[bluekai_keyValDict allKeys][i]] = @"1";
                         } else {
                             if (attempts < 5) {
-                                [atmt_dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
-                                atmt_dictionary[[keyVal_dict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
+                                [atmt_dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
+                                atmt_dictionary[[bluekai_keyValDict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
                             } else {
-                                [dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
-                                [atmt_dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
+                                [dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
+                                [atmt_dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
                             }
                         }
 
@@ -898,27 +898,27 @@ NSUserDefaults *user_defaults;
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             }
         } else {
-            if (appVersion != nil) {
+            if (bluekai_appVersion != nil) {
                 [self blueKaiLogger:devMode withString:@"siteId parameter is nil" withObject:nil];
             } else {
                 [self blueKaiLogger:devMode withString:@"siteId and appVersion parameters are nil" withObject:nil];
             }
 
-            for (int i = 0; i < [[keyVal_dict allKeys] count]; i++) {
-                if (![remainkeyVal_dict valueForKey:[keyVal_dict allKeys][i]]) {
+            for (int i = 0; i < [[bluekai_keyValDict allKeys] count]; i++) {
+                if (![bluekai_remainkeyValDict valueForKey:[bluekai_keyValDict allKeys][i]]) {
                     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
                     NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
-                    int attempts = [atmt_dictionary[[keyVal_dict allKeys][i]] intValue];
+                    int attempts = [atmt_dictionary[[bluekai_keyValDict allKeys][i]] intValue];
                     if (attempts == 0) {
-                        dictionary[[keyVal_dict allKeys][i]] = [keyVal_dict valueForKey:[keyVal_dict allKeys][i]];
-                        atmt_dictionary[[keyVal_dict allKeys][i]] = @"1";
+                        dictionary[[bluekai_keyValDict allKeys][i]] = [bluekai_keyValDict valueForKey:[bluekai_keyValDict allKeys][i]];
+                        atmt_dictionary[[bluekai_keyValDict allKeys][i]] = @"1";
                     } else {
                         if (attempts < 5) {
-                            [atmt_dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
-                            atmt_dictionary[[keyVal_dict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
+                            [atmt_dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
+                            atmt_dictionary[[bluekai_keyValDict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
                         } else {
-                            [dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
-                            [atmt_dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
+                            [dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
+                            [atmt_dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
                         }
                     }
 
@@ -930,17 +930,17 @@ NSUserDefaults *user_defaults;
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }
     } else {
-        if (siteId != nil && appVersion != nil) {
+        if (bluekai_siteId != nil && bluekai_appVersion != nil) {
             [self blueKaiLogger:devMode withString:@"view parameter is nil" withObject:nil];
         } else {
-            if (siteId != nil) {
-                if (appVersion != nil) {
+            if (bluekai_siteId != nil) {
+                if (bluekai_appVersion != nil) {
                     [self blueKaiLogger:devMode withString:@"view parameter is nil" withObject:nil];
                 } else {
                     [self blueKaiLogger:devMode withString:@"view and appVersion parameters are nil" withObject:nil];
                 }
             } else {
-                if (appVersion != nil) {
+                if (bluekai_appVersion != nil) {
                     [self blueKaiLogger:devMode withString:@"siteId and view parameters are nil" withObject:nil];
                 } else {
                     [self blueKaiLogger:devMode withString:@"siteId, view and appVersion parameters are nil" withObject:nil];
@@ -948,22 +948,22 @@ NSUserDefaults *user_defaults;
             }
         }
 
-        for (int i = 0; i < [[keyVal_dict allKeys] count]; i++) {
-            if (![remainkeyVal_dict valueForKey:[keyVal_dict allKeys][i]]) {
+        for (int i = 0; i < [[bluekai_keyValDict allKeys] count]; i++) {
+            if (![bluekai_remainkeyValDict valueForKey:[bluekai_keyValDict allKeys][i]]) {
                 NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
                 NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
-                int attempts = [atmt_dictionary[[keyVal_dict allKeys][i]] intValue];
+                int attempts = [atmt_dictionary[[bluekai_keyValDict allKeys][i]] intValue];
 
                 if (attempts == 0) {
-                    dictionary[[keyVal_dict allKeys][i]] = [keyVal_dict valueForKey:[keyVal_dict allKeys][i]];
-                    atmt_dictionary[[keyVal_dict allKeys][i]] = @"1";
+                    dictionary[[bluekai_keyValDict allKeys][i]] = [bluekai_keyValDict valueForKey:[bluekai_keyValDict allKeys][i]];
+                    atmt_dictionary[[bluekai_keyValDict allKeys][i]] = @"1";
                 } else {
                     if (attempts < 5) {
-                        [atmt_dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
-                        atmt_dictionary[[keyVal_dict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
+                        [atmt_dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
+                        atmt_dictionary[[bluekai_keyValDict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
                     } else {
-                        [dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
-                        [atmt_dictionary removeObjectForKey:[keyVal_dict allKeys][i]];
+                        [dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
+                        [atmt_dictionary removeObjectForKey:[bluekai_keyValDict allKeys][i]];
                     }
                 }
 
@@ -977,21 +977,21 @@ NSUserDefaults *user_defaults;
 }
 
 - (void)resume {
-    if (web_URL == nil) {
-        web_URL = [[NSMutableString alloc] init];
+    if (bluekai_webUrl == nil) {
+        bluekai_webUrl = [[NSMutableString alloc] init];
     } else {
-        [web_URL replaceCharactersInRange:NSMakeRange(0, [web_URL length]) withString:@""];
+        [bluekai_webUrl replaceCharactersInRange:NSMakeRange(0, [bluekai_webUrl length]) withString:@""];
     }
 
-    keyVal_dict = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
+    bluekai_keyValDict = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
 
-    if ([[keyVal_dict allKeys] count] != 0) {
-        numberOfRunningRequests = -1;
+    if ([[bluekai_keyValDict allKeys] count] != 0) {
+        bluekai_numberOfRunningRequests = -1;
         BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
         NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
 
         if (networkStatus != NotReachable) {
-            web.tag = 1;
+            bluekai_webView.tag = 1;
             [self startDataUpload];
         } else {
             [self webView:nil didFailLoadWithError:nil];
@@ -1000,15 +1000,15 @@ NSUserDefaults *user_defaults;
     }
 }
 
-- (void)drawWebFrame:(UIWebView *)web {
-    web.frame = CGRectMake(10, 10, 300, 390);
-    cncl_Btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cncl_Btn.frame = CGRectMake(281, 9, 30, 30);
-    cncl_Btn.tag = 10;
-    [cncl_Btn setImage:[UIImage imageNamed:@"btn-sub-del-op.png"] forState:UIControlStateNormal];
-    [cncl_Btn addTarget:self action:@selector(Cancel:) forControlEvents:UIControlEventTouchUpInside];
-    cncl_Btn.hidden = YES;
-    [main_View.view addSubview:cncl_Btn];
+- (void)drawWebFrame:(UIWebView *)webView {
+    webView.frame = CGRectMake(10, 10, 300, 390);
+    bluekai_cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    bluekai_cancelButton.frame = CGRectMake(281, 9, 30, 30);
+    bluekai_cancelButton.tag = 10;
+    [bluekai_cancelButton setImage:[UIImage imageNamed:@"btn-sub-del-op.png"] forState:UIControlStateNormal];
+    [bluekai_cancelButton addTarget:self action:@selector(Cancel:) forControlEvents:UIControlEventTouchUpInside];
+    bluekai_cancelButton.hidden = YES;
+    [bluekai_mainView.view addSubview:bluekai_cancelButton];
 }
 
 - (void)blueKaiLogger:(BOOL)devMode withString:(NSString *)string withObject:(NSObject *)object {
