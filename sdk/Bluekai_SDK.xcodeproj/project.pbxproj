@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		00677794177ACD8F00C943BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00677793177ACD8F00C943BB /* SystemConfiguration.framework */; };
-		24DBFE5318FDD78F0069F878 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4818FDD78F0069F878 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		24DBFE5418FDD78F0069F878 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4A18FDD78F0069F878 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		24DBFE5518FDD78F0069F878 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4C18FDD78F0069F878 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		24DBFE5618FDD78F0069F878 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4E18FDD78F0069F878 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		24DBFE5718FDD78F0069F878 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5018FDD78F0069F878 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		24DBFE5818FDD78F0069F878 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5218FDD78F0069F878 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5318FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4818FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5418FDD78F0069F878 /* NSString+BlueKai_SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4A18FDD78F0069F878 /* NSString+BlueKai_SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5518FDD78F0069F878 /* BlueKai_SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4C18FDD78F0069F878 /* BlueKai_SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5618FDD78F0069F878 /* BlueKai_SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4E18FDD78F0069F878 /* BlueKai_SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5718FDD78F0069F878 /* BlueKai_SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5018FDD78F0069F878 /* BlueKai_SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		24DBFE5818FDD78F0069F878 /* BlueKai_SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5218FDD78F0069F878 /* BlueKai_SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		35DBAB3030DB20EB3A87057E /* BlueKai_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */; };
 		D71EF5ED173B6CF200B90918 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EC173B6CF200B90918 /* UIKit.framework */; };
 		D71EF5EF173B6E3E00B90918 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EE173B6E3E00B90918 /* QuartzCore.framework */; };
 		D74FF32E173CC2F900C34EE0 /* btn-sub-del-op.png in Resources */ = {isa = PBXBuildFile; fileRef = D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */; };
@@ -58,18 +59,20 @@
 
 /* Begin PBXFileReference section */
 		00677793177ACD8F00C943BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		24DBFE4718FDD78F0069F878 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
-		24DBFE4818FDD78F0069F878 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
-		24DBFE4918FDD78F0069F878 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
-		24DBFE4A18FDD78F0069F878 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
-		24DBFE4B18FDD78F0069F878 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
-		24DBFE4C18FDD78F0069F878 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
-		24DBFE4D18FDD78F0069F878 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
-		24DBFE4E18FDD78F0069F878 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
-		24DBFE4F18FDD78F0069F878 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		24DBFE5018FDD78F0069F878 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
-		24DBFE5118FDD78F0069F878 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		24DBFE5218FDD78F0069F878 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		24DBFE4718FDD78F0069F878 /* NSObject+BlueKai_SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BlueKai_SBJSON.h"; sourceTree = "<group>"; };
+		24DBFE4818FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+BlueKai_SBJSON.m"; sourceTree = "<group>"; };
+		24DBFE4918FDD78F0069F878 /* NSString+BlueKai_SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BlueKai_SBJSON.h"; sourceTree = "<group>"; };
+		24DBFE4A18FDD78F0069F878 /* NSString+BlueKai_SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+BlueKai_SBJSON.m"; sourceTree = "<group>"; };
+		24DBFE4B18FDD78F0069F878 /* BlueKai_SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_SBJSON.h; sourceTree = "<group>"; };
+		24DBFE4C18FDD78F0069F878 /* BlueKai_SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_SBJSON.m; sourceTree = "<group>"; };
+		24DBFE4D18FDD78F0069F878 /* BlueKai_SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_SBJsonBase.h; sourceTree = "<group>"; };
+		24DBFE4E18FDD78F0069F878 /* BlueKai_SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_SBJsonBase.m; sourceTree = "<group>"; };
+		24DBFE4F18FDD78F0069F878 /* BlueKai_SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_SBJsonParser.h; sourceTree = "<group>"; };
+		24DBFE5018FDD78F0069F878 /* BlueKai_SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_SBJsonParser.m; sourceTree = "<group>"; };
+		24DBFE5118FDD78F0069F878 /* BlueKai_SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_SBJsonWriter.h; sourceTree = "<group>"; };
+		24DBFE5218FDD78F0069F878 /* BlueKai_SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_SBJsonWriter.m; sourceTree = "<group>"; };
+		35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_Reachability.m; sourceTree = "<group>"; };
+		35DBAB0E3941F731AEDB1939 /* BlueKai_Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_Reachability.h; sourceTree = "<group>"; };
 		D71EF5EC173B6CF200B90918 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D71EF5EE173B6E3E00B90918 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sub-del-op.png"; sourceTree = "<group>"; };
@@ -122,18 +125,20 @@
 			children = (
 				D79AF790173A2151002E0A0B /* BlueKai_Reachability.h */,
 				D79AF791173A2151002E0A0B /* BlueKai_Reachability.m */,
-				24DBFE4718FDD78F0069F878 /* NSObject+SBJSON.h */,
-				24DBFE4818FDD78F0069F878 /* NSObject+SBJSON.m */,
-				24DBFE4918FDD78F0069F878 /* NSString+SBJSON.h */,
-				24DBFE4A18FDD78F0069F878 /* NSString+SBJSON.m */,
-				24DBFE4B18FDD78F0069F878 /* SBJSON.h */,
-				24DBFE4C18FDD78F0069F878 /* SBJSON.m */,
-				24DBFE4D18FDD78F0069F878 /* SBJsonBase.h */,
-				24DBFE4E18FDD78F0069F878 /* SBJsonBase.m */,
-				24DBFE4F18FDD78F0069F878 /* SBJsonParser.h */,
-				24DBFE5018FDD78F0069F878 /* SBJsonParser.m */,
-				24DBFE5118FDD78F0069F878 /* SBJsonWriter.h */,
-				24DBFE5218FDD78F0069F878 /* SBJsonWriter.m */,
+				24DBFE4718FDD78F0069F878 /* NSObject+BlueKai_SBJSON.h */,
+				24DBFE4818FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m */,
+				24DBFE4918FDD78F0069F878 /* NSString+BlueKai_SBJSON.h */,
+				24DBFE4A18FDD78F0069F878 /* NSString+BlueKai_SBJSON.m */,
+				24DBFE4B18FDD78F0069F878 /* BlueKai_SBJSON.h */,
+				24DBFE4C18FDD78F0069F878 /* BlueKai_SBJSON.m */,
+				24DBFE4D18FDD78F0069F878 /* BlueKai_SBJsonBase.h */,
+				24DBFE4E18FDD78F0069F878 /* BlueKai_SBJsonBase.m */,
+				24DBFE4F18FDD78F0069F878 /* BlueKai_SBJsonParser.h */,
+				24DBFE5018FDD78F0069F878 /* BlueKai_SBJsonParser.m */,
+				24DBFE5118FDD78F0069F878 /* BlueKai_SBJsonWriter.h */,
+				24DBFE5218FDD78F0069F878 /* BlueKai_SBJsonWriter.m */,
+				35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */,
+				35DBAB0E3941F731AEDB1939 /* BlueKai_Reachability.h */,
 			);
 			name = "Third Party Libs";
 			sourceTree = "<group>";
@@ -315,15 +320,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24DBFE5518FDD78F0069F878 /* SBJSON.m in Sources */,
-				24DBFE5418FDD78F0069F878 /* NSString+SBJSON.m in Sources */,
+				24DBFE5518FDD78F0069F878 /* BlueKai_SBJSON.m in Sources */,
+				24DBFE5418FDD78F0069F878 /* NSString+BlueKai_SBJSON.m in Sources */,
 				D79AF762173A1AA7002E0A0B /* BlueKai.m in Sources */,
-				24DBFE5618FDD78F0069F878 /* SBJsonBase.m in Sources */,
-				24DBFE5818FDD78F0069F878 /* SBJsonWriter.m in Sources */,
+				24DBFE5618FDD78F0069F878 /* BlueKai_SBJsonBase.m in Sources */,
+				24DBFE5818FDD78F0069F878 /* BlueKai_SBJsonWriter.m in Sources */,
 				D79AF792173A2151002E0A0B /* BlueKai_Reachability.m in Sources */,
-				24DBFE5718FDD78F0069F878 /* SBJsonParser.m in Sources */,
-				24DBFE5318FDD78F0069F878 /* NSObject+SBJSON.m in Sources */,
+				24DBFE5718FDD78F0069F878 /* BlueKai_SBJsonParser.m in Sources */,
+				24DBFE5318FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m in Sources */,
 				D791D7721771E062004E5D93 /* BlueKai_OpenUDID.m in Sources */,
+				35DBAB3030DB20EB3A87057E /* BlueKai_Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
