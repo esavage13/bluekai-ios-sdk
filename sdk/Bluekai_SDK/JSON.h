@@ -44,7 +44,7 @@
  
 */
 
-#import "SBJSON.h"
-#import "NSObject+SBJSON.h"
-#import "NSString+SBJSON.h"
+#import "BlueKai_SBJSON.h"
+#import "NSObject+BlueKai_SBJSON.h"
+#import "NSString+BlueKai_SBJSON.h"
 

@@ -27,15 +27,15 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SBJSON.h"
+#import "BlueKai_SBJSON.h"
 
-@implementation SBJSON
+@implementation BlueKai_SBJSON
 
 - (id)init {
     self = [super init];
     if (self) {
-        jsonWriter = [SBJsonWriter new];
-        jsonParser = [SBJsonParser new];
+        jsonWriter = [BlueKai_SBJsonWriter new];
+        jsonParser = [BlueKai_SBJsonParser new];
         [self setMaxDepth:512];
 
     }
