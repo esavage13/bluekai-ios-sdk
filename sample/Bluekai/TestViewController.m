@@ -42,7 +42,6 @@
 }
 
 - (void)onDataPosted:(BOOL)status {
-    NSLog(@"onDataPosted: ======= %hhd", status);
     if (status) {
         alert = [[UIAlertView alloc] initWithTitle:nil message:@"\n\nData sent successfully" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
         [alert show];
@@ -105,7 +104,6 @@
 //            }
 //        }
 //    }
-    NSLog(@"DevMode? ======= %@", configDict[@"devMode"]);
 
     if ([configDict[@"devMode"] boolValue]) {
         blueKaiSDK = [[BlueKai alloc] initWithArgs:YES withSiteId:configDict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];

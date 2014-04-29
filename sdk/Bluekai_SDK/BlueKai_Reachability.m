@@ -51,30 +51,28 @@
 #import <arpa/inet.h>
 #import <ifaddrs.h>
 #import <netdb.h>
-
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "BlueKai_Reachability.h"
 
 #define kShouldPrintReachabilityFlags 1
 
-static void PrintReachabilityFlags(SCNetworkReachabilityFlags    flags, const char* comment)
+static void PrintReachabilityFlags(SCNetworkReachabilityFlags flags, const char* comment)
 {
-#if kShouldPrintReachabilityFlags
-	
-    NSLog(@"BlueKai_Reachability Flag Status: %c%c %c%c%c%c%c%c%c %s\n",
-          (flags & kSCNetworkReachabilityFlagsIsWWAN)				? 'W' : '-',
-          (flags & kSCNetworkReachabilityFlagsReachable)            ? 'R' : '-',
-          (flags & kSCNetworkReachabilityFlagsTransientConnection)  ? 't' : '-',
-          (flags & kSCNetworkReachabilityFlagsConnectionRequired)   ? 'c' : '-',
-          (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic)  ? 'C' : '-',
-          (flags & kSCNetworkReachabilityFlagsInterventionRequired) ? 'i' : '-',
-          (flags & kSCNetworkReachabilityFlagsConnectionOnDemand)   ? 'D' : '-',
-          (flags & kSCNetworkReachabilityFlagsIsLocalAddress)       ? 'l' : '-',
-          (flags & kSCNetworkReachabilityFlagsIsDirect)             ? 'd' : '-',
-          comment
-          );
-#endif
+//#if kShouldPrintReachabilityFlags
+//    NSLog(@"BlueKai_Reachability Flag Status: %c%c %c%c%c%c%c%c%c %s\n",
+//              (flags & kSCNetworkReachabilityFlagsIsWWAN)				? 'W' : '-',
+//              (flags & kSCNetworkReachabilityFlagsReachable)            ? 'R' : '-',
+//              (flags & kSCNetworkReachabilityFlagsTransientConnection)  ? 't' : '-',
+//              (flags & kSCNetworkReachabilityFlagsConnectionRequired)   ? 'c' : '-',
+//              (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic)  ? 'C' : '-',
+//              (flags & kSCNetworkReachabilityFlagsInterventionRequired) ? 'i' : '-',
+//              (flags & kSCNetworkReachabilityFlagsConnectionOnDemand)   ? 'D' : '-',
+//              (flags & kSCNetworkReachabilityFlagsIsLocalAddress)       ? 'l' : '-',
+//              (flags & kSCNetworkReachabilityFlagsIsDirect)             ? 'd' : '-',
+//              comment
+//         );
+//#endif
 }
 
 

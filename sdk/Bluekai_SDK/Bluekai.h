@@ -28,6 +28,6 @@
 
 - (void)setViewController:(UIViewController *)view;
 
-- (void)setSiteId:(int)siteid;
+- (void)setSiteId:(int)siteId;
 
 @end
