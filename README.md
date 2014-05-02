@@ -1,7 +1,7 @@
 # Integrating the BlueKai SDK
 ## Download the BlueKai SDK for iOs
 
-http://199.204.23.142/bk-mobile/BlueKai_iOS_SDK-20130806.zip
+http://bluekai.github.io/bluekai-ios-sdk-static-libs.zip
 
 ## Obtain BlueKai site ID
 
