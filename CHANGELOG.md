@@ -2,7 +2,7 @@
 -----
 Minor release with enhancements.
 ### Bug fixes
-- `Reachability` class is now BlueKai namespaced ([bug #4])(https://github.com/BlueKai/bluekai-ios-sdk/issues/4)
+- `Reachability` class is now BlueKai namespaced ([bug #4](https://github.com/BlueKai/bluekai-ios-sdk/issues/4))
 
 ### Enhancements
 - General code clean up, bringing SDK to use ARC and updated deprecated syntax
