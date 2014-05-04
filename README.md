@@ -165,15 +165,18 @@ addition to the site id:
 
 | Definition        | Method           | 
 | ------------- | ------------- | 
-|  Create the instance for Bluekai SDK with required arguments     | (id)initSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value  | 
-|  Convenience constructor to initialize and get instance of BlueKai without arguments      | (id)init  | 
-|  Method to show BlueKai in-built opt-in or opt-out screen     | (void)showSettingsScreen  | 
-|  Method to resume BlueKai process after calling application resumes or comes to foreground. To use in onResume() of the calling activity foreground.     | (void)resume  | 
-|  Method to set user opt-in or opt-out preference     | (void)setPreference:(BOOL)optIn  | 
-|  Set developer mode (YES or NO)     | (void)setdevMode:(BOOL)mode  | 
-|  Set the calling application version number.     | (void)setAppVersion:(NSString *)version  | 
-|  Set the ViewController instance as view to get notification on the data posting status     | (void)setViewController:(UIViewController *)view  | 
-|  Set BlueKai site id     | (void)setSiteId:(int)siteid  | 
+|  **[DEPRECATED]** Create the instance for Bluekai SDK with required arguments; use `initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value` instead | ~~- (id)initWithArgs:(BOOL)value withSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view;~~
+|  Create the instance for Bluekai SDK with required arguments | - (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value  | 
+|  Convenience constructor to initialize and get instance of BlueKai without arguments      | - (id)init  | 
+|  Method to show BlueKai in-built opt-in or opt-out screen     | - (void)showSettingsScreen  | 
+|  Method to resume BlueKai process after calling application resumes or comes to foreground. To use in onResume() of the calling activity foreground.     | - (void)resume  | 
+|  **[DEPRECATED]** Method to set user opt-in or opt-out preference; use `setOptInPreference:(BOOL)OptIn` instead     | ~~- (void) setPreference:(BOOL)optIn~~  | 
+|  Method to set user opt-in or opt-out preference           | - (void) setOptInPreference:(BOOL)OptIn
+|  Set developer mode (YES or NO); provides verbose logging  | - (void) setDevMode:(BOOL)mode  | 
+|  Set the calling application version number     | - (void) setAppVersion:(NSString *)version  | 
+|  Set the ViewController instance as view to get notification on the data posting status     | - (void) setViewController:(UIViewController *)view  | 
+|  Set BlueKai site id     | - (void)setSiteId:(int)siteId  | 
+|  Use HTTPS transfer protocol (YES or NO) | - (void)useHttps:(BOOL)secured  |
 
 
 # Updating the SDK 
