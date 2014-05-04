@@ -100,14 +100,12 @@
 //        }
 //    }
 
-    if ([configDict[@"devMode"] boolValue]) {
-        blueKaiSDK = [[BlueKai alloc] initWithArgs:YES withSiteId:configDict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
-    } else {
-        blueKaiSDK = [[BlueKai alloc] initWithArgs:NO withSiteId:configDict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
-    }
-
+    blueKaiSDK = [[BlueKai alloc] initWithSiteId:configDict[@"siteId"]
+                                  withAppVersion:[[NSBundle mainBundle]
+                                  objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                  withView:self
+                                  withDevMode:[configDict[@"devMode"] boolValue]];
     blueKaiSDK.delegate = self;
-    // blueKaiSDK=[[Bluekai_SDK alloc]initWithBool:NO withSiteId:@"2" withAppVersion:@"1" withView:self];
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
