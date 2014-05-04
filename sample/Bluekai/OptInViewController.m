@@ -44,13 +44,7 @@
     }
 
     config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-
-    if ([config_dict[@"devMode"] boolValue]) {
-        Obj_bluekai = [[BlueKai alloc] initWithArgs:YES withSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
-    } else {
-        Obj_bluekai = [[BlueKai alloc] initWithArgs:NO withSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
-    }
-
+    Obj_bluekai = [[BlueKai alloc] initWithSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self withDevMode:[config_dict[@"devMode"] boolValue]];
     Obj_bluekai.delegate = self;
     [Obj_bluekai showSettingsScreen];
 }
