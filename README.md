@@ -1,11 +1,13 @@
 # Integrating the BlueKai SDK
-## Download the BlueKai SDK for iOs
+## Download the BlueKai SDK for iOS
 
 http://bluekai.github.io/bluekai-ios-sdk-static-libs.zip
 
 ## Obtain BlueKai site ID
 
-For any demo projects a site id of "2" can be used. 
+For any demo projects a site id of "2" can be used.
+
+But before you ship be sure to contact your BlueKai account manager for your company site ID.
 
 ## Add BlueKai SDK to Project
 
@@ -55,7 +57,7 @@ In `ViewController.h` file, define an instance of BlueKai SDK.
 ```objectivec
 @interface ViewController : UIViewController<OnDataPostedListener>
 {
-    BlueKai *obj_SDK;
+    BlueKai *blueKaiSdk;
 }
 ```
 
@@ -63,21 +65,25 @@ In `ViewController.h` file, define an instance of BlueKai SDK.
 
 In `viewDidLoad` method of `ViewController.h` file, initialize the
 instance of the SDK by adding these lines. Set the view controller as
-the delegate for BlueKai SDK. 
+the delegate for BlueKai SDK. All the arguments are required.
 
   
 ```objectivec
-obj_SDK=[[BlueKai alloc]initWithArgs:NO withSiteId:@"2" withAppVersion:version withView:self]; 
+blueKaiSdk = [[BlueKai alloc]initWithSiteId:@"2" withAppVersion:version withView:self withDevMode:YES]; 
 ```
 
-The first argument indicates whether you want developer mode. In this mode, a webview overlay will be displayed 
-with response from the BluaKai server. You should turn this feature off in your production code.
-The second argument is site id, which you would get from BlueKai. The
-third argument is app version and is not necessarily the
+The first argument (`initWithSiteId`) is site id, which you would get from BlueKai.
+
+The second argument is app version (`withAppVersion`) and is not necessarily the
 application version of the calling application. This is a value by
 which BlueKai can uniquely indentify the application from which the
-request originated. A suggested approach is to use "app
-name-version_number" format. 
+request originated. A suggested approach is to use "app name-version_number" format.
+
+The third argument (`withView`) is a view to which the SDK can attach an invisible WebView to call BlueKai's tag. When
+`devMode` is enabled, this view becomes visible to display values being passed to BlueKai's server for debugging.
+
+The last argument (`withDevMode`) indicates whether you want developer mode. In this mode, a webview overlay will be displayed 
+with response from the BluaKai server. You should turn this feature off in your production code.
 
 
 
@@ -85,33 +91,33 @@ name-version_number" format.
 
 To pass a single key value pair to BlueKai SDK, use the below code
 
-	[obj_SDK put:@"Key":@"Value"];
+	[blueKaiSdk put:@"myKey" withValue:@"myValue"];
 	
 
 ## Passing Multiple Values 
 
 To pass multiple of key value pairs to BlueKai SDK, create an NSDictionary with key/value pairs and use the below method
 
-    [obj_SDK put:dictionary];
+    [blueKaiSdk put:dictionary];
 
 ## Resuming Data Post 
 
 The `resume()` method in BlueKai SDK should be invoked from the
-calling view controller’s `appCameToForeGround()` method. This should be
+calling view controller’s `appCameToForeground()` method. This should be
 done in order to send out any queued data, which may not have been sent
 because either the application was closed while data upload was in progress or due to network issues. Create a
-notification in viewDidLoad method or wherever you deem fit.
+notification in `viewDidLoad` method or wherever you deem fit.
 
 ```objectivec
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeGround) name:UIApplicationWillEnterForegroundNotification object:nil];
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 ```
 
-Define a method appCameToForeGround and call `resume()`:
+Define a method appCameToForeground and call `resume()`:
 
 ```objectivec
--(void)appCameToForeGround
+-(void)appCameToForeground
 {
-   [obj_SDK resume];
+   [blueKaiSdk resume];
 }
 ```
 
@@ -131,8 +137,8 @@ to BlueKai server.
 Set `ViewController.h` as the delegate. You can place this code right after initializing SDK
   
 ```objectivec
-obj_SDK=[[Bluekai alloc]initWithArgs:NO withSiteId:@"2" withAppVersion:version withView:self]; 
-obj_SDK.delegate=self;
+blueKaiSdk = [[Bluekai alloc]initWithSiteId:@"2" withAppVersion:version withView:self withDevMode:NO]; 
+blueKaiSdk.delegate = self;
 ```
 
 To get notifications about the status of data posting, implement the
@@ -152,14 +158,14 @@ addition to the site id:
 ```objectivec
     NSDictionary *infoPList = [[NSBundle mainBundle] infoDictionary];
     NSString *displayName = [infoPList objectForKey:@"CFBundleDisplayName"];
-    [obj_SDK put:@"displayName":displayName];
+    [blueKaiSdk put:@"displayName" withValue:displayName];
 
 ```
 # Public Methods 
 
 | Definition        | Method           | 
 | ------------- | ------------- | 
-|  Create the instance for Bluekai SDK with required arguments     | (id)initWithArgs:(BOOL)devMode withSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view  | 
+|  Create the instance for Bluekai SDK with required arguments     | (id)initSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value  | 
 |  Convenience constructor to initialize and get instance of BlueKai without arguments      | (id)init  | 
 |  Method to show BlueKai in-built opt-in or opt-out screen     | (void)showSettingsScreen  | 
 |  Method to resume BlueKai process after calling application resumes or comes to foreground. To use in onResume() of the calling activity foreground.     | (void)resume  | 
