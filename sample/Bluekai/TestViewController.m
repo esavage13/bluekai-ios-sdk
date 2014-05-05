@@ -24,12 +24,10 @@
 - (IBAction)sendKeyValuePair:(id)sender {
     if (keyTextfield.text.length == 0) {
         alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter key" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        alert.delegate = self;
         [alert show];
     } else {
         if (valueTextfield.text.length == 0) {
             alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter value" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            alert.delegate = self;
             [alert show];
         } else {
             [blueKaiSDK put:keyTextfield.text withValue:valueTextfield.text];
@@ -37,7 +35,7 @@
     }
 }
 
-- (void)appCameToForeGround {
+- (void)appCameToForeground {
     [blueKaiSDK resume];
 }
 
@@ -65,7 +63,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeGround) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
     self.tabBarController.delegate = self;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
