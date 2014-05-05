@@ -713,17 +713,17 @@ NSUserDefaults *bluekai_userDefaults;
     //    }
     bluekai_userDefaults = [NSUserDefaults standardUserDefaults];
     bluekai_userCheckImage = [[UIImageView alloc] initWithFrame:CGRectMake(25, 100, 40, 40)];
-    bluekai_checkimage = @[@"chk-1.png", @"unchk-1.png"];
+    bluekai_checkimage = @[@"chk-1", @"unchk-1"];
 
     UIGraphicsBeginImageContext(bluekai_userCheckImage.frame.size);
     NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
 
     if ([value isEqualToString:@"YES"]) {
-        [[UIImage imageNamed:@"chk-1.png"] drawInRect:bluekai_userCheckImage.bounds];
+        [[UIImage imageNamed:@"chk-1"] drawInRect:bluekai_userCheckImage.bounds];
         [bluekai_userDefaults setObject:@"YES" forKey:@"KeyToUserData"];
         bluekai_userCheckImage.tag = 0;
     } else {
-        [[UIImage imageNamed:@"unchk-1.png"] drawInRect:bluekai_userCheckImage.bounds];
+        [[UIImage imageNamed:@"unchk-1"] drawInRect:bluekai_userCheckImage.bounds];
         [bluekai_userDefaults setObject:@"NO" forKey:@"KeyToUserData"];
         bluekai_userCheckImage.tag = 1;
     }
@@ -791,7 +791,7 @@ NSUserDefaults *bluekai_userDefaults;
 - (void)userData_Change:(UITapGestureRecognizer *)recognizer {
     if (bluekai_userCheckImage.tag == 1) {
         UIGraphicsBeginImageContext(bluekai_userCheckImage.frame.size);
-        [[UIImage imageNamed:@"chk-1.png"] drawInRect:bluekai_userCheckImage.bounds];
+        [[UIImage imageNamed:@"chk-1"] drawInRect:bluekai_userCheckImage.bounds];
         UIImage *appsimage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         bluekai_userCheckImage.image = appsimage;
@@ -799,7 +799,7 @@ NSUserDefaults *bluekai_userDefaults;
         bluekai_userCheckImage.tag = 0;
     } else {
         UIGraphicsBeginImageContext(bluekai_userCheckImage.frame.size);
-        [[UIImage imageNamed:@"unchk-1.png"] drawInRect:bluekai_userCheckImage.bounds];
+        [[UIImage imageNamed:@"unchk-1"] drawInRect:bluekai_userCheckImage.bounds];
         UIImage *appsimage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         bluekai_userCheckImage.image = appsimage;
@@ -828,13 +828,9 @@ NSUserDefaults *bluekai_userDefaults;
 
 - (void)setOptInPreference:(BOOL)optIn {
     [self blueKaiLogger:devMode withString:@"setOptInPreference:OptIn" withObject:(optIn ? @"true" : @"false")];
-    bluekai_userDefaults = [NSUserDefaults standardUserDefaults];
 
-    if (optIn) {
-        [bluekai_userDefaults setObject:@"YES" forKey:@"KeyToUserData"];
-    } else {
-        [bluekai_userDefaults setObject:@"NO" forKey:@"KeyToUserData"];
-    }
+    bluekai_userDefaults = [NSUserDefaults standardUserDefaults];
+    [bluekai_userDefaults setObject:(optIn ? @"YES" : @"NO") forKey:@"KeyToUserData"];
 
     [self saveSettings:nil];
     [self updateServer];
@@ -852,8 +848,6 @@ NSUserDefaults *bluekai_userDefaults;
 }
 
 - (void)updateServer {
-    //bluekai_webUrl=nil;
-
     if (bluekai_webUrl == nil) {
         bluekai_webUrl = [[NSMutableString alloc] init];
     } else {
@@ -915,11 +909,8 @@ NSUserDefaults *bluekai_userDefaults;
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             }
         } else {
-            if (bluekai_appVersion != nil) {
-                [self blueKaiLogger:devMode withString:@"siteId parameter is nil" withObject:nil];
-            } else {
-                [self blueKaiLogger:devMode withString:@"siteId and appVersion parameters are nil" withObject:nil];
-            }
+            NSString *errorMsg = bluekai_appVersion ? @"siteId parameter is nil" : @"siteId and appVersion parameters are nil";
+            [self blueKaiLogger:devMode withString:errorMsg withObject:nil];
 
             for (int i = 0; i < [[bluekai_keyValDict allKeys] count]; i++) {
                 if (![bluekai_remainkeyValDict valueForKey:[bluekai_keyValDict allKeys][i]]) {
@@ -947,21 +938,17 @@ NSUserDefaults *bluekai_userDefaults;
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }
     } else {
-        if (bluekai_siteId != nil && bluekai_appVersion != nil) {
+        if (bluekai_siteId && bluekai_appVersion) {
             [self blueKaiLogger:devMode withString:@"view parameter is nil" withObject:nil];
         } else {
-            if (bluekai_siteId != nil) {
-                if (bluekai_appVersion != nil) {
-                    [self blueKaiLogger:devMode withString:@"view parameter is nil" withObject:nil];
-                } else {
-                    [self blueKaiLogger:devMode withString:@"view and appVersion parameters are nil" withObject:nil];
-                }
+            NSString *errorMsg;
+
+            if (bluekai_siteId) {
+                errorMsg = bluekai_appVersion ? @"view parameter is nil" : @"view and appVersion parameters are nil";
+                [self blueKaiLogger:devMode withString:errorMsg withObject:nil];
             } else {
-                if (bluekai_appVersion != nil) {
-                    [self blueKaiLogger:devMode withString:@"siteId and view parameters are nil" withObject:nil];
-                } else {
-                    [self blueKaiLogger:devMode withString:@"siteId, view and appVersion parameters are nil" withObject:nil];
-                }
+                errorMsg = bluekai_appVersion ? @"siteId and view parameters are nil" : @"siteId, view and appVersion parameters are nil";
+                [self blueKaiLogger:devMode withString:errorMsg withObject:nil];
             }
         }
 
@@ -1026,7 +1013,7 @@ NSUserDefaults *bluekai_userDefaults;
     bluekai_cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     bluekai_cancelButton.frame = CGRectMake(281, 9, 30, 30);
     bluekai_cancelButton.tag = 10;
-    [bluekai_cancelButton setImage:[UIImage imageNamed:@"btn-sub-del-op.png"] forState:UIControlStateNormal];
+    [bluekai_cancelButton setImage:[UIImage imageNamed:@"btn-sub-del-op"] forState:UIControlStateNormal];
     [bluekai_cancelButton addTarget:self action:@selector(Cancel:) forControlEvents:UIControlEventTouchUpInside];
     bluekai_cancelButton.hidden = YES;
     [bluekai_mainView.view addSubview:bluekai_cancelButton];
