@@ -264,7 +264,7 @@
 				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = wifin;
 			};
-			buildConfigurationList = D79AF751173A1AA7002E0A0B /* Build configuration list for PBXProject "BlueKai" */;
+			buildConfigurationList = D79AF751173A1AA7002E0A0B /* Build configuration list for PBXProject "Bluekai_SDK" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -488,7 +488,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D79AF751173A1AA7002E0A0B /* Build configuration list for PBXProject "BlueKai" */ = {
+		D79AF751173A1AA7002E0A0B /* Build configuration list for PBXProject "Bluekai_SDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D79AF77A173A1AA8002E0A0B /* Debug */,
