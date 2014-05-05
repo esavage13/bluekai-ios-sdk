@@ -7,16 +7,13 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForTesting = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D79AF756173A1AA7002E0A0B"
-               BuildableName = "libBlueKai.a"
-               BlueprintName = "BlueKai"
+               BlueprintIdentifier = "D79AF767173A1AA8002E0A0B"
+               BuildableName = "BlueKai.xcodeprojTests.octest"
+               BlueprintName = "BlueKai Tests"
                ReferencedContainer = "container:Bluekai_SDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,6 +25,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D79AF767173A1AA8002E0A0B"
+               BuildableName = "BlueKai.xcodeprojTests.octest"
+               BlueprintName = "BlueKai Tests"
+               ReferencedContainer = "container:Bluekai_SDK.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

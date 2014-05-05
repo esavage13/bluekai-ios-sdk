@@ -16,22 +16,106 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-@protocol OnDataPostedListener<NSObject>
--(void)onDataPosted:(BOOL)status;
+
+@protocol OnDataPostedListener <NSObject>
+- (void)onDataPosted:(BOOL)status;
 @end
-@interface BlueKai: NSObject<UIWebViewDelegate,UIGestureRecognizerDelegate,NSURLConnectionDelegate>{
+
+@interface BlueKai : NSObject <UIWebViewDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate> {
 }
-@property (nonatomic,assign) id<OnDataPostedListener> delegate;
--(id)initWithArgs:(BOOL)value withSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view;
--(id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version;
--(void)put:(NSString *)key:(NSString *)value;
--(void)put:(NSDictionary *)dictionary;
--(void)showSettingsScreen;
--(void)resume;
--(void)setPreference:(BOOL)optIn;
--(void)setDevMode:(BOOL)mode;
--(void)setAppVersion:(NSString *)version;
--(void)setViewController:(UIViewController *)view;
--(void)setSiteId:(int)siteid;
+
+@property(nonatomic, weak) id <OnDataPostedListener> delegate;
+
+/** Init BlueKai SDK
+*
+* Create the instance for BlueKai SDK with required arguments
+*
+* @param siteId, contact your BlueKai rep for this id; required
+* @param appVersion, version of your iOS application; required
+* @param viewController, a view for the SDK to attach itself to for an invisible webView to call BlueKai tags with; required
+* @param devMode, BOOL value to toggle on/off verbose logging; defaults to "NO"; optional
+*/
+- (id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode:(BOOL)value;
+
+
+/** Init BlueKai SDK (Deprecated)
+*
+* Deprecated; Use "initWithSiteId" instead
+*
+*/
+- (id)initWithArgs:(BOOL)value withSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view;
+
+/** Sets URL params as a key/value pair
+*
+* @param key, URL param key; required
+* @param value, URL param value; required
+*/
+- (void)put:(NSString *)key withValue:(NSString *)value;
+
+/** Sets URL params by using NSDictionary
+*
+* @param dictionary, key/value pairs to be constructed as URL params
+*/
+- (void)put:(NSDictionary *)dictionary;
+
+/** Displays BlueKai Optout screen
+*
+* Displays a view to allow user to optout of tracking by BlueKai
+*
+*/
+- (void)showSettingsScreen;
+
+/** Resume BlueKai process
+*
+* Method to resume BlueKai process after calling application resumes or comes to foreground. To use in onResume() of the calling activity foreground.
+*
+*/
+- (void)resume;
+
+/** Sets user opt-in preference
+*
+* This replaces the deprecated "setPreference" method
+*
+* @param pref, sets user tracking preference; defaults to "YES"
+*/
+- (void)setOptInPreference:(BOOL)optIn;
+
+/** Sets user opt-in preference (Deprecated)
+*
+* Deprecated; Use "setOptInPreference" instead
+*
+* @param pref, sets user tracking preference; defaults to "YES"
+*/
+- (void)setPreference:(BOOL)optIn;
+
+/** Sets development mode
+*
+* @param mode, turns on/off verbose logging with visual confirmation of params sent; defaults to "NO"
+*/
+- (void)setDevMode:(BOOL)mode;
+
+/** Sets iOS app version
+*
+* @param version, version of your iOS application
+*/
+- (void)setAppVersion:(NSString *)version;
+
+/** Sets ViewController
+*
+* @param ViewController, set the ViewController instance as view to get notification on the data posting status
+*/
+- (void)setViewController:(UIViewController *)view;
+
+/** Sets BlueKai siteId
+*
+* @param id, contact your BlueKai rep for this id
+*/
+- (void)setSiteId:(int)siteId;
+
+/** Sets HTTPS transfer protocol
+ *
+ * @param BOOL, sets HTTPS; defaults to "NO"
+ */
+- (void)useHttps:(BOOL)secured;
 
 @end

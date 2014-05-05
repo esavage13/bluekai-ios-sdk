@@ -1,103 +1,86 @@
-
 #import "TestViewController.h"
 #import "Bluekai.h"
 
+@interface TestViewController ()
+@end
 
 @implementation TestViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+
     if (self) {
         //self.title = NSLocalizedString(@"BlueKai", @"BlueKai");
-        self.tabBarItem.title=@"BlueKai";
+        self.tabBarItem.title = @"BlueKai";
     }
     return self;
 }
-							
-- (void)viewDidLoad
-{
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 }
--(IBAction)sendKeyValuePair:(id)sender
-{
-    if(key_Txtfld.text.length==0)
-    {
-        alert=[[UIAlertView alloc]initWithTitle:@"Error message" message:@"Enter key" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        alert.delegate=self;
+
+- (IBAction)sendKeyValuePair:(id)sender {
+    if (keyTextfield.text.length == 0) {
+        alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter key" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert show];
-        [alert release];
-    }
-    else
-    {
-        if(value_Txtfld.text.length==0)
-        {
-           alert=[[UIAlertView alloc]initWithTitle:@"Error message" message:@"Enter value" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            alert.delegate=self;
+    } else {
+        if (valueTextfield.text.length == 0) {
+            alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter value" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alert show];
-            [alert release];
-        }
-        else
-        {
-            [obj_SDK put:key_Txtfld.text :value_Txtfld.text];
+        } else {
+            [blueKaiSDK put:keyTextfield.text withValue:valueTextfield.text];
         }
     }
 }
--(void)appCameToForeGround
-{
-    NSLog(@"Application opened");
-    [obj_SDK resume];
+
+- (void)appCameToForeground {
+    [blueKaiSDK resume];
 }
--(void)onDataPosted:(BOOL)status
-{
-    if(status)
-    {
-        alert=[[UIAlertView alloc]initWithTitle:nil message:@"\n\nData sent successfully" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [alert show];
-        [alert release];
-    }
-    else {
-        alert=[[UIAlertView alloc]initWithTitle:nil message:@"\n\nData could not be sent" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [alert show];
-        [alert release];
-    }
+
+- (void)onDataPosted:(BOOL)status {
+    NSString *msg = status ? @"\n\nData sent successfully" : @"\n\nData could not be sent";
+
+    alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    [alert show];
+
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(removeAlert:) userInfo:nil repeats:NO];
 }
--(void)removeAlert:(id)sender
-{
+
+- (void)removeAlert:(id)sender {
     [alert dismissWithClickedButtonIndex:-1 animated:YES];
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
--(IBAction)cancelBtn:(id)sender
-{
-    key_Txtfld.text=@"";
-    value_Txtfld.text=@"";
+
+- (IBAction)cancelBtn:(id)sender {
+    keyTextfield.text = @"";
+    valueTextfield.text = @"";
 }
--(void)viewWillAppear:(BOOL)animated
-{
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeGround) name:UIApplicationWillEnterForegroundNotification object:nil];
-    self.tabBarController.delegate=self;
-   // [obj_SDK release];
-    //[config_dict release];
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    self.tabBarController.delegate = self;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *plistPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Configurationfile.plist"];
-    
+    NSString *plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
+
     BOOL success = [fileManager fileExistsAtPath:plistPath];
-    if(!success){
+
+    if (!success) {
         //file does not exist. So look into mainBundle
         NSString *defaultPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Configurationfile.plist"];
         [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
     }
-    config_dict=[[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
-    
-//    if(![[config_dict objectForKey:@"devMode"] boolValue])
+
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+
+//    if(![[configDict objectForKey:@"devMode"] boolValue])
 //    {
 //        NSArray *subviews=[self.view subviews];
 //        for (UIView *view in subviews) {
@@ -114,40 +97,21 @@
 //            }
 //        }
 //    }
-    NSLog(@"%@",[config_dict objectForKey:@"devMode"]);
-if([[config_dict objectForKey:@"devMode"]boolValue])
-{
-    obj_SDK=[[BlueKai alloc]initWithArgs:YES withSiteId:[config_dict objectForKey:@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
-}
-else{
-     obj_SDK=[[BlueKai alloc]initWithArgs:NO withSiteId:[config_dict objectForKey:@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self];
-}
-    obj_SDK.delegate=self;
-   // obj_SDK=[[Bluekai_SDK alloc]initWithBool:NO withSiteId:@"2" withAppVersion:@"1" withView:self];
+
+    blueKaiSDK = [[BlueKai alloc] initWithSiteId:configDict[@"siteId"]
+                                  withAppVersion:[[NSBundle mainBundle]
+                                  objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                  withView:self
+                                  withDevMode:[configDict[@"devMode"] boolValue]];
+    blueKaiSDK.delegate = self;
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    [obj_SDK release];
-    [config_dict release];
-   
-    // Release any retained subviews of the main view.
-}
-
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
-{
-    if (tabBarController.selectedIndex==0 || tabBarController.selectedIndex==1) {
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if (tabBarController.selectedIndex == 0 || tabBarController.selectedIndex == 1) {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        
+
     }
     return YES;
-}
-
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 @end
