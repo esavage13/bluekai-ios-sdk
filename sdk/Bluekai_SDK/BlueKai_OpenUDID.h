@@ -1,21 +1,21 @@
 //
-//  Bluekai_OpenUDID.h
+//  BlueKai_OpenUDID.h
 //  openudid
 //
 //  initiated by Yann Lechelle (cofounder @Appsfire) on 8/28/11.
-//  Copyright 2011 Bluekai_OpenUDID.org
+//  Copyright 2011 BlueKai_OpenUDID.org
 //
 //  Main branches
-//      iOS code: https://github.com/ylechelle/Bluekai_OpenUDID
+//      iOS code: https://github.com/ylechelle/BlueKai_OpenUDID
 //
 
 /*
  !!! IMPORTANT !!!
  
- IF YOU ARE GOING TO INTEGRATE Bluekai_OpenUDID INSIDE A (STATIC) LIBRARY,
- PLEASE MAKE SURE YOU REFACTOR THE Bluekai_OpenUDID CLASS WITH A PREFIX OF YOUR OWN,
+ IF YOU ARE GOING TO INTEGRATE BlueKai_OpenUDID INSIDE A (STATIC) LIBRARY,
+ PLEASE MAKE SURE YOU REFACTOR THE BlueKai_OpenUDID CLASS WITH A PREFIX OF YOUR OWN,
  E.G. ACME_OpenUDID. THIS WILL AVOID CONFUSION BY DEVELOPERS WHO ARE ALSO
- USING Bluekai_OpenUDID IN THEIR OWN CODE.
+ USING BlueKai_OpenUDID IN THEIR OWN CODE.
  
  !!! IMPORTANT !!!
  
@@ -48,15 +48,15 @@
 
 //
 // Usage:
-//    #include "Bluekai_OpenUDID.h"
-//    NSString* openUDID = [Bluekai_OpenUDID value];
+//    #include "BlueKai_OpenUDID.h"
+//    NSString* openUDID = [BlueKai_OpenUDID value];
 //
 
 #define kOpenUDIDErrorNone          0
 #define kOpenUDIDErrorOptedOut      1
 #define kOpenUDIDErrorCompromised   2
 
-@interface Bluekai_OpenUDID : NSObject {
+@interface BlueKai_OpenUDID : NSObject {
 }
 + (NSString*) value;
 + (NSString*) valueWithError:(NSError**)error;
