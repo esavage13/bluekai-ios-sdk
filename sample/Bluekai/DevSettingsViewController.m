@@ -35,11 +35,7 @@
 
     config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
 
-    if ([config_dict[@"devMode"] boolValue]) {
-        [dev_btn setImage:[UIImage imageNamed:@"chk-1.png"] forState:UIControlStateNormal];
-    } else {
-        [dev_btn setImage:[UIImage imageNamed:@"unchk-1.png"] forState:UIControlStateNormal];
-    }
+    [dev_btn setImage:[UIImage imageNamed:([config_dict[@"devMode"] boolValue]) ? @"chk-1" : @"unchk-1"] forState:UIControlStateNormal];
 
     siteId_Txtfield.text = config_dict[@"siteId"];
 }
@@ -53,15 +49,15 @@
     UIButton *btn = (UIButton *) sender;
     UIImage *actual_image = btn.currentImage;
     NSData *present_image = UIImagePNGRepresentation(actual_image);
-    NSData *compare_image = UIImagePNGRepresentation([UIImage imageNamed:@"unchk-1.png"]);
+    NSData *compare_image = UIImagePNGRepresentation([UIImage imageNamed:@"unchk-1"]);
 
     if ([present_image isEqual:compare_image]) {
-        [dev_btn setImage:[UIImage imageNamed:@"chk-1.png"] forState:UIControlStateNormal];
+        [dev_btn setImage:[UIImage imageNamed:@"chk-1"] forState:UIControlStateNormal];
         //update the plist file
         config_dict[@"devMode"] = @"YES";
 
     } else {
-        [dev_btn setImage:[UIImage imageNamed:@"unchk-1.png"] forState:UIControlStateNormal];
+        [dev_btn setImage:[UIImage imageNamed:@"unchk-1"] forState:UIControlStateNormal];
         //update plist file
 
         [config_dict setValue:@"NO" forKey:@"devMode"];
