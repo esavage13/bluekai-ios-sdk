@@ -12,9 +12,11 @@ Major internal code updates and enhancements.
 - Upgrade `Reachability` class to the v3.5 (latest as of this release)
 - More verbose inline documentation
 - Update `README` documentation
+- Add ability to use `https` to tranfer data
+- New mobile proxy endpoint
 
 ### Deprecated
-- The `setPreference` method was ambigiously and named and will be deprecated in favor of `setOptInPreference` method; no functionality change
+- The `setPreference` method was ambigiously named and will be deprecated in favor of `setOptInPreference` method; no functionality change
 - The `InitWithArgs` method is deprecated in favor of `InitWithSiteId:withAppVersion:withView:withDevMode`
 
 
