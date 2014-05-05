@@ -414,6 +414,26 @@ NSUserDefaults *bluekai_userDefaults;
 }
 
 
+#pragma mark - Objective-C Method overrides
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@: %p, %@>",
+                                        [self class],
+                                        self,
+                                        @{
+                                            @"siteID": bluekai_siteId,
+                                            @"appVersion": bluekai_appVersion,
+                                            @"view": bluekai_mainView,
+                                            @"devMode": devMode ? @"YES" : @"NO",
+                                            @"useHTTPS": bluekai_useHttps ? @"YES" : @"NO"
+                                        }];
+}
+
+- (NSString *)debugDescription {
+    return [self description];
+}
+
+
 #pragma mark - IBActions
 
 - (IBAction)termsConditions:(id)sender {
