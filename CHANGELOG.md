@@ -7,11 +7,13 @@ Major internal code updates and enhancements.
 
 ### Enhancements
 - General code clean up, bringing SDK to use ARC and updated deprecated syntax
-- BlueKai SDK `NSLog`s can now be turned on/off via the `devMode` boolean
 - All global variables are namespaced with `BlueKai_` prefix
 - Upgrade `Reachability` class to the v3.5 (latest as of this release)
 - More verbose inline documentation
 - Update `README` documentation
+
+### New features
+- BlueKai SDK `NSLog`s can now be turned on/off via the `devMode` boolean
 - Add ability to use `https` to tranfer data
 - New mobile proxy endpoint
 
