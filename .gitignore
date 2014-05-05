@@ -1,5 +1,7 @@
-# Xcode
+# Global
 .DS_Store
+.idea/
+# Xcode
 build/
 *.pbxuser
 !default.pbxuser
@@ -15,6 +17,5 @@ xcuserdata
 profile
 *.moved-aside
 DerivedData
-.idea/
 # Pods - for those of you who use CocoaPods
 Pods
