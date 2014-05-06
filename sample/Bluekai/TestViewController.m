@@ -23,11 +23,11 @@
 
 - (IBAction)sendKeyValuePair:(id)sender {
     if (keyTextfield.text.length == 0) {
-        alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter key" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter key" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     } else {
         if (valueTextfield.text.length == 0) {
-            alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter value" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter value" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         } else {
             [blueKaiSDK put:keyTextfield.text withValue:valueTextfield.text];
@@ -42,7 +42,7 @@
 - (void)onDataPosted:(BOOL)status {
     NSString *msg = status ? @"\n\nData sent successfully" : @"\n\nData could not be sent";
 
-    alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(removeAlert:) userInfo:nil repeats:NO];
@@ -103,7 +103,7 @@
                                   objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
                                   withView:self
                                   withDevMode:[configDict[@"devMode"] boolValue]];
-    blueKaiSDK.delegate = self;
+    blueKaiSDK.delegate = (id) self;
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {

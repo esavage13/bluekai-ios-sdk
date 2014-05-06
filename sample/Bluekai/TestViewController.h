@@ -1,7 +1,9 @@
 #import <UIKit/UIKit.h>
-#import "BlueKai.h"
 
-@interface TestViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate, NSURLConnectionDelegate, UITabBarControllerDelegate, OnDataPostedListener>
+@class BlueKai;
+@protocol OnDataPostedListener;
+
+@interface TestViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate, NSURLConnectionDelegate, UITabBarControllerDelegate>
 {
     BlueKai      *blueKaiSDK;
     NSDictionary *configDict;

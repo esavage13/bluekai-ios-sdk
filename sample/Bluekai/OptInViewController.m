@@ -1,4 +1,5 @@
 #import "OptInViewController.h"
+#import "BlueKai.h"
 
 @interface OptInViewController ()
 
@@ -10,7 +11,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.tabBarItem.title = @"T&C";
-
     }
     return self;
 }
@@ -38,20 +38,20 @@
     BOOL success = [fileManager fileExistsAtPath:plistPath];
 
     if (!success) {
-        //file does not exist. So look into mainBundle
+        // file does not exist. So look into mainBundle
         NSString *defaultPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Configurationfile.plist"];
         [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
     }
 
     config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-    Obj_bluekai = [[BlueKai alloc] initWithSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self withDevMode:[config_dict[@"devMode"] boolValue]];
-    Obj_bluekai.delegate = self;
-    [Obj_bluekai showSettingsScreen];
+    blueKaiSDK = [[BlueKai alloc] initWithSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self withDevMode:[config_dict[@"devMode"] boolValue]];
+    blueKaiSDK.delegate = (id) self;
+    [blueKaiSDK showSettingsScreen];
 }
 
 - (void)appEnteredToForeGround {
     NSLog(@"Application opened");
-    [Obj_bluekai resume];
+    [blueKaiSDK resume];
 }
 
 - (void)onDataPosted:(BOOL)status {
