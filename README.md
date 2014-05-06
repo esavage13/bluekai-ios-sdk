@@ -177,6 +177,7 @@ addition to the site id:
 |  Create the instance for Bluekai SDK with required arguments | - (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value  | 
 |  Convenience constructor to initialize and get instance of BlueKai without arguments      | - (id)init  | 
 |  Method to show BlueKai in-built opt-in or opt-out screen     | - (void)showSettingsScreen  | 
+|  The same functionality as `showSettingsScreen` with ability to set custom background color | - (void)showSettingsScreenWithBackgroundColor:(UIColor *)color |
 |  Method to resume BlueKai process after calling application resumes or comes to foreground. To use in onResume() of the calling activity foreground.     | - (void)resume  | 
 |  **[DEPRECATED]** Method to set user opt-in or opt-out preference; use `setOptInPreference:(BOOL)OptIn` instead     | ~~- (void) setPreference:(BOOL)optIn~~  | 
 |  Method to set user opt-in or opt-out preference           | - (void) setOptInPreference:(BOOL)OptIn

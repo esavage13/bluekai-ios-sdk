@@ -314,15 +314,20 @@ NSUserDefaults *bluekai_userDefaults;
 }
 
 - (void)showSettingsScreen {
-    //    NSArray *array=[bluekai_mainView.view subviews];
-    //    for (UIView *view in array) {
-    //        if(![view isKindOfClass:[UIWebView class]])
-    //        {
-    //            [view removeFromSuperview];
-    //        }
-    //    }
+    [self showSettingsScreenWithBackgroundColor:nil];
+}
 
-    NSArray *bluekai_checkimage = @[@"chk-1", @"unchk-1"];
+- (void)showSettingsScreenWithBackgroundColor:(UIColor *)backgroundColor {
+//    NSArray *array = [bluekai_mainView.view subviews];
+//    for (UIView *view in array) {
+//        if(![view isKindOfClass:[UIWebView class]]) {
+//            [view removeFromSuperview];
+//        }
+//    }
+
+    UIColor *bgColor = backgroundColor ? backgroundColor : [UIColor whiteColor];
+
+    bluekai_mainView.view.backgroundColor = bgColor;
     bluekai_userDefaults = [NSUserDefaults standardUserDefaults];
     bluekai_userCheckImage = [[UIImageView alloc] initWithFrame:CGRectMake(25, 100, 40, 40)];
 
@@ -382,19 +387,21 @@ NSUserDefaults *bluekai_userDefaults;
     [savebtn.layer setBorderWidth:2.0f];
     [savebtn.layer setBorderColor:[[UIColor grayColor] CGColor]];
     [savebtn.layer setCornerRadius:5.0f];
+    [savebtn setBackgroundColor:[UIColor whiteColor]];
     [savebtn addTarget:self action:@selector(saveSettings:) forControlEvents:UIControlEventTouchUpInside];
     [savebtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [bluekai_mainView.view addSubview:savebtn];
 
-    UIButton *Cnclbtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    Cnclbtn.frame = CGRectMake(175, 290, 80, 35);
-    [Cnclbtn setTitle:@"Cancel" forState:UIControlStateNormal];
-    [Cnclbtn.layer setBorderWidth:2.0f];
-    [Cnclbtn.layer setBorderColor:[[UIColor grayColor] CGColor]];
-    [Cnclbtn.layer setCornerRadius:5.0f];
-    [Cnclbtn addTarget:self action:@selector(Cancelbtn:) forControlEvents:UIControlEventTouchUpInside];
-    [Cnclbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [bluekai_mainView.view addSubview:Cnclbtn];
+    UIButton *cancelbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelbtn.frame = CGRectMake(175, 290, 80, 35);
+    [cancelbtn setTitle:@"Cancel" forState:UIControlStateNormal];
+    [cancelbtn.layer setBorderWidth:2.0f];
+    [cancelbtn.layer setBorderColor:[[UIColor grayColor] CGColor]];
+    [cancelbtn.layer setCornerRadius:5.0f];
+    [cancelbtn setBackgroundColor:[UIColor whiteColor]];
+    [cancelbtn addTarget:self action:@selector(Cancelbtn:) forControlEvents:UIControlEventTouchUpInside];
+    [cancelbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [bluekai_mainView.view addSubview:cancelbtn];
     [bluekai_mainView.view addSubview:bluekai_webView];
     [bluekai_mainView.view addSubview:bluekai_cancelButton];
 }

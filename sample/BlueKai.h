@@ -60,9 +60,16 @@
 /** Displays BlueKai Optout screen
 *
 * Displays a view to allow user to optout of tracking by BlueKai
-*
 */
 - (void)showSettingsScreen;
+
+/** Displays BlueKai Optout screen with option to set background color
+*
+* Same functionality as `shoSettingsScreen`
+*
+* @param color, sets background color for settings UIViewController; defaults to `whiteColor`
+*/
+- (void)showSettingsScreenWithBackgroundColor:(UIColor *)color;
 
 /** Resume BlueKai process
 *
