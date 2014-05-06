@@ -17,11 +17,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol OnDataPostedListener <NSObject>
+@protocol BlueKaiOnDataPostedListener <NSObject>
 - (void)onDataPosted:(BOOL)status;
 @end
 
-@interface BlueKai : NSObject <UIWebViewDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate, OnDataPostedListener> {
+@interface BlueKai : NSObject <UIWebViewDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate, BlueKaiOnDataPostedListener> {
 }
 
 @property(nonatomic, weak) id <OnDataPostedListener> delegate;

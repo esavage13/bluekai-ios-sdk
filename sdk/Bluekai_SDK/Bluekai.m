@@ -577,9 +577,9 @@ NSUserDefaults *bluekai_userDefaults;
         bluekai_numberOfRunningRequests = 0;
 
         // to avoid the "Weak receiver may be unpredictably null in ARC mode" warning
-        id <OnDataPostedListener> localDelegate = delegate;
+        id <BlueKaiOnDataPostedListener> localDelegate = delegate;
 
-        if ([localDelegate respondsToSelector:@selector(onDabluekai_taposted:)]) {
+        if ([localDelegate respondsToSelector:@selector(onDataPosted:)]) {
             [localDelegate onDataPosted:FALSE];
         }
 
@@ -627,7 +627,7 @@ NSUserDefaults *bluekai_userDefaults;
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     bluekai_numberOfRunningRequests = bluekai_numberOfRunningRequests - 1;
     // to avoid the "Weak receiver may be unpredictably null in ARC mode" warning
-    id <OnDataPostedListener> localDelegate = delegate;
+    id <BlueKaiOnDataPostedListener> localDelegate = delegate;
 
     if (bluekai_numberOfRunningRequests == 0) {
         if (!bluekai_alertShowBool) {
