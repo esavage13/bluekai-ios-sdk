@@ -5,9 +5,9 @@ http://bluekai.github.io/bluekai-ios-sdk-static-libs.zip
 
 ## Obtain BlueKai site ID
 
-For any demo projects a site id of "2" can be used.
+For any demo projects a site id of `2` can be used.
 
-But before you ship be sure to contact your BlueKai account manager for your company site ID.
+But before you ship, be sure to contact your BlueKai account manager for your company site ID.
 
 ## Add BlueKai SDK to Project
 
@@ -42,20 +42,26 @@ project. To do so, please follow these steps.
 
     ![Screenshot](http://bluekai.github.io/images/ios/image009.png)
 
-## Import SDK 
+## Include BlueKai iOS SDK 
 
 In `ViewController.h` file or the header file of your view, add 
 
+```objectivec
+@class BlueKai;
+```
 
-    #import "BlueKai.h" 
+On the top of the corresponding implementaton `.m` file, add
 
+```objectivec
+#import 'BlueKai.h'
+```
 
 ## Create Instance 
 
 In `ViewController.h` file, define an instance of BlueKai SDK.
 
 ```objectivec
-@interface ViewController : UIViewController<OnDataPostedListener>
+@interface ViewController : UIViewController
 {
     BlueKai *blueKaiSdk;
 }
@@ -94,7 +100,7 @@ To pass a single key value pair to BlueKai SDK, use the below code
 	[blueKaiSdk put:@"myKey" withValue:@"myValue"];
 	
 
-## Passing Multiple Values 
+## Passing Multiple Values
 
 To pass multiple of key value pairs to BlueKai SDK, create an NSDictionary with key/value pairs and use the below method
 
@@ -129,7 +135,9 @@ to BlueKai server.
 
 
 ```objectivec
-@interface ViewController : UIViewController<OnDataPostedListener>
+@protocol OnDataPostedListener;
+
+@interface ViewController : UIViewController
 {
 } 
 ```
@@ -138,7 +146,7 @@ Set `ViewController.h` as the delegate. You can place this code right after init
   
 ```objectivec
 blueKaiSdk = [[Bluekai alloc]initWithSiteId:@"2" withAppVersion:version withView:self withDevMode:NO]; 
-blueKaiSdk.delegate = self;
+blueKaiSdk.delegate = (id) self;
 ```
 
 To get notifications about the status of data posting, implement the
