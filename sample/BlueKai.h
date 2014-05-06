@@ -21,7 +21,7 @@
 - (void)onDataPosted:(BOOL)status;
 @end
 
-@interface BlueKai : NSObject <UIWebViewDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate> {
+@interface BlueKai : NSObject <UIWebViewDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate, OnDataPostedListener> {
 }
 
 @property(nonatomic, weak) id <OnDataPostedListener> delegate;
@@ -36,7 +36,6 @@
 * @param devMode, BOOL value to toggle on/off verbose logging; defaults to "NO"; optional
 */
 - (id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode:(BOOL)value;
-
 
 /** Init BlueKai SDK (Deprecated)
 *

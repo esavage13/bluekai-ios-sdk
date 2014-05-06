@@ -8,7 +8,6 @@
 @synthesize delegate;
 
 BOOL bluekai_alertShowBool,
-     bluekai_loadFailedBool,
      bluekai_useHttps,
      bluekai_webLoaded,
      devMode;
@@ -16,16 +15,13 @@ BOOL bluekai_alertShowBool,
 int bluekai_urlStringCount,
     bluekai_numberOfRunningRequests;
 
-UIAlertView *bluekai_alertView;
 UIButton    *bluekai_cancelButton;
-UIImageView *bluekai_userCheckImage,
-            *bluekai_TCCheckImage;
+UIImageView *bluekai_userCheckImage;
 
 UITapGestureRecognizer *bluekai_tap;
 UIWebView              *bluekai_webView;
 UIViewController *bluekai_mainView;
 
-NSArray         *bluekai_checkimage;
 NSMutableString *bluekai_webUrl;
 
 NSString *bluekai_appVersion,
@@ -325,9 +321,10 @@ NSUserDefaults *bluekai_userDefaults;
     //            [view removeFromSuperview];
     //        }
     //    }
+
+    NSArray *bluekai_checkimage = @[@"chk-1", @"unchk-1"];
     bluekai_userDefaults = [NSUserDefaults standardUserDefaults];
     bluekai_userCheckImage = [[UIImageView alloc] initWithFrame:CGRectMake(25, 100, 40, 40)];
-    bluekai_checkimage = @[@"chk-1", @"unchk-1"];
 
     UIGraphicsBeginImageContext(bluekai_userCheckImage.frame.size);
     NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
