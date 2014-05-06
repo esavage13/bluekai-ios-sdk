@@ -64,7 +64,7 @@
 		2460700619131BDD000BABDD /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
 		2460700B19131BDE000BABDD /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		2460700C19131BDE000BABDD /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
-		61C3BCA8182324420029963C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		61C3BCA8182324420029963C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		B701E7F01759A26F008C3775 /* BlueKaiSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueKaiSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B701E7F41759A26F008C3775 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B701E7F61759A26F008C3775 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -81,7 +81,7 @@
 		B701E80E1759A270008C3775 /* OptInViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptInViewController.m; sourceTree = "<group>"; };
 		B701E8151759A270008C3775 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TestViewController.xib; sourceTree = "<group>"; };
 		B701E8181759A270008C3775 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/OptInViewController.xib; sourceTree = "<group>"; };
-		B701E8331759A8C3008C3775 /* Configurationfile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Configurationfile.plist; sourceTree = "<group>"; };
+		B701E8331759A8C3008C3775 /* Configurationfile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Configurationfile.plist; path = ../Configurationfile.plist; sourceTree = "<group>"; };
 		B74DA5171759BB0B00054D1C /* DevSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevSettingsViewController.h; sourceTree = "<group>"; };
 		B74DA5181759BB0B00054D1C /* DevSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevSettingsViewController.m; sourceTree = "<group>"; };
 		B74DA5191759BB0B00054D1C /* DevSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DevSettingsViewController.xib; sourceTree = "<group>"; };
@@ -134,11 +134,9 @@
 		B701E7E51759A26F008C3775 = {
 			isa = PBXGroup;
 			children = (
-				2460701F19131CFE000BABDD /* Icons */,
-				61C3BCA8182324420029963C /* Default-568h@2x.png */,
-				B701E8331759A8C3008C3775 /* Configurationfile.plist */,
-				B701E8231759A82C008C3775 /* BlueKai_SDK Library */,
 				B701E7FA1759A26F008C3775 /* BlueKaiSampleApp */,
+				2460701F19131CFE000BABDD /* Icons */,
+				B701E8231759A82C008C3775 /* BlueKai_SDK Library */,
 				B701E7F31759A26F008C3775 /* Frameworks */,
 				B701E7F11759A26F008C3775 /* Products */,
 			);
@@ -187,6 +185,8 @@
 		B701E7FB1759A26F008C3775 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				61C3BCA8182324420029963C /* Default-568h@2x.png */,
+				B701E8331759A8C3008C3775 /* Configurationfile.plist */,
 				B701E7FC1759A26F008C3775 /* BlueKaiSampleApp-Info.plist */,
 				B701E7FD1759A26F008C3775 /* InfoPlist.strings */,
 				B701E8001759A26F008C3775 /* main.m */,
@@ -394,6 +394,7 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_OPTIMIZATION_LEVEL = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bluekai/BlueKaiSampleApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
