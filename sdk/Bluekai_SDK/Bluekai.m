@@ -109,7 +109,7 @@ NSUserDefaults *bluekai_userDefaults;
 
         if ([[bluekai_keyValDict allKeys] count] > 1) {
             bluekai_numberOfRunningRequests = -1;
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
             NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
 
@@ -129,7 +129,7 @@ NSUserDefaults *bluekai_userDefaults;
 - (void)setDevMode:(BOOL)mode {
     devMode = mode;
 
-    if (bluekai_mainView != nil && bluekai_siteId != nil && bluekai_appVersion != nil) {
+    if (bluekai_mainView && bluekai_siteId && bluekai_appVersion) {
         [self resume];
     }
 }
@@ -137,7 +137,7 @@ NSUserDefaults *bluekai_userDefaults;
 - (void)setAppVersion:(NSString *)version {
     bluekai_appVersion = version;
 
-    if (bluekai_mainView != nil && bluekai_siteId != nil) {
+    if (bluekai_mainView && bluekai_siteId) {
         [self resume];
     }
 }
@@ -147,14 +147,14 @@ NSUserDefaults *bluekai_userDefaults;
 
     bluekai_mainView = view;
 
-    if (bluekai_siteId != nil) {
+    if (bluekai_siteId) {
         bluekai_webView = nil;
         bluekai_cancelButton = nil;
 
-        if (bluekai_webUrl == nil) {
-            bluekai_webUrl = [[NSMutableString alloc] init];
-        } else {
+        if (bluekai_webUrl) {
             [bluekai_webUrl replaceCharactersInRange:NSMakeRange(0, [bluekai_webUrl length]) withString:@""];
+        } else {
+            bluekai_webUrl = [[NSMutableString alloc] init];
         }
 
         bluekai_webView = [[UIWebView alloc] init];
@@ -180,7 +180,7 @@ NSUserDefaults *bluekai_userDefaults;
 
     bluekai_siteId = [NSString stringWithFormat:@"%d", siteId];
 
-    if (bluekai_mainView != nil) {
+    if (bluekai_mainView) {
         [self resume];
     }
 }
@@ -216,10 +216,10 @@ NSUserDefaults *bluekai_userDefaults;
     if (bluekai_webLoaded) {
         [bluekai_nonLoadkeyValDict setValue:value forKey:key];
     } else {
-        if (bluekai_webUrl == nil) {
-            bluekai_webUrl = [[NSMutableString alloc] init];
-        } else {
+        if (bluekai_webUrl) {
             [bluekai_webUrl replaceCharactersInRange:NSMakeRange(0, [bluekai_webUrl length]) withString:@""];
+        } else {
+            bluekai_webUrl = [[NSMutableString alloc] init];
         }
 
         bluekai_keyString = nil;
@@ -227,8 +227,7 @@ NSUserDefaults *bluekai_userDefaults;
         bluekai_keyString = [key copy];
         bluekai_valueString = [value copy];
 
-        //Check the settings page to find the use data is allowed to send to server or not
-        if (bluekai_keyValDict != nil) {
+        if (bluekai_keyValDict) {
             [bluekai_keyValDict removeAllObjects];
         } else {
             bluekai_keyValDict = [[NSMutableDictionary alloc] init];
@@ -236,27 +235,7 @@ NSUserDefaults *bluekai_userDefaults;
 
         [bluekai_keyValDict setValue:bluekai_valueString forKey:bluekai_keyString];
 
-        NSString *user_value = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
-
-        if ([user_value isEqualToString:@"YES"]) {
-            bluekai_numberOfRunningRequests = -1;
-            bluekai_webLoaded = YES;
-
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-            BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
-            NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-
-            if (networkStatus != NotReachable) {
-                [self startDataUpload];
-            } else {
-                [self webView:nil didFailLoadWithError:nil];
-            }
-
-        } else {
-            if (!bluekai_webView.hidden) {
-                bluekai_webView.hidden = YES;
-            }
-        }
+        [self uploadIfNetworkIsAvailable];
     }
 }
 
@@ -277,25 +256,7 @@ NSUserDefaults *bluekai_userDefaults;
 
     [bluekai_keyValDict setValuesForKeysWithDictionary:dictionary];
 
-    //Check the settings page to find the use data is allowed to send to server or not
-    NSString *value = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
-
-    if ([value isEqualToString:@"YES"]) {
-        bluekai_numberOfRunningRequests = -1;
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
-        NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-
-        if (networkStatus != NotReachable) {
-            [self startDataUpload];
-        } else {
-            [self webView:nil didFailLoadWithError:nil];
-        }
-    } else {
-        if (!bluekai_webView.hidden) {
-            bluekai_webView.hidden = YES;
-        }
-    }
+    [self uploadIfNetworkIsAvailable];
 }
 
 - (void)setOptInPreference:(BOOL)optIn {
@@ -458,7 +419,7 @@ NSUserDefaults *bluekai_userDefaults;
 }
 
 - (IBAction)saveSettings:(id)sender {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     NSString *userDataValue = [bluekai_userDefaults objectForKey:@"KeyToUserData"];
     [[NSUserDefaults standardUserDefaults] setObject:userDataValue forKey:@"settings"];
     [self updateServer];
@@ -582,7 +543,7 @@ NSUserDefaults *bluekai_userDefaults;
             [localDelegate onDataPosted:FALSE];
         }
 
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
         for (int i = 0; i < [[bluekai_keyValDict allKeys] count]; i++) {
             if (![bluekai_remainkeyValDict valueForKey:[bluekai_keyValDict allKeys][i]]) {
@@ -610,7 +571,7 @@ NSUserDefaults *bluekai_userDefaults;
 
         bluekai_webLoaded = NO;
 
-        if (bluekai_remainkeyValDict != nil || bluekai_nonLoadkeyValDict != nil) {
+        if (bluekai_remainkeyValDict || bluekai_nonLoadkeyValDict) {
             if ([bluekai_remainkeyValDict count] != 0 || [bluekai_nonLoadkeyValDict count] != 0) {
                 [self loadAnotherRequest];
             }
@@ -654,7 +615,7 @@ NSUserDefaults *bluekai_userDefaults;
             }
 
             bluekai_webLoaded = NO;
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
             if ([localDelegate respondsToSelector:@selector(onDataPosted:)]) {
                 [localDelegate onDataPosted:TRUE];
@@ -663,7 +624,7 @@ NSUserDefaults *bluekai_userDefaults;
             [self blueKaiLogger:devMode withString:@"URL Passed" withObject:webView.request.URL];
             bluekai_alertShowBool = YES;
 
-            if (bluekai_remainkeyValDict != nil || bluekai_nonLoadkeyValDict != nil) {
+            if (bluekai_remainkeyValDict || bluekai_nonLoadkeyValDict) {
                 if ([bluekai_remainkeyValDict count] != 0 || [bluekai_nonLoadkeyValDict count] != 0) {
                     [self loadAnotherRequest];
                 }
@@ -765,7 +726,7 @@ NSUserDefaults *bluekai_userDefaults;
                 [bluekai_nonLoadkeyValDict removeObjectForKey:[bluekai_keyValDict allKeys][j]];
             }
 
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self startDataUpload];
         } else {
             bluekai_nonLoadkeyValDict = nil;
@@ -806,7 +767,7 @@ NSUserDefaults *bluekai_userDefaults;
         }
 
         bluekai_numberOfRunningRequests = -1;
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         [self startDataUpload];
     }
 }
@@ -839,7 +800,7 @@ NSUserDefaults *bluekai_userDefaults;
             }
         }
 
-        [self blueKaiLogger:devMode withString:@"Encoded URL: " withObject:url_string];
+        [self blueKaiLogger:devMode withString:@"Encoded URL" withObject:url_string];
         [bluekai_webUrl appendString:url_string];
     }
     bluekai_alertShowBool = NO;
@@ -918,9 +879,9 @@ NSUserDefaults *bluekai_userDefaults;
 }
 
 - (void)startDataUpload {
-    if (bluekai_mainView != nil) {
-        if (bluekai_siteId != nil) {
-            if (bluekai_appVersion != nil) {
+    if (bluekai_mainView) {
+        if (bluekai_siteId) {
+            if (bluekai_appVersion) {
                 [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:bluekai_keyValDict];
             } else {
                 [self blueKaiLogger:devMode withString:@"appVersion parameter is nil" withObject:nil];
@@ -949,7 +910,7 @@ NSUserDefaults *bluekai_userDefaults;
                     }
                 }
 
-                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             }
         } else {
             NSString *errorMsg = bluekai_appVersion ? @"siteId parameter is nil" : @"siteId and appVersion parameters are nil";
@@ -978,7 +939,7 @@ NSUserDefaults *bluekai_userDefaults;
                 }
             }
 
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }
     } else {
         if (bluekai_siteId && bluekai_appVersion) {
@@ -1019,7 +980,7 @@ NSUserDefaults *bluekai_userDefaults;
             }
         }
 
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
 }
 
@@ -1034,12 +995,37 @@ NSUserDefaults *bluekai_userDefaults;
     [bluekai_mainView.view addSubview:bluekai_cancelButton];
 }
 
+- (void)uploadIfNetworkIsAvailable {
+    //Check the settings page to find the use data is allowed to send to server or not
+    NSString *userPref = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
+
+    if ([userPref isEqualToString:@"YES"]) {
+        bluekai_numberOfRunningRequests = -1;
+        bluekai_webLoaded = YES;
+
+//        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
+        NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+
+        if (networkStatus != NotReachable) {
+            [self startDataUpload];
+        } else {
+            [self webView:nil didFailLoadWithError:nil];
+        }
+
+    } else {
+        if (!bluekai_webView.hidden) {
+            bluekai_webView.hidden = YES;
+        }
+    }
+}
+
 - (void)blueKaiLogger:(BOOL)devMode withString:(NSString *)string withObject:(NSObject *)object {
     if(devMode) {
-        if(object == nil) {
-            NSLog(@">>> BlueKaiSDK Log: %@", string);
-        } else {
+        if(object) {
             NSLog(@">>> BlueKaiSDK Log: %@: %@", string, object);
+        } else {
+            NSLog(@">>> BlueKaiSDK Log: %@", string);
         }
     }
 }
