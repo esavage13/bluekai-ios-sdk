@@ -287,6 +287,7 @@ NSUserDefaults *bluekai_userDefaults;
 
     UIColor *bgColor = backgroundColor ? backgroundColor : [UIColor whiteColor];
 
+    bluekai_mainView.view.hidden = NO;
     bluekai_mainView.view.backgroundColor = bgColor;
     bluekai_userDefaults = [NSUserDefaults standardUserDefaults];
     bluekai_userCheckImage = [[UIImageView alloc] initWithFrame:CGRectMake(25, 100, 40, 40)];
@@ -411,6 +412,8 @@ NSUserDefaults *bluekai_userDefaults;
 }
 
 - (IBAction)Cancelbtn:(id)sender {
+    [self blueKaiLogger:devMode withString:@"cancel opt-in view" withObject:nil];
+    bluekai_mainView.view.hidden = YES;
 }
 
 - (IBAction)Cancel:(id)sender {
