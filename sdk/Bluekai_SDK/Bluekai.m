@@ -1,7 +1,6 @@
 #include <QuartzCore/QuartzCore.h>
 #import "BlueKai.h"
 #import "BlueKai_Reachability.h"
-#import "BlueKai_OpenUDID.h"
 #import "BlueKai_SBJSON.h"
 
 @implementation BlueKai
@@ -827,7 +826,6 @@ NSUserDefaults *bluekai_userDefaults;
         // send the dictionary details to BlueKai server
         NSMutableString *url_string = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@%@?site=%@&", protocol, serverURL, endPoint, bluekai_siteId]];
         [url_string appendString:[NSString stringWithFormat:@"appVersion=%@", bluekai_appVersion]];
-        [url_string appendString:[NSString stringWithFormat:@"&identifierForVendor=%@", [NSString stringWithFormat:@"%@", [self getVendorID]]]];
         bluekai_urlStringCount = url_string.length;
 
         for (int i = 0; i < [[bluekai_keyValDict allKeys] count]; i++) {
@@ -870,12 +868,6 @@ NSUserDefaults *bluekai_userDefaults;
         }
     }
     return output;
-}
-
-- (NSString *)getVendorID {
-    NSString *vendorId;
-    vendorId = [BlueKai_OpenUDID value];
-    return vendorId;
 }
 
 - (void)userData_Change:(UITapGestureRecognizer *)recognizer {
