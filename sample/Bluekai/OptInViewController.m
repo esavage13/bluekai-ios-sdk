@@ -1,4 +1,5 @@
 #import "OptInViewController.h"
+#import "OptInViewController.h"
 #import "BlueKai.h"
 
 @interface OptInViewController ()
@@ -28,7 +29,7 @@
         }
     }
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredToForeGround) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
     self.tabBarController.delegate = self;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
@@ -51,7 +52,7 @@
     [blueKaiSDK showSettingsScreenWithBackgroundColor:[UIColor colorWithRed:(246/255.0) green:(247/255.0) blue:(220/255.0) alpha:1.0]];
 }
 
-- (void)appEnteredToForeGround {
+- (void)appEnteredToForeground {
     NSLog(@"Application opened");
     [blueKaiSDK resume];
 }

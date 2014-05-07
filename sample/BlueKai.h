@@ -24,7 +24,7 @@
 @interface BlueKai : NSObject <UIWebViewDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate, BlueKaiOnDataPostedListener> {
 }
 
-@property(nonatomic, weak) id <OnDataPostedListener> delegate;
+@property(nonatomic, weak) id <BlueKaiOnDataPostedListener> delegate;
 
 /** Init BlueKai SDK
 *

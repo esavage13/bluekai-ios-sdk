@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 
 @class BlueKai;
-@protocol OnDataPostedListener;
+@protocol BlueKaiOnDataPostedListener;
 
 @interface TestViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate, NSURLConnectionDelegate, UITabBarControllerDelegate>
 {
