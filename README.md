@@ -97,14 +97,14 @@ with response from the BluaKai server. You should turn this feature off in your 
 
 To pass a single key value pair to BlueKai SDK, use the below code
 
-	[blueKaiSdk put:@"myKey" withValue:@"myValue"];
+  [blueKaiSdk updateWithKey:@"myKey" andValue:@"myValue"];
 	
 
 ## Passing Multiple Values
 
 To pass multiple of key value pairs to BlueKai SDK, create an NSDictionary with key/value pairs and use the below method
 
-    [blueKaiSdk put:dictionary];
+    [blueKaiSdk updateWithDictionary:dictionary];
 
 ## Resuming Data Post 
 
@@ -121,7 +121,7 @@ notification in `viewDidLoad` method or wherever you deem fit.
 Define a method appCameToForeground and call `resume()`:
 
 ```objectivec
--(void)appCameToForeground
+- (void)appCameToForeground
 {
    [blueKaiSdk resume];
 }
@@ -146,15 +146,14 @@ Set `ViewController.h` as the delegate. You can place this code right after init
   
 ```objectivec
 blueKaiSdk = [[Bluekai alloc]initWithSiteId:@"2" withAppVersion:version withView:self withDevMode:NO]; 
-blueKaiSdk.delegate = (id) self;
+blueKaiSdk.delegate = (id) <BlueKaiOnDataPostedListener> self;
 ```
 
 To get notifications about the status of data posting, implement the
 following delegate method in `ViewController.m`. 
 
 ```objectivec
--(void)onDataPosted:(BOOL)status
-{
+- (void)onDataPosted:(BOOL)status {
 }
 ```
 
@@ -166,9 +165,9 @@ addition to the site id:
 ```objectivec
     NSDictionary *infoPList = [[NSBundle mainBundle] infoDictionary];
     NSString *displayName = [infoPList objectForKey:@"CFBundleDisplayName"];
-    [blueKaiSdk put:@"displayName" withValue:displayName];
-
+    [blueKaiSdk updateWithKey:@"displayName" andValue:displayName];
 ```
+
 # Public Methods 
 
 | Definition        | Method           | 
@@ -186,6 +185,10 @@ addition to the site id:
 |  Set the ViewController instance as view to get notification on the data posting status     | - (void) setViewController:(UIViewController *)view  | 
 |  Set BlueKai site id     | - (void)setSiteId:(int)siteId  | 
 |  Use HTTPS transfer protocol (YES or NO) | - (void)useHttps:(BOOL)secured  |
+|  Set key/value strings and send them to BlueKai server | - (void)updateWithKey:(NSString *)key andValue:(NSString *)value |
+|  **[DEPRECATED]** Set key/value strings and send them to BlueKai server | ~~- (void)put:(NSString *)key withValue:(NSString *)value~~ |
+|  Set key/value strings in a NSDictionary and send them to BlueKai server | - (void)updateWithDictionary:(NSDictionary *)dictionary |
+|  **[DEPRECATED]** Set key/value strings in a NSDictionary and send them to BlueKai server | ~~- (void)put:(NSDictionary *)dictionary~~ |
 
 
 # Updating the SDK 
