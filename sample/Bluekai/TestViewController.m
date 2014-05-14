@@ -21,20 +21,6 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
-- (IBAction)sendKeyValuePair:(id)sender {
-    if (keyTextfield.text.length == 0) {
-        alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter key" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    } else {
-        if (valueTextfield.text.length == 0) {
-            alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter value" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        } else {
-            [blueKaiSDK put:keyTextfield.text withValue:valueTextfield.text];
-        }
-    }
-}
-
 - (void)appCameToForeground {
     [blueKaiSDK resume];
 }
@@ -55,11 +41,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
-}
-
-- (IBAction)cancelBtn:(id)sender {
-    keyTextfield.text = @"";
-    valueTextfield.text = @"";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -114,4 +95,26 @@
     return YES;
 }
 
+
+
+#pragma mark - IBActions
+
+- (IBAction)sendKeyValuePair:(id)sender {
+    if (keyTextfield.text.length == 0) {
+        alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter key" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    } else {
+        if (valueTextfield.text.length == 0) {
+            alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter value" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        } else {
+            [blueKaiSDK put:keyTextfield.text withValue:valueTextfield.text];
+        }
+    }
+}
+
+- (IBAction)cancelBtn:(id)sender {
+    keyTextfield.text = @"";
+    valueTextfield.text = @"";
+}
 @end

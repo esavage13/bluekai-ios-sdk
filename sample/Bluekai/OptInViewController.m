@@ -47,6 +47,8 @@
     config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
     blueKaiSDK = [[BlueKai alloc] initWithSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self withDevMode:[config_dict[@"devMode"] boolValue]];
     blueKaiSDK.delegate = (id) self;
+    
+    NSLog(@"%@", blueKaiSDK);
 
     // adds a slight yellow tint to background
     [blueKaiSDK showSettingsScreenWithBackgroundColor:[UIColor colorWithRed:(246/255.0) green:(247/255.0) blue:(220/255.0) alpha:1.0]];
