@@ -198,14 +198,14 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 }
 
 
-- (void)dealloc
-{
-	[self stopNotifier];
-	if (_reachabilityRef != NULL)
-	{
-		CFRelease(_reachabilityRef);
-	}
-}
+//- (void)dealloc
+//{
+//	[self stopNotifier];
+//	if (_reachabilityRef != NULL)
+//	{
+//		CFRelease(_reachabilityRef);
+//	}
+//}
 
 
 #pragma mark - Network Flag Handling
