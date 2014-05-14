@@ -50,9 +50,26 @@
 * @param key, URL param key; required
 * @param value, URL param value; required
 */
+- (void)updateWithKey:(NSString *)key andValue:(NSString *)value;
+
+/** Sets URL params as a key/value pair
+*
+* Deprecated; use "updateWithKey:andValue" intead
+*
+* @param key, URL param key; required
+* @param value, URL param value; required
+*/
 - (void)put:(NSString *)key withValue:(NSString *)value;
 
 /** Sets URL params by using NSDictionary
+*
+* @param dictionary, key/value pairs to be constructed as URL params
+*/
+- (void)updateWithDictionary:(NSDictionary *)dictionary;
+
+/** Sets URL params by using NSDictionary
+*
+* Deprecated; use "updateWithDictionary" instead
 *
 * @param dictionary, key/value pairs to be constructed as URL params
 */
@@ -64,6 +81,14 @@
 *
 */
 - (void)showSettingsScreen;
+
+/** Displays BlueKai Optout screen with option to set background color
+*
+* Same functionality as `showSettingsScreen` with option to set custom background color
+*
+* @param color, sets background color for settings UIViewController; defaults to `whiteColor`
+*/
+- (void)showSettingsScreenWithBackgroundColor:(UIColor *)color;
 
 /** Resume BlueKai process
 *
@@ -82,7 +107,7 @@
 
 /** Sets user opt-in preference (Deprecated)
 *
-* Deprecated; Use "setOptInPreference" instead
+* Deprecated; use "setOptInPreference" instead
 *
 * @param pref, sets user tracking preference; defaults to "YES"
 */
