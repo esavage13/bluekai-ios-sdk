@@ -14,9 +14,7 @@
 		24DBFE5618FDD78F0069F878 /* BlueKai_SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4E18FDD78F0069F878 /* BlueKai_SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		24DBFE5718FDD78F0069F878 /* BlueKai_SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5018FDD78F0069F878 /* BlueKai_SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		24DBFE5818FDD78F0069F878 /* BlueKai_SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE5218FDD78F0069F878 /* BlueKai_SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		35DBA0D53D0C45553E72144B /* BlueKai_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBA4910E5AD1FAB809164A /* BlueKai_OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		35DBAB3030DB20EB3A87057E /* BlueKai_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */; };
-		35DBABAC51479C6926359472 /* BlueKai_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBA4910E5AD1FAB809164A /* BlueKai_OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D71EF5ED173B6CF200B90918 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EC173B6CF200B90918 /* UIKit.framework */; };
 		D71EF5EF173B6E3E00B90918 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EE173B6E3E00B90918 /* QuartzCore.framework */; };
 		D74FF32E173CC2F900C34EE0 /* btn-sub-del-op.png in Resources */ = {isa = PBXBuildFile; fileRef = D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */; };
@@ -27,11 +25,9 @@
 		D79AF762173A1AA7002E0A0B /* BlueKai.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF761173A1AA7002E0A0B /* BlueKai.m */; };
 		D79AF76A173A1AA8002E0A0B /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF769173A1AA8002E0A0B /* SenTestingKit.framework */; };
 		D79AF76D173A1AA8002E0A0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF75A173A1AA7002E0A0B /* Foundation.framework */; };
-		D79AF770173A1AA8002E0A0B /* libBlueKai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF757173A1AA7002E0A0B /* libBlueKai.a */; };
 		D79AF776173A1AA8002E0A0B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D79AF774173A1AA8002E0A0B /* InfoPlist.strings */; };
 		D79AF779173A1AA8002E0A0B /* BluekaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF778173A1AA8002E0A0B /* BluekaiTests.m */; };
-		D79AF792173A2151002E0A0B /* BlueKai_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF791173A2151002E0A0B /* BlueKai_Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D79AF793173A2151002E0A0B /* BlueKai_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF791173A2151002E0A0B /* BlueKai_Reachability.m */; };
+		D79AF792173A2151002E0A0B /* BlueKai_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +55,8 @@
 
 /* Begin PBXFileReference section */
 		00677793177ACD8F00C943BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		24541F4E1922BA77000820F8 /* libBlueKai.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBlueKai.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		24541F4F1922BA77000820F8 /* BlueKai.xcodeprojTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueKai.xcodeprojTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		24DBFE4718FDD78F0069F878 /* NSObject+BlueKai_SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BlueKai_SBJSON.h"; sourceTree = "<group>"; };
 		24DBFE4818FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+BlueKai_SBJSON.m"; sourceTree = "<group>"; };
 		24DBFE4918FDD78F0069F878 /* NSString+BlueKai_SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BlueKai_SBJSON.h"; sourceTree = "<group>"; };
@@ -72,27 +70,21 @@
 		24DBFE5118FDD78F0069F878 /* BlueKai_SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_SBJsonWriter.h; sourceTree = "<group>"; };
 		24DBFE5218FDD78F0069F878 /* BlueKai_SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_SBJsonWriter.m; sourceTree = "<group>"; };
 		35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_Reachability.m; sourceTree = "<group>"; };
-		35DBA341DA7284E4A6F89886 /* BlueKai_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_OpenUDID.h; sourceTree = "<group>"; };
-		35DBA4910E5AD1FAB809164A /* BlueKai_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_OpenUDID.m; sourceTree = "<group>"; };
 		35DBAB0E3941F731AEDB1939 /* BlueKai_Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_Reachability.h; sourceTree = "<group>"; };
 		D71EF5EC173B6CF200B90918 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D71EF5EE173B6E3E00B90918 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sub-del-op.png"; sourceTree = "<group>"; };
 		D74FF335173CC43200C34EE0 /* chk-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chk-1.png"; sourceTree = "<group>"; };
 		D74FF336173CC43200C34EE0 /* unchk-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchk-1.png"; sourceTree = "<group>"; };
-		D79AF757173A1AA7002E0A0B /* libBlueKai.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBlueKai.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D79AF75A173A1AA7002E0A0B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D79AF75E173A1AA7002E0A0B /* BlueKai.xcodeproj-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlueKai.xcodeproj-Prefix.pch"; sourceTree = "<group>"; };
 		D79AF75F173A1AA7002E0A0B /* BlueKai.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlueKai.h; sourceTree = "<group>"; };
 		D79AF761173A1AA7002E0A0B /* BlueKai.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlueKai.m; sourceTree = "<group>"; };
-		D79AF768173A1AA8002E0A0B /* BlueKai.xcodeprojTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueKai.xcodeprojTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D79AF769173A1AA8002E0A0B /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		D79AF773173A1AA8002E0A0B /* Bluekai-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bluekai-Info.plist"; sourceTree = "<group>"; };
 		D79AF775173A1AA8002E0A0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D79AF777173A1AA8002E0A0B /* BluekaiTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BluekaiTests.h; sourceTree = "<group>"; };
 		D79AF778173A1AA8002E0A0B /* BluekaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BluekaiTests.m; sourceTree = "<group>"; };
-		D79AF790173A2151002E0A0B /* BlueKai_Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_Reachability.h; sourceTree = "<group>"; };
-		D79AF791173A2151002E0A0B /* BlueKai_Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +105,6 @@
 			files = (
 				D79AF76A173A1AA8002E0A0B /* SenTestingKit.framework in Frameworks */,
 				D79AF76D173A1AA8002E0A0B /* Foundation.framework in Frameworks */,
-				D79AF770173A1AA8002E0A0B /* libBlueKai.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,8 +114,6 @@
 		24DBFE4618FDD77A0069F878 /* Third Party Libs */ = {
 			isa = PBXGroup;
 			children = (
-				D79AF790173A2151002E0A0B /* BlueKai_Reachability.h */,
-				D79AF791173A2151002E0A0B /* BlueKai_Reachability.m */,
 				24DBFE4718FDD78F0069F878 /* NSObject+BlueKai_SBJSON.h */,
 				24DBFE4818FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m */,
 				24DBFE4918FDD78F0069F878 /* NSString+BlueKai_SBJSON.h */,
@@ -137,10 +126,8 @@
 				24DBFE5018FDD78F0069F878 /* BlueKai_SBJsonParser.m */,
 				24DBFE5118FDD78F0069F878 /* BlueKai_SBJsonWriter.h */,
 				24DBFE5218FDD78F0069F878 /* BlueKai_SBJsonWriter.m */,
-				35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */,
 				35DBAB0E3941F731AEDB1939 /* BlueKai_Reachability.h */,
-				35DBA341DA7284E4A6F89886 /* BlueKai_OpenUDID.h */,
-				35DBA4910E5AD1FAB809164A /* BlueKai_OpenUDID.m */,
+				35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */,
 			);
 			name = "Third Party Libs";
 			sourceTree = "<group>";
@@ -151,17 +138,9 @@
 				D79AF75C173A1AA7002E0A0B /* BlueKai */,
 				D79AF771173A1AA8002E0A0B /* Bluekai Tests */,
 				D79AF759173A1AA7002E0A0B /* Frameworks */,
-				D79AF758173A1AA7002E0A0B /* Products */,
+				24541F4E1922BA77000820F8 /* libBlueKai.a */,
+				24541F4F1922BA77000820F8 /* BlueKai.xcodeprojTests.octest */,
 			);
-			sourceTree = "<group>";
-		};
-		D79AF758173A1AA7002E0A0B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D79AF757173A1AA7002E0A0B /* libBlueKai.a */,
-				D79AF768173A1AA8002E0A0B /* BlueKai.xcodeprojTests.octest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		D79AF759173A1AA7002E0A0B /* Frameworks */ = {
@@ -229,6 +208,7 @@
 				D79AF753173A1AA7002E0A0B /* Sources */,
 				D79AF754173A1AA7002E0A0B /* Frameworks */,
 				D79AF755173A1AA7002E0A0B /* CopyFiles */,
+				24A22516191C223200FB912A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -236,7 +216,7 @@
 			);
 			name = BlueKai;
 			productName = Bluekai_SDK;
-			productReference = D79AF757173A1AA7002E0A0B /* libBlueKai.a */;
+			productReference = 24541F4E1922BA77000820F8 /* libBlueKai.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D79AF767173A1AA8002E0A0B /* BlueKai Tests */ = {
@@ -255,7 +235,7 @@
 			);
 			name = "BlueKai Tests";
 			productName = Bluekai_SDKTests;
-			productReference = D79AF768173A1AA8002E0A0B /* BlueKai.xcodeprojTests.octest */;
+			productReference = 24541F4F1922BA77000820F8 /* BlueKai.xcodeprojTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -275,7 +255,7 @@
 				en,
 			);
 			mainGroup = D79AF74C173A1AA7002E0A0B;
-			productRefGroup = D79AF758173A1AA7002E0A0B /* Products */;
+			productRefGroup = D79AF74C173A1AA7002E0A0B;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -300,6 +280,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		24A22516191C223200FB912A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "##########################################\n#\n# c.f. http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n#\n# Version 2.7\n#\n# Latest Change:\n# - Supports iPhone 5 / iPod Touch 5 (uses Apple's workaround to lipo bug)\n#\n# Purpose:\n#   Automatically create a Universal static library for iPhone + iPad + iPhone Simulator from within XCode\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n\nset -e\nset -o pipefail\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\n    echo \"########### TESTS #############\"\n    echo \"Use the following variables when debugging this script; note that they may change on recursions\"\n    echo \"BUILD_DIR = $BUILD_DIR\"\n    echo \"BUILD_ROOT = $BUILD_ROOT\"\n    echo \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\n    echo \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\n    echo \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\n    echo \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\n    OTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\n    OTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\n    echo \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n    # CRITICAL:\n    # Prevent infinite recursion (Xcode sucks)\n    export ALREADYINVOKED=\"true\"\n\n    echo \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\n    echo \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -project \\\"${PROJECT_NAME}.xcodeproj\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\" BUILD_DIR=\\\"${BUILD_DIR}\\\" BUILD_ROOT=\\\"${BUILD_ROOT}\\\" SYMROOT=\\\"${SYMROOT}\\\"\n\n    xcodebuild -configuration \"${CONFIGURATION}\" -project \"${PROJECT_NAME}.xcodeproj\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\"\n\n    ACTION=\"build\"\n\n    #Merge all platform binaries as a fat binary for each configurations.\n\n    # Calculate where the (multiple) built files are coming from:\n    CURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\n    CURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\n    echo \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\n    echo \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\n    CREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\n    echo \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n    # ... remove the products of previous runs of this script\n    #      NB: this directory is ONLY created by this script - it should be safe to delete!\n\n    rm -rf \"${CREATING_UNIVERSAL_DIR}\"\n    mkdir \"${CREATING_UNIVERSAL_DIR}\"\n\n    #\n    echo \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n    xcrun -sdk iphoneos lipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n    #########\n    #\n    # Added: StackOverflow suggestion to also copy \"include\" files\n    #    (untested, but should work OK)\n    #\n    echo \"Fetching headers from ${PUBLIC_HEADERS_FOLDER_PATH}\"\n    echo \"  (if you embed your library project in another project, you will need to add\"\n    echo \"   a \"User Search Headers\" build setting of: (NB INCLUDE THE DOUBLE QUOTES BELOW!)\"\n    echo '        \"$(TARGET_BUILD_DIR)/usr/local/include/\"'\n    \n    if [ -d \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\" ]\n    then\n        mkdir -p \"${CREATING_UNIVERSAL_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"\n        # * needs to be outside the double quotes?\n    cp -r \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"* \"${CREATING_UNIVERSAL_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"\n  fi\n\n  #open \"${CREATING_UNIVERSAL_DIR}\"\n  # copy to sample app for testing\n  echo \"Copying static binary to for sample app ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n    cp \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" ../sample/\n\nfi\n\n";
+			showEnvVarsInLog = 0;
+		};
 		D79AF766173A1AA8002E0A0B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -312,6 +306,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -329,7 +324,6 @@
 				24DBFE5718FDD78F0069F878 /* BlueKai_SBJsonParser.m in Sources */,
 				24DBFE5318FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m in Sources */,
 				35DBAB3030DB20EB3A87057E /* BlueKai_Reachability.m in Sources */,
-				35DBABAC51479C6926359472 /* BlueKai_OpenUDID.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,8 +332,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D79AF779173A1AA8002E0A0B /* BluekaiTests.m in Sources */,
-				D79AF793173A2151002E0A0B /* BlueKai_Reachability.m in Sources */,
-				35DBA0D53D0C45553E72144B /* BlueKai_OpenUDID.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +451,7 @@
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				DSTROOT = /tmp/Bluekai_SDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -487,6 +480,7 @@
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				DSTROOT = /tmp/Bluekai_SDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
