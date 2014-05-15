@@ -1,7 +1,10 @@
 
-#import "BluekaiTests.h"
+#import <XCTest/XCTest.h>
 
-@implementation BluekaiTests
+@interface BluekaiTests : XCTestCase
+@end
+
+@implementation BlueKaiTests
 
 - (void)setUp
 {
@@ -19,7 +22,7 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in BluekaiTests");
+    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
 }
 
 @end
