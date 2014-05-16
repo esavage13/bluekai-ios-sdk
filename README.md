@@ -1,15 +1,15 @@
-# Integrating the BlueKai SDK
-## Download the BlueKai SDK for iOS
+## Integrating the BlueKai SDK
+### Download the BlueKai SDK for iOS
 
 http://bluekai.github.io/bluekai-ios-sdk-static-libs.zip
 
-## Obtain BlueKai site ID
+### Obtain BlueKai site ID
 
 For any demo projects a site id of `2` can be used.
 
 But before you ship, be sure to contact your BlueKai account manager for your company site ID.
 
-## Add BlueKai SDK to Project
+### Add BlueKai SDK to Project
 
 In XCode, drag the BlueKai_SDK folder into the project directory as shown. 
 
@@ -21,28 +21,28 @@ choose the option that fits your environment.
 
    ![Screenshot](http://bluekai.github.io/images/ios/image003.png)
 
-## Add Dependencies 
+### Add Dependencies 
 
 Add `libsqlite3.0.dylib`, `SystemConfiguration.framework` to your
 project. To do so, please follow these steps.
 
-+	Select "Targets" from your project
++ Select "Targets" from your project
 
     ![Screenshot](http://bluekai.github.io/images/ios/image005.png)
-+	Select "Build Phases"
-+	Click on "+" symbol in "Link Binary With Libraries" panel
-+	Type "libsqli" in the search box
-+	Select "`libsqlite3.dylib`" from the list
-+	Click on the "Add" button
++ Select "Build Phases"
++ Click on "+" symbol in "Link Binary With Libraries" panel
++ Type "libsqli" in the search box
++ Select "`libsqlite3.dylib`" from the list
++ Click on the "Add" button
     
     ![Screenshot](http://bluekai.github.io/images/ios/image007.png)
 + Repeat this process to add SystemConfiguration.framework. Type "system" in the search box
-+	Select "SystemConfiguration.framework" from the list
-+	Click on the "Add" button
++ Select "SystemConfiguration.framework" from the list
++ Click on the "Add" button
 
     ![Screenshot](http://bluekai.github.io/images/ios/image009.png)
 
-## Include BlueKai iOS SDK 
+### Include BlueKai iOS SDK 
 
 In `ViewController.h` file or the header file of your view, add 
 
@@ -53,10 +53,10 @@ In `ViewController.h` file or the header file of your view, add
 On the top of the corresponding implementaton `.m` file, add
 
 ```objectivec
-#import 'BlueKai.h'
+#import "BlueKai.h"
 ```
 
-## Create Instance 
+### Create Instance 
 
 In `ViewController.h` file, define an instance of BlueKai SDK.
 
@@ -67,7 +67,7 @@ In `ViewController.h` file, define an instance of BlueKai SDK.
 }
 ```
 
-## Initialize SDK 
+### Initialize SDK 
 
 In `viewDidLoad` method of `ViewController.h` file, initialize the
 instance of the SDK by adding these lines. Set the view controller as
@@ -75,7 +75,7 @@ the delegate for BlueKai SDK. All the arguments are required.
 
   
 ```objectivec
-blueKaiSdk = [[BlueKai alloc]initWithSiteId:@"2" withAppVersion:version withView:self withDevMode:YES]; 
+blueKaiSdk = [[BlueKai alloc] initWithSiteId:@"2" withAppVersion:version withView:self withDevMode:YES]; 
 ```
 
 The first argument (`initWithSiteId`) is site id, which you would get from BlueKai.
@@ -93,20 +93,20 @@ with response from the BluaKai server. You should turn this feature off in your 
 
 
 
-## Passing a Value 
+### Passing a Value 
 
 To pass a single key value pair to BlueKai SDK, use the below code
 
-  [blueKaiSdk updateWithKey:@"myKey" andValue:@"myValue"];
-	
+    [blueKaiSdk updateWithKey:@"myKey" andValue:@"myValue"];
+  
 
-## Passing Multiple Values
+### Passing Multiple Values
 
 To pass multiple of key value pairs to BlueKai SDK, create an NSDictionary with key/value pairs and use the below method
 
     [blueKaiSdk updateWithDictionary:dictionary];
 
-## Resuming Data Post 
+### Resuming Data Post 
 
 The `resume()` method in BlueKai SDK should be invoked from the
 calling view controller’s `appCameToForeground()` method. This should be
@@ -127,7 +127,7 @@ Define a method appCameToForeground and call `resume()`:
 }
 ```
 
-## Add Notification Support (Optional)
+### Add Notification Support (Optional)
 
 Declare the BlueKai SDK delegate in `ViewController.h`. This step is
 optional and is needed only if you need a notification when data is posted
@@ -135,7 +135,7 @@ to BlueKai server.
 
 
 ```objectivec
-@protocol OnDataPostedListener;
+@protocol BlueKaiOnDataPostedListener;
 
 @interface ViewController : UIViewController
 {
@@ -157,7 +157,7 @@ following delegate method in `ViewController.m`.
 }
 ```
 
-## Send displayName by Default (Recommended)
+### Send displayName by Default (Recommended)
 
 It's recommended that the display name of the application be sent in
 addition to the site id: 
@@ -168,7 +168,7 @@ addition to the site id:
     [blueKaiSdk updateWithKey:@"displayName" andValue:displayName];
 ```
 
-# Public Methods 
+## Public Methods 
 
 | Definition        | Method           | 
 | ------------- | ------------- | 
@@ -191,7 +191,7 @@ addition to the site id:
 |  **[DEPRECATED]** Set key/value strings in a NSDictionary and send them to BlueKai server | ~~- (void)put:(NSDictionary *)dictionary~~ |
 
 
-# Updating the SDK 
+## Updating the SDK 
 
 Update, unless otherwise indicated, can be done by just copying over
 the previous version. 
