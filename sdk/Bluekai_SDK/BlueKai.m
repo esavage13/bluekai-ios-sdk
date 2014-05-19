@@ -373,18 +373,22 @@
 #pragma mark - Deprecated Methods
 
 - (id)initWithArgs:(BOOL)value withSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view {
+    [self blueKaiLogger:_devMode withString:@"WARNING: [DEPRECATED] Please use the \"- (void) InitWithSiteId:withAppVersion:withView:withDevMode\" method instead" withObject:nil];
     return [self initWithSiteId:siteID withAppVersion:version withView:view withDevMode:value];
 }
 
 - (void)setPreference:(BOOL)optIn {
+    [self blueKaiLogger:_devMode withString:@"WARNING: [DEPRECATED] Please use the \"- (void) setOptInPreference\" method instead" withObject:nil];
     [self setOptInPreference:optIn];
 }
 
 - (void)put:(NSString *)key withValue:(NSString *)value {
+    [self blueKaiLogger:_devMode withString:@"WARNING: [DEPRECATED] Please use the \"- (void) updateWithKey:andValue\" method instead" withObject:nil];
     [self updateWithKey:key andValue:value];
 }
 
 - (void)put:(NSDictionary *)dictionary {
+    [self blueKaiLogger:_devMode withString:@"WARNING: [DEPRECATED] Please use the \"- (void) updateWithDictionary\" method instead" withObject:nil];
     [self updateWithDictionary:dictionary];
 }
 
