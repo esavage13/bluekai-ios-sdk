@@ -108,7 +108,8 @@
             alert = [[UIAlertView alloc] initWithTitle:@"Error message" message:@"Enter value" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         } else {
-            [blueKaiSDK put:keyTextfield.text withValue:valueTextfield.text];
+//            [blueKaiSDK put:keyTextfield.text withValue:valueTextfield.text]; // example for deprecate warning
+            [blueKaiSDK updateWithKey:keyTextfield.text andValue:valueTextfield.text];
         }
     }
 }
