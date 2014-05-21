@@ -33,8 +33,18 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D79AF767173A1AA8002E0A0B"
-               BuildableName = "BlueKai.xcodeprojTests.octest"
+               BuildableName = "BlueKai.xcodeprojTests.xctest"
                BlueprintName = "BlueKai Tests"
+               ReferencedContainer = "container:Bluekai_SDK.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "24F7B6FF192ADADC002D8F99"
+               BuildableName = "BlueKai Tests2.xctest"
+               BlueprintName = "BlueKai Tests2"
                ReferencedContainer = "container:Bluekai_SDK.xcodeproj">
             </BuildableReference>
          </TestableReference>
