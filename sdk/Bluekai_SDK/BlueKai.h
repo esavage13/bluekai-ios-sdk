@@ -54,7 +54,7 @@
 
 /** Sets URL params as a key/value pair
 *
-* Deprecated; use "updateWithKey:andValue" intead
+* Deprecated; use "updateWithKey:andValue" instead
 *
 * @param key, URL param key; required
 * @param value, URL param value; required
