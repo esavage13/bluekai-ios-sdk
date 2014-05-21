@@ -33,8 +33,6 @@
     NSUserDefaults      *_userDefaults;
 }
 
-@synthesize delegate = _delegate;
-
 
 #pragma mark - Public Methods
 
@@ -65,6 +63,7 @@
         _mainView = nil;
         _mainView = view;
         _webView = nil;
+        _webView.delegate = nil;
         _cancelButton = nil;
         _webUrl = [[NSMutableString alloc] init];
         _nonLoadkeyValDict = [[NSMutableDictionary alloc] init];
@@ -242,7 +241,7 @@
 }
 
 - (void)updateWithDictionary:(NSDictionary *)dictionary {
-    [self blueKaiLogger:_devMode withString:@"put:dictionary" withObject:dictionary];
+    [self blueKaiLogger:_devMode withString:@"updateWithDictionary" withObject:dictionary];
 
     if (_webUrl) {
         [_webUrl replaceCharactersInRange:NSMakeRange(0, [_webUrl length]) withString:@""];
