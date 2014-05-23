@@ -46,13 +46,13 @@ project. To do so, please follow these steps.
 
 In `ViewController.h` file or the header file of your view, add 
 
-```objectivec
+```objective-c
 @class BlueKai;
 ```
 
 On the top of the corresponding implementaton `.m` file, add
 
-```objectivec
+```objective-c
 #import "BlueKai.h"
 ```
 
@@ -60,7 +60,7 @@ On the top of the corresponding implementaton `.m` file, add
 
 In `ViewController.h` file, define an instance of BlueKai SDK.
 
-```objectivec
+```objective-c
 @interface ViewController : UIViewController
 {
     BlueKai *blueKaiSdk;
@@ -74,7 +74,7 @@ instance of the SDK by adding these lines. Set the view controller as
 the delegate for BlueKai SDK. All the arguments are required.
 
   
-```objectivec
+```objective-c
 blueKaiSdk = [[BlueKai alloc] initWithSiteId:@"2" withAppVersion:version withView:self withDevMode:YES]; 
 ```
 
@@ -114,13 +114,13 @@ done in order to send out any queued data, which may not have been sent
 because either the application was closed while data upload was in progress or due to network issues. Create a
 notification in `viewDidLoad` method or wherever you deem fit.
 
-```objectivec
+```objective-c
 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appCameToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 ```
 
 Define a method appCameToForeground and call `resume()`:
 
-```objectivec
+```objective-c
 - (void)appCameToForeground
 {
    [blueKaiSdk resume];
@@ -134,7 +134,7 @@ optional and is needed only if you need a notification when data is posted
 to BlueKai server.
 
 
-```objectivec
+```objective-c
 @protocol BlueKaiOnDataPostedListener;
 
 @interface ViewController : UIViewController
@@ -144,7 +144,7 @@ to BlueKai server.
 
 Set `ViewController.h` as the delegate. You can place this code right after initializing SDK
   
-```objectivec
+```objective-c
 blueKaiSdk = [[Bluekai alloc]initWithSiteId:@"2" withAppVersion:version withView:self withDevMode:NO]; 
 blueKaiSdk.delegate = (id) <BlueKaiOnDataPostedListener> self;
 ```
@@ -152,7 +152,7 @@ blueKaiSdk.delegate = (id) <BlueKaiOnDataPostedListener> self;
 To get notifications about the status of data posting, implement the
 following delegate method in `ViewController.m`. 
 
-```objectivec
+```objective-c
 - (void)onDataPosted:(BOOL)status {
 }
 ```
@@ -162,33 +162,103 @@ following delegate method in `ViewController.m`.
 It's recommended that the display name of the application be sent in
 addition to the site id: 
 
-```objectivec
+```objective-c
     NSDictionary *infoPList = [[NSBundle mainBundle] infoDictionary];
     NSString *displayName = [infoPList objectForKey:@"CFBundleDisplayName"];
     [blueKaiSdk updateWithKey:@"displayName" andValue:displayName];
 ```
 
-## Public Methods 
+## Public Methods
 
-| Definition        | Method           | 
-| ------------- | ------------- | 
-|  **[DEPRECATED]** Create the instance for Bluekai SDK with required arguments; use `initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value` instead | ~~- (id)initWithArgs:(BOOL)value withSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view;~~
-|  Create the instance for Bluekai SDK with required arguments | - (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value  | 
-|  Convenience constructor to initialize and get instance of BlueKai without arguments      | - (id)init  | 
-|  Method to show BlueKai in-built opt-in or opt-out screen     | - (void)showSettingsScreen  | 
-|  The same functionality as `showSettingsScreen` with ability to set custom background color | - (void)showSettingsScreenWithBackgroundColor:(UIColor *)color |
-|  Method to resume BlueKai process after calling application resumes or comes to foreground. To use in onResume() of the calling activity foreground.     | - (void)resume  | 
-|  **[DEPRECATED]** Method to set user opt-in or opt-out preference; use `setOptInPreference:(BOOL)OptIn` instead     | ~~- (void) setPreference:(BOOL)optIn~~  | 
-|  Method to set user opt-in or opt-out preference           | - (void) setOptInPreference:(BOOL)OptIn
-|  Set developer mode (YES or NO); provides verbose logging  | - (void) setDevMode:(BOOL)mode  | 
-|  Set the calling application version number     | - (void) setAppVersion:(NSString *)version  | 
-|  Set the ViewController instance as view to get notification on the data posting status     | - (void) setViewController:(UIViewController *)view  | 
-|  Set BlueKai site id     | - (void)setSiteId:(int)siteId  | 
-|  Use HTTPS transfer protocol (YES or NO) | - (void)useHttps:(BOOL)secured  |
-|  Set key/value strings and send them to BlueKai server | - (void)updateWithKey:(NSString *)key andValue:(NSString *)value |
-|  **[DEPRECATED]** Set key/value strings and send them to BlueKai server | ~~- (void)put:(NSString *)key withValue:(NSString *)value~~ |
-|  Set key/value strings in a NSDictionary and send them to BlueKai server | - (void)updateWithDictionary:(NSDictionary *)dictionary |
-|  **[DEPRECATED]** Set key/value strings in a NSDictionary and send them to BlueKai server | ~~- (void)put:(NSDictionary *)dictionary~~ |
+### Properties
+
+Set developer mode (YES or NO); provides verbose logging
+```objective-c
+@property (nonatomic) BOOL devMode;
+```
+
+Set the calling application version number
+```objective-c
+@property (nonatomic) NSString *appVersion;
+```
+
+Set the ViewController instance as view to get notification on the data posting status
+```objective-c
+@property (nonatomic) UIViewController *viewController;
+```
+
+Set BlueKai site id
+```objective-c
+@property (nonatomic) NSString *siteId;
+```
+
+Use HTTPS transfer protocol
+```objective-c
+@property (nonatomic) BOOL useHttps;
+```
+
+
+### Methods
+
+Create the instance for Bluekai SDK with required arguments. This method is preferred
+```objective-c
+    - (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value
+```
+
+**[DEPRECATED]**
+```objective-c
+    - (id)initWithArgs:(BOOL)value withSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view
+```
+
+Convenience constructor to initialize and get instance of BlueKai without arguments
+```objective-c
+    - (id)init
+```
+
+Method to show BlueKai in-built opt-in or opt-out screen
+```objective-c
+- (void)showSettingsScreen
+```
+
+The same functionality as `showSettingsScreen` with ability to set custom background color
+```objective-c
+- (void)showSettingsScreenWithBackgroundColor:(UIColor *)color
+```
+
+Method to resume BlueKai process after calling application resumes or comes to foreground. To use in onResume() of the calling activity foreground.
+```objective-c
+- (void)resume
+```
+
+Method to set user opt-in or opt-out preference
+```objective-c
+- (void) setOptInPreference:(BOOL)OptIn
+```
+
+**[DEPRECATED]**
+```objective-c
+- (void) setPreference:(BOOL)optIn
+```
+
+Set key/value strings and send them to BlueKai server
+```objective-c
+- (void)updateWithKey:(NSString *)key andValue:(NSString *)value
+```
+
+**[DEPRECATED]**
+```objective-c
+- (void)put:(NSString *)key withValue:(NSString *)value
+```
+
+Set key/value strings in a NSDictionary and send them to BlueKai server
+```objective-c
+- (void)updateWithDictionary:(NSDictionary *)dictionary
+```
+
+**[DEPRECATED]**
+```objective-c
+- (void)put:(NSDictionary *)dictionary
+```
 
 
 ## Updating the SDK 

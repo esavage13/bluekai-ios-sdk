@@ -5,9 +5,7 @@
 
 @implementation BlueKai {
     BOOL _alertShowBool,
-         _useHttps,
-         _webLoaded,
-         _devMode;
+         _webLoaded;
 
     int _urlStringCount,
         _numberOfRunningRequests;
@@ -17,13 +15,10 @@
 
     UITapGestureRecognizer *_tap;
     UIWebView              *_webView;
-    UIViewController       *_mainView;
 
     NSMutableString        *_webUrl;
 
-    NSString               *_appVersion,
-                           *_keyString,
-                           *_siteId,
+    NSString               *_keyString,
                            *_valueString;
 
     NSMutableDictionary *_keyValDict,
@@ -39,11 +34,12 @@
 - (id)init {
     if (self = [super init]) {
         _appVersion = nil;
-        _mainView = nil;
+        _viewController = nil;
         _siteId = nil;
         _useHttps = NO;
         _devMode = NO;
-        [self setOptInPreference:YES];
+        _optInPreference = YES;
+        _userDefaults = [NSUserDefaults standardUserDefaults];
     }
 
     return self;
@@ -58,23 +54,21 @@
     if (self = [super init]) {
         _appVersion = version;
         _devMode = value;
-        _siteId = nil;
         _siteId = siteID;
-        _mainView = nil;
-        _mainView = view;
-        _webView = nil;
-        _webView.delegate = nil;
+        _viewController = view;
+        _optInPreference = YES;
         _cancelButton = nil;
         _webUrl = [[NSMutableString alloc] init];
         _nonLoadkeyValDict = [[NSMutableDictionary alloc] init];
         _remainkeyValDict = [[NSMutableDictionary alloc] init];
         _webLoaded = NO;
+        _userDefaults = [NSUserDefaults standardUserDefaults];
         _webView = [[UIWebView alloc] init];
         _webView.delegate = self;
         _webView.layer.cornerRadius = 5.0f;
         _webView.layer.borderColor = [[UIColor grayColor] CGColor];
         _webView.layer.borderWidth = 4.0f;
-        [_mainView.view addSubview:_webView];
+        [_viewController.view addSubview:_webView];
 
         if (_devMode) {
             [self drawWebFrame:_webView];
@@ -82,9 +76,15 @@
             _webView.frame = CGRectMake(10, 10, 1, 1);
         }
 
-        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"settings"]) {
-            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"settings"];
+        if (![_userDefaults objectForKey:@"settings"]) {
+            [_userDefaults setObject:@"NO" forKey:@"settings"];
         }
+
+        if (![_userDefaults objectForKey:@"KeyToUserData"]) {
+            [_userDefaults setObject:(_optInPreference ? @"YES" : @"NO") forKey:@"KeyToUserData"];
+        }
+
+        [self saveSettings:nil];
 
         _webView.hidden = YES;
 
@@ -127,26 +127,10 @@
     return self;
 }
 
-- (void)setDevMode:(BOOL)mode {
-    _devMode = mode;
-
-    if (_mainView && _siteId && _appVersion) {
-        [self resume];
-    }
-}
-
-- (void)setAppVersion:(NSString *)version {
-    _appVersion = version;
-
-    if (_mainView && _siteId) {
-        [self resume];
-    }
-}
-
 - (void)setViewController:(UIViewController *)view {
     [self blueKaiLogger:_devMode withString:@"setViewController" withObject:view];
 
-    _mainView = view;
+    _viewController = view;
 
     if (_siteId) {
         _webView = nil;
@@ -163,7 +147,7 @@
         _webView.layer.cornerRadius = 5.0f;
         _webView.layer.borderColor = [[UIColor grayColor] CGColor];
         _webView.layer.borderWidth = 4.0f;
-        [_mainView.view addSubview:_webView];
+        [_viewController.view addSubview:_webView];
 
         if(_devMode) {
             [self drawWebFrame:_webView];
@@ -172,16 +156,6 @@
         }
 
         _webView.hidden = YES;
-        [self resume];
-    }
-}
-
-- (void)setSiteId:(int)siteId {
-    [self blueKaiLogger:_devMode withString:@"setSiteId" withObject:[NSString stringWithFormat:@"%i", siteId]];
-
-    _siteId = [NSString stringWithFormat:@"%d", siteId];
-
-    if (_mainView) {
         [self resume];
     }
 }
@@ -206,7 +180,6 @@
         } else {
             [self webView:nil didFailLoadWithError:nil];
         }
-
     }
 }
 
@@ -215,11 +188,14 @@
     [self blueKaiLogger:_devMode withString:@"updateWithKeyValue:value" withObject:value];
 
     if (_webLoaded) {
+        [self blueKaiLogger:_devMode withString:@"******** 1" withObject:nil];
         [_nonLoadkeyValDict setValue:value forKey:key];
     } else {
         if (_webUrl) {
+            [self blueKaiLogger:_devMode withString:@"******** 2" withObject:nil];
             [_webUrl replaceCharactersInRange:NSMakeRange(0, [_webUrl length]) withString:@""];
         } else {
+            [self blueKaiLogger:_devMode withString:@"******** 3" withObject:nil];
             _webUrl = [[NSMutableString alloc] init];
         }
 
@@ -229,15 +205,18 @@
         _valueString = [value copy];
 
         if (_keyValDict) {
+            [self blueKaiLogger:_devMode withString:@"******** 4" withObject:nil];
             [_keyValDict removeAllObjects];
         } else {
+            [self blueKaiLogger:_devMode withString:@"******** 5" withObject:nil];
             _keyValDict = [[NSMutableDictionary alloc] init];
         }
 
         [_keyValDict setValue:_valueString forKey:_keyString];
 
-        [self uploadIfNetworkIsAvailable];
     }
+
+    [self uploadIfNetworkIsAvailable];
 }
 
 - (void)updateWithDictionary:(NSDictionary *)dictionary {
@@ -261,25 +240,52 @@
 }
 
 - (void)setOptInPreference:(BOOL)optIn {
-    [self blueKaiLogger:_devMode withString:@"setOptInPreference:OptIn" withObject:(optIn ? @"true" : @"false")];
+    [self blueKaiLogger:_devMode withString:@"setOptInPreference:OptIn" withObject:(_optInPreference ? @"true" : @"false")];
 
-    _userDefaults = [NSUserDefaults standardUserDefaults];
-    [_userDefaults setObject:(optIn ? @"YES" : @"NO") forKey:@"KeyToUserData"];
+    _optInPreference = optIn;
+
+    [_userDefaults setObject:(_optInPreference ? @"YES" : @"NO") forKey:@"KeyToUserData"];
 
     [self saveSettings:nil];
     [self saveOptInPrefsOnServer];
 }
 
-- (void)useHttps:(BOOL)secured {
-    _useHttps = secured;
-}
+//- (void)setSiteId:(int)siteId {
+//    [self blueKaiLogger:_devMode withString:@"setSiteId" withObject:[NSString stringWithFormat:@"%i", siteId]];
+//
+//    _siteId = [NSString stringWithFormat:@"%d", siteId];
+//
+//    if (_viewController) {
+//        [self resume];
+//    }
+//}
+
+//- (void)useHttps:(BOOL)secured {
+//    _useHttps = secured;
+//}
 
 - (void)showSettingsScreen {
     [self showSettingsScreenWithBackgroundColor:nil];
 }
 
+//- (void)setDevMode:(BOOL)mode {
+//    _devMode = mode;
+//
+//    if (_viewController && _siteId && _appVersion) {
+//        [self resume];
+//    }
+//}
+
+//- (void)setAppVersion:(NSString *)version {
+//    _appVersion = version;
+//
+//    if (_viewController && _siteId) {
+//        [self resume];
+//    }
+//}
+
 - (void)showSettingsScreenWithBackgroundColor:(UIColor *)backgroundColor {
-//    NSArray *array = [_mainView.view subviews];
+//    NSArray *array = [_viewController.view subviews];
 //    for (UIView *view in array) {
 //        if(![view isKindOfClass:[UIWebView class]]) {
 //            [view removeFromSuperview];
@@ -288,15 +294,18 @@
 
     UIColor *bgColor = backgroundColor ? backgroundColor : [UIColor whiteColor];
 
-    _mainView.view.hidden = NO;
-    _mainView.view.backgroundColor = bgColor;
-    _userDefaults = [NSUserDefaults standardUserDefaults];
+    _viewController.view.hidden = NO;
+    _viewController.view.backgroundColor = bgColor;
     _userCheckImage = [[UIImageView alloc] initWithFrame:CGRectMake(25, 100, 40, 40)];
 
     UIGraphicsBeginImageContext(_userCheckImage.frame.size);
-    NSString *userPref = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
+    NSString *userPref = [_userDefaults objectForKey:@"settings"];
+    NSString *test = [_userDefaults objectForKey:@"KeyToUserData"];
 
-    if ([userPref isEqualToString:@"YES"]) {
+    [self blueKaiLogger:_devMode withString:@"userPref" withObject:[NSString stringWithFormat:@"%@", userPref]];
+    [self blueKaiLogger:_devMode withString:@"test" withObject:[NSString stringWithFormat:@"%@", test]];
+
+    if ([userPref isEqualToString:@"YES"] || _optInPreference) {
         [[UIImage imageNamed:@"chk-1"] drawInRect:_userCheckImage.bounds];
         [_userDefaults setObject:@"YES" forKey:@"KeyToUserData"];
         _userCheckImage.tag = 0;
@@ -313,7 +322,7 @@
     _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userDataChanged:)];
     _tap.delegate = self;
     [_userCheckImage addGestureRecognizer:_tap];
-    [_mainView.view addSubview:_userCheckImage];
+    [_viewController.view addSubview:_userCheckImage];
 
     UILabel *usrData_lbl = [[UILabel alloc] initWithFrame:CGRectMake(75, 95, 240, 50)];
     usrData_lbl.textColor = [UIColor blackColor];
@@ -323,7 +332,7 @@
     usrData_lbl.lineBreakMode = NSLineBreakByWordWrapping;
     usrData_lbl.font = [UIFont systemFontOfSize:14];
     usrData_lbl.text = @"Allow Bluekai to receive my data";
-    [_mainView.view addSubview:usrData_lbl];
+    [_viewController.view addSubview:usrData_lbl];
 
     UILabel *tclbl = [[UILabel alloc] initWithFrame:CGRectMake(25, 235, 280, 50)];
     tclbl.textColor = [UIColor blackColor];
@@ -333,7 +342,7 @@
     tclbl.lineBreakMode = NSLineBreakByWordWrapping;
     tclbl.font = [UIFont systemFontOfSize:14];
     tclbl.text = @"The BlueKai privacy policy is available";
-    [_mainView.view addSubview:tclbl];
+    [_viewController.view addSubview:tclbl];
 
     UIButton *Here = [UIButton buttonWithType:UIButtonTypeCustom];
     Here.frame = CGRectMake(256, 253, 50, 14);
@@ -341,7 +350,7 @@
     Here.titleLabel.font = [UIFont systemFontOfSize:14];
     [Here addTarget:self action:@selector(termsConditions:) forControlEvents:UIControlEventTouchUpInside];
     [Here setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [_mainView.view addSubview:Here];
+    [_viewController.view addSubview:Here];
 
     UIButton *savebtn = [UIButton buttonWithType:UIButtonTypeCustom];
     savebtn.frame = CGRectMake(75, 290, 80, 35);
@@ -352,7 +361,7 @@
     [savebtn setBackgroundColor:[UIColor whiteColor]];
     [savebtn addTarget:self action:@selector(saveSettings:) forControlEvents:UIControlEventTouchUpInside];
     [savebtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_mainView.view addSubview:savebtn];
+    [_viewController.view addSubview:savebtn];
 
     UIButton *cancelbtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelbtn.frame = CGRectMake(175, 290, 80, 35);
@@ -363,9 +372,9 @@
     [cancelbtn setBackgroundColor:[UIColor whiteColor]];
     [cancelbtn addTarget:self action:@selector(Cancelbtn:) forControlEvents:UIControlEventTouchUpInside];
     [cancelbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_mainView.view addSubview:cancelbtn];
-    [_mainView.view addSubview:_webView];
-    [_mainView.view addSubview:_cancelButton];
+    [_viewController.view addSubview:cancelbtn];
+    [_viewController.view addSubview:_webView];
+    [_viewController.view addSubview:_cancelButton];
 }
 
 
@@ -401,9 +410,10 @@
                                       @{
                                           @"siteID": _siteId,
                                           @"appVersion": _appVersion,
-                                          @"view": _mainView,
+                                          @"view": _viewController,
                                           @"devMode": _devMode ? @"YES" : @"NO",
-                                          @"useHTTPS": _useHttps ? @"YES" : @"NO"
+                                          @"useHTTPS": _useHttps ? @"YES" : @"NO",
+                                          @"optInPreference": _optInPreference ? @"YES" : @"NO"
                                       }];
 }
 
@@ -426,7 +436,7 @@
 
 - (IBAction)Cancelbtn:(id)sender {
     [self blueKaiLogger:_devMode withString:@"cancel opt-in view" withObject:nil];
-    _mainView.view.hidden = YES;
+    _viewController.view.hidden = YES;
 }
 
 - (IBAction)Cancel:(id)sender {
@@ -437,7 +447,8 @@
 - (IBAction)saveSettings:(id)sender {
 //    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     NSString *userDataValue = [_userDefaults objectForKey:@"KeyToUserData"];
-    [[NSUserDefaults standardUserDefaults] setObject:userDataValue forKey:@"settings"];
+    [self blueKaiLogger:_devMode withString:@"save opt-in view" withObject:nil];
+    [_userDefaults setObject:userDataValue forKey:@"settings"];
     [self saveOptInPrefsOnServer];
 }
 
@@ -559,10 +570,10 @@
         NSString *urlPath = [[_userDefaults objectForKey:@"KeyToUserData"] isEqualToString:@"YES"] ? @"clear_ignore" : @"set_ignore";
         NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@", server, urlPath]];
 
-        [self blueKaiLogger:_devMode withString:@"opt-out preference is set to" withObject:[_userDefaults objectForKey:@"KeyToUserData"]];
-        [self blueKaiLogger:_devMode withString:@"opt-out URL" withObject:url];
+        [self blueKaiLogger:_devMode withString:@"opt-in preference is set to" withObject:[_userDefaults objectForKey:@"KeyToUserData"]];
+        [self blueKaiLogger:_devMode withString:@"opt-in URL" withObject:url];
 
-        [_mainView.view addSubview:optInWebView];
+        [_viewController.view addSubview:optInWebView];
         [optInWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
     } else {
         [self webView:nil didFailLoadWithError:nil];
@@ -570,6 +581,8 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [self blueKaiLogger:_devMode withString:@"*********** webView didFailWithError" withObject:nil];
+
     if (_numberOfRunningRequests != 0) {
         _numberOfRunningRequests = 0;
 
@@ -617,6 +630,7 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
+    [self blueKaiLogger:_devMode withString:@"*********** webViewDidStartLoad" withObject:nil];
     // if "_numberOfRunningRequests" is not -1, +1; otherwise (0 or -1) set it back to 1
     _numberOfRunningRequests = _numberOfRunningRequests != -1 ? _numberOfRunningRequests + 1 : 1;
 }
@@ -667,7 +681,7 @@
                 }
             }
 
-            NSArray *webViews = [_mainView.view subviews];
+            NSArray *webViews = [_viewController.view subviews];
             int web_count = 0;
             int btn_count = 0;
 
@@ -721,7 +735,7 @@
             _webView.layer.borderColor = [[UIColor grayColor] CGColor];
             _webView.layer.borderWidth = 4.0f;
             _webView.hidden = YES;
-            [_mainView.view addSubview:_webView];
+            [_viewController.view addSubview:_webView];
 
             if (_devMode) {
                 [self drawWebFrame:_webView];
@@ -777,7 +791,7 @@
         _webView.layer.borderWidth = 4.0f;
         _webView.tag = 1;
         _webView.hidden = YES;
-        [_mainView.view addSubview:_webView];
+        [_viewController.view addSubview:_webView];
 
         [self blueKaiLogger:_devMode withString:@"3.2" withObject:nil];
 
@@ -837,7 +851,6 @@
             }
         }
 
-        [self blueKaiLogger:_devMode withString:@"Encoded URL" withObject:url_string];
         [_webUrl appendString:url_string];
     }
 
@@ -890,7 +903,9 @@
 }
 
 - (void)startDataUpload {
-    if (_mainView) {
+    [self blueKaiLogger:_devMode withString:@"***** _siteId" withObject:_siteId];
+
+    if (_viewController) {
         if (_siteId) {
             if (_appVersion) {
                 [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:_keyValDict];
@@ -1003,14 +1018,15 @@
     [_cancelButton setImage:[UIImage imageNamed:@"btn-sub-del-op"] forState:UIControlStateNormal];
     [_cancelButton addTarget:self action:@selector(Cancel:) forControlEvents:UIControlEventTouchUpInside];
     _cancelButton.hidden = YES;
-    [_mainView.view addSubview:_cancelButton];
+    [_viewController.view addSubview:_cancelButton];
 }
 
 - (void)uploadIfNetworkIsAvailable {
     //Check the settings page to find the use data is allowed to send to server or not
-    NSString *userPref = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
+    NSString *userPref = [_userDefaults objectForKey:@"settings"];
 
     if ([userPref isEqualToString:@"YES"]) {
+        [self blueKaiLogger:_devMode withString:@"******** 7" withObject:nil];
         _numberOfRunningRequests = -1;
         _webLoaded = YES;
 
@@ -1019,12 +1035,15 @@
         NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
 
         if (networkStatus != NotReachable) {
+            [self blueKaiLogger:_devMode withString:@"******** 7a" withObject:nil];
             [self startDataUpload];
         } else {
+            [self blueKaiLogger:_devMode withString:@"******** 7b" withObject:nil];
             [self webView:nil didFailLoadWithError:nil];
         }
 
     } else {
+        [self blueKaiLogger:_devMode withString:@"******** 8" withObject:nil];
         if (!_webView.hidden) {
             _webView.hidden = YES;
         }
