@@ -26,7 +26,7 @@
 }
 
 - (void)onDataPosted:(BOOL)status {
-    NSString *msg = status ? @"\n\nData sent successfully" : @"\n\nData could not be sent";
+    NSString *msg = status ? @"\nData sent successfully" : @"\nData could not be sent";
 
     alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];

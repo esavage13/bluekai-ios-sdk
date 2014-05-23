@@ -1,14 +1,14 @@
 #import <UIKit/UIKit.h>
 
 @class BlueKai;
-@protocol OnDataPostedListener;
+@protocol BlueKaiOnDataPostedListener;
 
 @interface OptInViewController : UIViewController<UIWebViewDelegate,UITabBarControllerDelegate>
 {
-    BlueKai *blueKaiSDK;
+    BlueKai             *blueKaiSDK;
+    UIAlertView         *alert;
     NSMutableDictionary *config_dict;
-    UIAlertView *alert;
-    
+
     IBOutlet UISegmentedControl *segment;
 }
 

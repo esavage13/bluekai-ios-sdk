@@ -1,5 +1,4 @@
 #import "OptInViewController.h"
-#import "OptInViewController.h"
 #import "BlueKai.h"
 
 @interface OptInViewController ()
@@ -29,7 +28,10 @@
         }
     }
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appEnteredToForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
     self.tabBarController.delegate = self;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
@@ -39,13 +41,16 @@
     BOOL success = [fileManager fileExistsAtPath:plistPath];
 
     if (!success) {
-        // file does not exist. So look into mainBundle
+        // file does not exist; so look into mainBundle
         NSString *defaultPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Configurationfile.plist"];
         [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
     }
 
     config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-    blueKaiSDK = [[BlueKai alloc] initWithSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self withDevMode:[config_dict[@"devMode"] boolValue]];
+    blueKaiSDK = [[BlueKai alloc] initWithSiteId:config_dict[@"siteId"]
+                                  withAppVersion:[[NSBundle mainBundle]
+                      objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                        withView:self withDevMode:[config_dict[@"devMode"] boolValue]];
     blueKaiSDK.delegate = (id) self;
     
     NSLog(@"%@", blueKaiSDK);
@@ -60,13 +65,12 @@
 }
 
 - (void)onDataPosted:(BOOL)status {
-    if (status) {
-        alert = [[UIAlertView alloc] initWithTitle:nil message:@"\n\nData sent successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    } else {
-        alert = [[UIAlertView alloc] initWithTitle:nil message:@"\n\nData could not be sent" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }
+    NSLog(@"**************** %hhd", status);
+    NSString *alertMessage = status ? @"\nData sent successfully" : @"\nData could not be sent";
+    
+    alert = [[UIAlertView alloc] initWithTitle:nil message:alertMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(removeAlert:) userInfo:nil repeats:NO];
 }
 
