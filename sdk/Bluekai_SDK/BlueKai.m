@@ -188,14 +188,11 @@
     [self blueKaiLogger:_devMode withString:@"updateWithKeyValue:value" withObject:value];
 
     if (_webLoaded) {
-        [self blueKaiLogger:_devMode withString:@"******** 1" withObject:nil];
         [_nonLoadkeyValDict setValue:value forKey:key];
     } else {
         if (_webUrl) {
-            [self blueKaiLogger:_devMode withString:@"******** 2" withObject:nil];
             [_webUrl replaceCharactersInRange:NSMakeRange(0, [_webUrl length]) withString:@""];
         } else {
-            [self blueKaiLogger:_devMode withString:@"******** 3" withObject:nil];
             _webUrl = [[NSMutableString alloc] init];
         }
 
@@ -205,10 +202,8 @@
         _valueString = [value copy];
 
         if (_keyValDict) {
-            [self blueKaiLogger:_devMode withString:@"******** 4" withObject:nil];
             [_keyValDict removeAllObjects];
         } else {
-            [self blueKaiLogger:_devMode withString:@"******** 5" withObject:nil];
             _keyValDict = [[NSMutableDictionary alloc] init];
         }
 
@@ -581,7 +576,6 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [self blueKaiLogger:_devMode withString:@"*********** webView didFailWithError" withObject:nil];
 
     if (_numberOfRunningRequests != 0) {
         _numberOfRunningRequests = 0;
@@ -630,7 +624,6 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    [self blueKaiLogger:_devMode withString:@"*********** webViewDidStartLoad" withObject:nil];
     // if "_numberOfRunningRequests" is not -1, +1; otherwise (0 or -1) set it back to 1
     _numberOfRunningRequests = _numberOfRunningRequests != -1 ? _numberOfRunningRequests + 1 : 1;
 }
@@ -1026,7 +1019,6 @@
     NSString *userPref = [_userDefaults objectForKey:@"settings"];
 
     if ([userPref isEqualToString:@"YES"]) {
-        [self blueKaiLogger:_devMode withString:@"******** 7" withObject:nil];
         _numberOfRunningRequests = -1;
         _webLoaded = YES;
 
@@ -1035,15 +1027,12 @@
         NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
 
         if (networkStatus != NotReachable) {
-            [self blueKaiLogger:_devMode withString:@"******** 7a" withObject:nil];
             [self startDataUpload];
         } else {
-            [self blueKaiLogger:_devMode withString:@"******** 7b" withObject:nil];
             [self webView:nil didFailLoadWithError:nil];
         }
 
     } else {
-        [self blueKaiLogger:_devMode withString:@"******** 8" withObject:nil];
         if (!_webView.hidden) {
             _webView.hidden = YES;
         }
