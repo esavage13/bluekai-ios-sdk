@@ -19,6 +19,7 @@
 		245725F6192C38FE00253FDB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 245725F5192C38FE00253FDB /* Images.xcassets */; };
 		24572616192C3EAF00253FDB /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 245725EC192C38FE00253FDB /* Main_iPhone.storyboard */; };
 		24572617192C3EAF00253FDB /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 245725EF192C38FE00253FDB /* Main_iPad.storyboard */; };
+		248828341935026E00CF851E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 248828331935026E00CF851E /* CFNetwork.framework */; };
 		24DBFE5318FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4818FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		24DBFE5418FDD78F0069F878 /* NSString+BlueKai_SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4A18FDD78F0069F878 /* NSString+BlueKai_SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		24DBFE5518FDD78F0069F878 /* BlueKai_SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DBFE4C18FDD78F0069F878 /* BlueKai_SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -76,6 +77,7 @@
 /* Begin PBXFileReference section */
 		00677793177ACD8F00C943BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		240C911C192C233E00C5633D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		24104D17193680B50028E34A /* BlueKai_Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_Protected.h; sourceTree = "<group>"; };
 		241DB7051926C999006FEFC5 /* BlueKaiTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKaiTestCase.m; sourceTree = "<group>"; };
 		245725DC192C38FE00253FDB /* TestRunnerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestRunnerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		245725E2192C38FE00253FDB /* TestRunnerApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestRunnerApp-Info.plist"; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		245725F2192C38FE00253FDB /* BLUEKAIViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLUEKAIViewController.h; sourceTree = "<group>"; };
 		245725F3192C38FE00253FDB /* BLUEKAIViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLUEKAIViewController.m; sourceTree = "<group>"; };
 		245725F5192C38FE00253FDB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		248828331935026E00CF851E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		24DBFE4718FDD78F0069F878 /* NSObject+BlueKai_SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BlueKai_SBJSON.h"; sourceTree = "<group>"; };
 		24DBFE4818FDD78F0069F878 /* NSObject+BlueKai_SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+BlueKai_SBJSON.m"; sourceTree = "<group>"; };
 		24DBFE4918FDD78F0069F878 /* NSString+BlueKai_SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+BlueKai_SBJSON.h"; sourceTree = "<group>"; };
@@ -145,10 +148,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				241DB707192A8609006FEFC5 /* libBlueKai.a in Frameworks */,
+				248828341935026E00CF851E /* CFNetwork.framework in Frameworks */,
+				D79AF76D173A1AA8002E0A0B /* Foundation.framework in Frameworks */,
 				24FDF098192560A7004755CD /* UIKit.framework in Frameworks */,
 				24FDF09619256092004755CD /* SystemConfiguration.framework in Frameworks */,
 				24FDF09519255FC1004755CD /* XCTest.framework in Frameworks */,
-				D79AF76D173A1AA8002E0A0B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +222,7 @@
 		D79AF759173A1AA7002E0A0B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				248828331935026E00CF851E /* CFNetwork.framework */,
 				D79AF75A173A1AA7002E0A0B /* Foundation.framework */,
 				00677793177ACD8F00C943BB /* SystemConfiguration.framework */,
 				D71EF5EC173B6CF200B90918 /* UIKit.framework */,
@@ -231,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				D79AF75F173A1AA7002E0A0B /* BlueKai.h */,
+				24104D17193680B50028E34A /* BlueKai_Protected.h */,
 				D79AF761173A1AA7002E0A0B /* BlueKai.m */,
 				24DBFE4618FDD77A0069F878 /* Third Party Libs */,
 				D79AF75D173A1AA7002E0A0B /* Supporting Files */,
@@ -417,7 +423,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\nif [ \"$RUN_UNIT_TEST_WITH_IOS_SIM\" = \"YES\" ]; then\n    test_bundle_path=\"$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION\"\nios-sim launch \"$(dirname \"$TEST_HOST\")\" --setenv DYLD_INSERT_LIBRARIES=/../../Library/PrivateFrameworks/IDEBundleInjection.framework/IDEBundleInjection --setenv XCInjectBundle=\"$test_bundle_path\" --setenv XCInjectBundleInto=\"$TEST_HOST\" --args -SenTest All \"$test_bundle_path\"\n    echo \"Finished running tests with ios-sim\"\nelse\n    \"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\nfi";
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -731,25 +737,36 @@
 		D79AF780173A1AA8002E0A0B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TestRunnerApp.app/TestRunnerApp";
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
 				DSTROOT = /tmp/Bluekai_SDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bluekai_SDK/BlueKai_SDK-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${SRCROOT}",
+				);
 				INFOPLIST_FILE = "Bluekai_SDKTests/BluekaiTests-Info.plist";
 				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = BlueKai.xcodeprojTests;
 				SEPARATE_STRIP = YES;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "arm64 armv7 armv7s i386";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -758,25 +775,36 @@
 		D79AF781173A1AA8002E0A0B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TestRunnerApp.app/TestRunnerApp";
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = NO;
 				DSTROOT = /tmp/Bluekai_SDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bluekai_SDK/BlueKai_SDK-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${SRCROOT}",
+				);
 				INFOPLIST_FILE = "Bluekai_SDKTests/BluekaiTests-Info.plist";
 				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = BlueKai.xcodeprojTests;
 				SEPARATE_STRIP = YES;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "arm64 armv7 armv7s i386";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -792,6 +820,7 @@
 				2457260A192C38FF00253FDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 		D79AF751173A1AA7002E0A0B /* Build configuration list for PBXProject "Bluekai_SDK" */ = {
 			isa = XCConfigurationList;
