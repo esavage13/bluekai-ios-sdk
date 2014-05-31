@@ -5,10 +5,6 @@
 
 @interface TestViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate, NSURLConnectionDelegate, UITabBarControllerDelegate>
 {
-    BlueKai      *blueKaiSDK;
-    NSDictionary *configDict;
-    UIAlertView  *alert;
-    
     IBOutlet UITextField *keyTextfield;
     IBOutlet UITextField *valueTextfield;
     IBOutlet UIView      *view;

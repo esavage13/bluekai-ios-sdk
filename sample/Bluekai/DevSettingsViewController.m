@@ -1,11 +1,11 @@
 #import "DevSettingsViewController.h"
 #import "TestViewController.h"
 
-@interface DevSettingsViewController ()
-
-@end
-
-@implementation DevSettingsViewController
+@implementation DevSettingsViewController {
+    NSMutableDictionary    *configDict;
+    NSString               *plistPath;
+    UITapGestureRecognizer *devTap;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -13,6 +13,7 @@
     if (self) {
         self.tabBarItem.title = @"Settings";
     }
+    
     return self;
 }
 
@@ -24,7 +25,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
+    plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
     BOOL success = [fileManager fileExistsAtPath:plistPath];
 
     if (!success) {
@@ -33,18 +34,18 @@
         [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
     }
 
-    config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
 
-    [dev_btn setImage:[UIImage imageNamed:([config_dict[@"devMode"] boolValue]) ? @"chk-1" : @"unchk-1"] forState:UIControlStateNormal];
+    [dev_btn setImage:[UIImage imageNamed:([configDict[@"devMode"] boolValue]) ? @"chk-1" : @"unchk-1"] forState:UIControlStateNormal];
 
-    siteId_Txtfield.text = config_dict[@"siteId"];
+    siteId_Txtfield.text = configDict[@"siteId"];
 }
 
 - (IBAction)changeDevMode:(id)sender {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = paths[0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
-    config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
 
     UIButton *btn = (UIButton *) sender;
     UIImage *actual_image = btn.currentImage;
@@ -54,16 +55,16 @@
     if ([present_image isEqual:compare_image]) {
         [dev_btn setImage:[UIImage imageNamed:@"chk-1"] forState:UIControlStateNormal];
         //update the plist file
-        config_dict[@"devMode"] = @"YES";
+        configDict[@"devMode"] = @"YES";
 
     } else {
         [dev_btn setImage:[UIImage imageNamed:@"unchk-1"] forState:UIControlStateNormal];
         //update plist file
 
-        [config_dict setValue:@"NO" forKey:@"devMode"];
+        [configDict setValue:@"NO" forKey:@"devMode"];
     }
 
-    [config_dict writeToFile:filePath atomically:YES];
+    [configDict writeToFile:filePath atomically:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -75,10 +76,10 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = paths[0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
-    config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-    [config_dict setValue:textField.text forKey:@"ServerURL"];
-    NSLog(@"%@", config_dict);
-    [config_dict writeToFile:filePath atomically:YES];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+    [configDict setValue:textField.text forKey:@"ServerURL"];
+    NSLog(@"%@", configDict);
+    [configDict writeToFile:filePath atomically:YES];
 }
 
 @end

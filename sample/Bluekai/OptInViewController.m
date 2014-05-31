@@ -1,17 +1,19 @@
 #import "OptInViewController.h"
 #import "BlueKai.h"
 
-@interface OptInViewController ()
-
-@end
-
-@implementation OptInViewController
+@implementation OptInViewController {
+    BlueKai             *blueKaiSDK;
+    NSMutableDictionary *configDict;
+    UIAlertView         *alert;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
     if (self) {
         self.tabBarItem.title = @"T&C";
     }
+    
     return self;
 }
 
@@ -29,10 +31,12 @@
     }
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appEnteredToForeground)
+                                             selector:@selector(appCameToForeground)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
+
     self.tabBarController.delegate = self;
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -46,30 +50,32 @@
         [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
     }
 
-    config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-    blueKaiSDK = [[BlueKai alloc] initWithSiteId:config_dict[@"siteId"]
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+
+    blueKaiSDK = [[BlueKai alloc] initWithSiteId:configDict[@"siteId"]
                                   withAppVersion:[[NSBundle mainBundle]
                       objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
-                                        withView:self withDevMode:[config_dict[@"devMode"] boolValue]];
+                                        withView:self
+                                     withDevMode:[configDict[@"devMode"] boolValue]];
     blueKaiSDK.delegate = (id) self;
-    
-    NSLog(@"%@", blueKaiSDK);
 
     // adds a slight yellow tint to background
     [blueKaiSDK showSettingsScreenWithBackgroundColor:[UIColor colorWithRed:(246/255.0) green:(247/255.0) blue:(220/255.0) alpha:1.0]];
 }
 
-- (void)appEnteredToForeground {
-    NSLog(@"Application opened");
+- (void)appCameToForeground {
     [blueKaiSDK resume];
 }
 
 - (void)onDataPosted:(BOOL)status {
-    NSLog(@"**************** %hhd", status);
-    NSString *alertMessage = status ? @"\nData sent successfully" : @"\nData could not be sent";
-    
-    alert = [[UIAlertView alloc] initWithTitle:nil message:alertMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alert show];
+    NSLog(@"optInViewController **************** %hhd", status);
+
+    if (blueKaiSDK.devMode) {
+        NSString *alertMessage = status ? @"\nData sent successfully" : @"\nData could not be sent";
+
+        alert = [[UIAlertView alloc] initWithTitle:nil message:alertMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(removeAlert:) userInfo:nil repeats:NO];
 }
