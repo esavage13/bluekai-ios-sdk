@@ -20,17 +20,25 @@ Enhancements and new features
         view = "<TestViewController: 0x85ac200>";
     }>
     ```
+- Transition all the setter/getter functions to Objective-C's native `@property` declarations
+    - Free `setter` and `getter` functions
+    - Do not impact existing functionalities
 
 ### New features
+- Add a new init method to tag on IDFA id: `initWithSiteId:withAppVersion:withIdfa:withView:withDevMode`
+- Add a new `@property` declaration to set an IDFA id
 - Add `showSettingsScreenWithBackgroundColor` public method to allow setting background color for user preference screen, examples:
     - `[blueKaiSDK showSettingsScreenWithBackgroundColor:[UIColor whiteColor]]`
     - `[blueKaiSDK showSettingsScreenWithBackgroundColor:[UIColor colorWithRed:(246/255.0) green:(247/255.0) blue:(220/255.0) alpha:1.0]]`
+- Add unit test coverage
 
 ### Deprecated
 - The SDK no lonoger uses OpenUDID since the industry is moving towards [IDFA](http://blog.appsfire.com/udid-is-dead-openudid-is-deprecated-long-live-advertisingidentifier/)
 - `- (void)put:(NSString *)key withValue:(NSString *)value` is deprecated in favor of `- (void)updateWithKey:(NSString *)key andValue:(NSString *)value`; no functional change
 - `- (void)put:(NSDictionary *)dictionary` is deprecated in favor of `- (void)updateWithDictionary:(NSDictionary *)dictionary`; no functional change
-
+- Show setting screen methods; use the `setOptInPreference` property to set the opt-in preference instead
+    - `- (void)showSettingsScreen`
+    - `- (void)showSettingsScreenWithBackgroundColor:(UIColor *)color`
 
 ## v1.5.0 (05.05.2014)
 -----

@@ -200,7 +200,12 @@ Use HTTPS transfer protocol
 
 ### Methods
 
-Create the instance for Bluekai SDK with required arguments. This method is preferred
+Create the instance for Bluekai SDK with required arguments (with IDFA support).
+```objective-c
+    - (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withIdfa:(NSString *)idfa withView:(UIViewController *)view withDevMode(BOOL)value
+```
+
+Create the instance for Bluekai SDK with required arguments (without IDFA support). This method is preferred if you do not have an Appple IDFA id.
 ```objective-c
     - (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value
 ```
@@ -215,11 +220,13 @@ Convenience constructor to initialize and get instance of BlueKai without argume
     - (id)init
 ```
 
+**[DEPRECATED]**
 Method to show BlueKai in-built opt-in or opt-out screen
 ```objective-c
 - (void)showSettingsScreen
 ```
 
+**[DEPRECATED]**
 The same functionality as `showSettingsScreen` with ability to set custom background color
 ```objective-c
 - (void)showSettingsScreenWithBackgroundColor:(UIColor *)color
