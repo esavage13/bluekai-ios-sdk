@@ -38,6 +38,11 @@
 */
 @property (nonatomic) BOOL devMode;
 
+/** Sets Apple IDFA id
+* @param idfa, IDFA (Identifier for Advertising) id from Apple
+*/
+@property (nonatomic) NSString *idfa;
+
 /** Sets user opt-in preference
 *
 * This replaces the deprecated "setPreference" method
@@ -76,8 +81,23 @@
 - (id)initWithSiteId:(NSString *)siteID
       withAppVersion:(NSString *)version
             withView:(UIViewController *)view
-         withDevMode:(BOOL)value;
+         withDevMode:(BOOL)devMode;
 
+/** Init BlueKai SDK with IDFA
+*
+* Create the instance for BlueKai SDK with required arguments and IDFA
+*
+* @param siteId, contact your BlueKai rep for this id; required
+* @param appVersion, version of your iOS application; required
+* @param idfa, IDFA (identifier for advertising) advertiser id from Apple, required
+* @param viewController, a view for the SDK to attach itself to for an invisible webView to call BlueKai tags with; required
+* @param devMode, BOOL value to toggle on/off verbose logging; defaults to "NO"; optional
+*/
+- (id)initWithSiteId:(NSString *)siteID
+      withAppVersion:(NSString *)version
+            withIdfa:(NSString *)idfa
+            withView:(UIViewController *)view
+         withDevMode:(BOOL)devMode;
 
 /** Init BlueKai SDK (Deprecated)
 *
@@ -123,12 +143,16 @@
 
 /** Displays BlueKai Optout screen
 *
+* Deprecated; use the "setOptInPreference" property instead
+*
 * Displays a view to allow user to optout of tracking by BlueKai
 *
 */
 - (void)showSettingsScreen;
 
 /** Displays BlueKai Optout screen with option to set background color
+*
+* Deprecated; use the "setOptInPreference" property instead
 *
 * Same functionality as `showSettingsScreen` with option to set custom background color
 *

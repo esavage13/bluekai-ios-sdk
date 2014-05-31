@@ -1,5 +1,6 @@
 #include <QuartzCore/QuartzCore.h>
 #import "BlueKai.h"
+#import "BlueKai_Protected.h"
 #import "BlueKai_Reachability.h"
 #import "BlueKai_SBJSON.h"
 
@@ -7,25 +8,13 @@
     BOOL _alertShowBool,
          _webLoaded;
 
-    int _urlStringCount,
+    int _urlLength,
         _numberOfRunningRequests;
 
     UIButton    *_cancelButton;
     UIImageView *_userCheckImage;
-
     UITapGestureRecognizer *_tap;
     UIWebView              *_webView;
-
-    NSMutableString        *_webUrl;
-
-    NSString               *_keyString,
-                           *_valueString;
-
-    NSMutableDictionary *_keyValDict,
-                        *_nonLoadkeyValDict,
-                        *_remainkeyValDict;
-
-    NSUserDefaults      *_userDefaults;
 }
 
 
@@ -36,6 +25,7 @@
         _appVersion = nil;
         _viewController = nil;
         _siteId = nil;
+        _idfa = nil;
         _useHttps = NO;
         _devMode = NO;
         _optInPreference = YES;
@@ -45,7 +35,7 @@
     return self;
 }
 
-- (id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode:(BOOL)value {
+- (id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version withIdfa:(NSString *)idfa withView:(UIViewController *)view withDevMode:(BOOL)value {
     [self blueKaiLogger:_devMode withString:@"init siteId " withObject:siteID];
     [self blueKaiLogger:_devMode withString:@"init appVersion " withObject:version];
     [self blueKaiLogger:_devMode withString:@"init view " withObject:view];
@@ -53,6 +43,7 @@
 
     if (self = [super init]) {
         _appVersion = version;
+        _idfa = idfa;
         _devMode = value;
         _siteId = siteID;
         _viewController = view;
@@ -127,6 +118,10 @@
     return self;
 }
 
+- (id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode:(BOOL)devMode {
+    return [self initWithSiteId:siteID withAppVersion:version withIdfa:nil withView:view withDevMode:devMode];
+}
+
 - (void)setViewController:(UIViewController *)view {
     [self blueKaiLogger:_devMode withString:@"setViewController" withObject:view];
 
@@ -196,19 +191,13 @@
             _webUrl = [[NSMutableString alloc] init];
         }
 
-        _keyString = nil;
-        _valueString = nil;
-        _keyString = [key copy];
-        _valueString = [value copy];
-
         if (_keyValDict) {
             [_keyValDict removeAllObjects];
         } else {
             _keyValDict = [[NSMutableDictionary alloc] init];
         }
 
-        [_keyValDict setValue:_valueString forKey:_keyString];
-
+        [_keyValDict setValue:[value copy] forKey:[key copy]];
     }
 
     [self uploadIfNetworkIsAvailable];
@@ -235,58 +224,22 @@
 }
 
 - (void)setOptInPreference:(BOOL)optIn {
-    [self blueKaiLogger:_devMode withString:@"setOptInPreference:OptIn" withObject:(_optInPreference ? @"true" : @"false")];
+    [self blueKaiLogger:_devMode withString:@"setOptInPreference:OptIn" withObject:(_optInPreference ? @"YES" : @"NO")];
 
     _optInPreference = optIn;
 
     [_userDefaults setObject:(_optInPreference ? @"YES" : @"NO") forKey:@"KeyToUserData"];
 
     [self saveSettings:nil];
-    [self saveOptInPrefsOnServer];
+    // TODO: Turn this back on when we can universally opt-out of BKSID
+    //[self saveOptInPrefsOnServer];
 }
-
-//- (void)setSiteId:(int)siteId {
-//    [self blueKaiLogger:_devMode withString:@"setSiteId" withObject:[NSString stringWithFormat:@"%i", siteId]];
-//
-//    _siteId = [NSString stringWithFormat:@"%d", siteId];
-//
-//    if (_viewController) {
-//        [self resume];
-//    }
-//}
-
-//- (void)useHttps:(BOOL)secured {
-//    _useHttps = secured;
-//}
 
 - (void)showSettingsScreen {
     [self showSettingsScreenWithBackgroundColor:nil];
 }
 
-//- (void)setDevMode:(BOOL)mode {
-//    _devMode = mode;
-//
-//    if (_viewController && _siteId && _appVersion) {
-//        [self resume];
-//    }
-//}
-
-//- (void)setAppVersion:(NSString *)version {
-//    _appVersion = version;
-//
-//    if (_viewController && _siteId) {
-//        [self resume];
-//    }
-//}
-
 - (void)showSettingsScreenWithBackgroundColor:(UIColor *)backgroundColor {
-//    NSArray *array = [_viewController.view subviews];
-//    for (UIView *view in array) {
-//        if(![view isKindOfClass:[UIWebView class]]) {
-//            [view removeFromSuperview];
-//        }
-//    }
-
     UIColor *bgColor = backgroundColor ? backgroundColor : [UIColor whiteColor];
 
     _viewController.view.hidden = NO;
@@ -295,10 +248,6 @@
 
     UIGraphicsBeginImageContext(_userCheckImage.frame.size);
     NSString *userPref = [_userDefaults objectForKey:@"settings"];
-    NSString *test = [_userDefaults objectForKey:@"KeyToUserData"];
-
-    [self blueKaiLogger:_devMode withString:@"userPref" withObject:[NSString stringWithFormat:@"%@", userPref]];
-    [self blueKaiLogger:_devMode withString:@"test" withObject:[NSString stringWithFormat:@"%@", test]];
 
     if ([userPref isEqualToString:@"YES"] || _optInPreference) {
         [[UIImage imageNamed:@"chk-1"] drawInRect:_userCheckImage.bounds];
@@ -403,12 +352,13 @@
                                       [self class],
                                       self,
                                       @{
-                                          @"siteID": _siteId,
-                                          @"appVersion": _appVersion,
-                                          @"view": _viewController,
-                                          @"devMode": _devMode ? @"YES" : @"NO",
-                                          @"useHTTPS": _useHttps ? @"YES" : @"NO",
-                                          @"optInPreference": _optInPreference ? @"YES" : @"NO"
+                                              @"appVersion": _appVersion,
+                                              @"devMode": _devMode ? @"YES" : @"NO",
+                                              @"idfa": _idfa,
+                                              @"optInPreference": _optInPreference ? @"YES" : @"NO",
+                                              @"siteID": _siteId,
+                                              @"useHTTPS": _useHttps ? @"YES" : @"NO",
+                                              @"view": _viewController
                                       }];
 }
 
@@ -442,9 +392,10 @@
 - (IBAction)saveSettings:(id)sender {
 //    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     NSString *userDataValue = [_userDefaults objectForKey:@"KeyToUserData"];
-    [self blueKaiLogger:_devMode withString:@"save opt-in view" withObject:nil];
     [_userDefaults setObject:userDataValue forKey:@"settings"];
-    [self saveOptInPrefsOnServer];
+
+    // TODO: Turn this back on when we can universally opt-out of BKSID
+    // [self saveOptInPrefsOnServer];
 }
 
 
@@ -479,11 +430,11 @@
     // The main act...
 }
 
-- (NSString *)getKeyValueJSON:(NSMutableDictionary *)keyvalues {
+- (NSString *)getKeyValueJSON:(NSMutableDictionary *)keyValues {
     @try {
-        NSMutableDictionary *dict3 = [[NSMutableDictionary alloc] initWithDictionary:keyvalues];
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:keyValues];
         BlueKai_SBJsonWriter *sb = [[BlueKai_SBJsonWriter alloc] init];
-        NSString *jsonString = [sb stringWithObject:dict3];
+        NSString *jsonString = [sb stringWithObject:dictionary];
 
         return jsonString;
     }
@@ -530,9 +481,9 @@
     [self blueKaiLogger:_devMode withString:@"getAttemptsJSON: " withObject:keyValues];
 
     @try {
-        NSMutableDictionary *dict3 = [[NSMutableDictionary alloc] initWithDictionary:keyValues];
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:keyValues];
         BlueKai_SBJsonWriter *sb = [[BlueKai_SBJsonWriter alloc] init];
-        NSString *jsonString = [sb stringWithObject:dict3];
+        NSString *jsonString = [sb stringWithObject:dict];
         return jsonString;
     }
 
@@ -549,10 +500,6 @@
     return realData;
 }
 
-- (void)updateWebview:(NSString *)url {
-    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
-}
-
 - (void)saveOptInPrefsOnServer {
     _numberOfRunningRequests = -1;
     BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
@@ -566,7 +513,7 @@
         NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@", server, urlPath]];
 
         [self blueKaiLogger:_devMode withString:@"opt-in preference is set to" withObject:[_userDefaults objectForKey:@"KeyToUserData"]];
-        [self blueKaiLogger:_devMode withString:@"opt-in URL" withObject:url];
+//        [self blueKaiLogger:_devMode withString:@"opt-in URL" withObject:url];
 
         [_viewController.view addSubview:optInWebView];
         [optInWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
@@ -576,6 +523,7 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [self blueKaiLogger:_devMode withString:@"Web View Error" withObject:error];
 
     if (_numberOfRunningRequests != 0) {
         _numberOfRunningRequests = 0;
@@ -623,8 +571,12 @@
     }
 }
 
+- (void)updateWebview:(NSString *)url {
+    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+}
+
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    // if "_numberOfRunningRequests" is not -1, +1; otherwise (0 or -1) set it back to 1
+    // if "_numberOfRunningRequests" is not -1, increment by 1; otherwise (0 or -1) set it back to 1
     _numberOfRunningRequests = _numberOfRunningRequests != -1 ? _numberOfRunningRequests + 1 : 1;
 }
 
@@ -633,12 +585,14 @@
     // to avoid the "Weak receiver may be unpredictably null in ARC mode" warning
     id <BlueKaiOnDataPostedListener> localDelegate = _delegate;
 
+
     if (_numberOfRunningRequests == 0) {
         if (!_alertShowBool) {
             if (_webView.tag == 1) {
                 //Delete the key and value pairs from database after sent to server.
                 for (int k = 0; k < [_keyValDict count]; k++) {
-                    if (![_remainkeyValDict valueForKey:[_keyValDict allKeys][k]]) {
+//                    if (![_remainkeyValDict valueForKey:[_keyValDict allKeys][k]]) {
+                    if ([_remainkeyValDict valueForKey:[_keyValDict allKeys][k]] != NULL) {
                         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
                         NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
                         int attempts = [atmt_dictionary[[_keyValDict allKeys][k]] intValue];
@@ -665,7 +619,7 @@
                 [localDelegate onDataPosted:TRUE];
             }
 
-            [self blueKaiLogger:_devMode withString:@"URL Passed" withObject:webView.request.URL];
+            [self blueKaiLogger:_devMode withString:@"URL loaded" withObject:webView.request.URL];
             _alertShowBool = YES;
 
             if (_remainkeyValDict || _nonLoadkeyValDict) {
@@ -758,9 +712,9 @@
                 NSString *key = [NSString stringWithFormat:@"%@", [_nonLoadkeyValDict allKeys][i]];
                 NSString *value = [NSString stringWithFormat:@"%@", _nonLoadkeyValDict[[_nonLoadkeyValDict allKeys][i]]];
 
-                if ((_urlStringCount + key.length + value.length + 2) <= 255) {
+                if ((_urlLength + key.length + value.length + 2) <= 255) {
                     [_keyValDict setValue:[_nonLoadkeyValDict valueForKey:[_nonLoadkeyValDict allKeys][i]] forKey:[_nonLoadkeyValDict allKeys][i]];
-                    _urlStringCount = _urlStringCount + key.length + value.length + 2;
+                    _urlLength = _urlLength + key.length + value.length + 2;
                 }
             }
 
@@ -785,8 +739,6 @@
         _webView.tag = 1;
         _webView.hidden = YES;
         [_viewController.view addSubview:_webView];
-
-        [self blueKaiLogger:_devMode withString:@"3.2" withObject:nil];
 
         if (_devMode) {
             [self drawWebFrame:_webView];
@@ -814,44 +766,6 @@
     }
 }
 
-- (void)startBackgroundJob:(NSDictionary *)dictionary {
-    NSString *serverURL = @"://mobileproxy.bluekai.com/";
-    NSMutableString *protocol = [NSMutableString stringWithFormat:@"%@", (_useHttps ? @"https" : @"http")];
-    NSMutableString *endPoint = [NSMutableString stringWithFormat:@"%@", (_devMode ? @"m-sandbox.html" : @"m.html")];
-
-    [self blueKaiLogger:_devMode withString:@"useHttps" withObject:(_useHttps ? @"YES" : @"NO")];
-
-    if (_remainkeyValDict) {
-        [_remainkeyValDict removeAllObjects];
-    }
-
-    @autoreleasepool {
-        // send the dictionary details to BlueKai server
-        NSMutableString *url_string = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@%@?site=%@&", protocol, serverURL, endPoint, _siteId]];
-        [url_string appendString:[NSString stringWithFormat:@"appVersion=%@", _appVersion]];
-        _urlStringCount = url_string.length;
-
-        int keyCount = [[_keyValDict allKeys] count];
-
-        for (int i = 0; i < keyCount; i++) {
-            NSString *key = [NSString stringWithFormat:@"%@", [_keyValDict allKeys][i]];
-            NSString *value = [NSString stringWithFormat:@"%@", _keyValDict[[_keyValDict allKeys][i]]];
-
-            if ((url_string.length + key.length + value.length + 2) > 255) {
-                [_remainkeyValDict setValue:value forKey:key];
-            } else {
-                [url_string appendString:[NSString stringWithFormat:@"&%@=%@", [self urlEncode:[_keyValDict allKeys][i]], [self urlEncode:_keyValDict[[_keyValDict allKeys][i]]]]];
-            }
-        }
-
-        [_webUrl appendString:url_string];
-    }
-
-    _alertShowBool = NO;
-
-    [self updateWebview:_webUrl];
-}
-
 - (NSString *)urlEncode:(NSString *)string {
     NSMutableString *output = [NSMutableString string];
 
@@ -861,6 +775,7 @@
     for (int i = 0; i < sourceLen; ++i) {
         const unsigned char thisChar = source[i];
 
+        // credit: http://stackoverflow.com/a/12927815/499700
         if (thisChar == ' ') {
             [output appendString:@"+"];
         } else if (thisChar == '.' || thisChar == '-' || thisChar == '_' || thisChar == '~' ||
@@ -872,6 +787,7 @@
             [output appendFormat:@"%%%02X", thisChar];
         }
     }
+
     return output;
 }
 
@@ -879,129 +795,63 @@
     if (_userCheckImage.tag == 1) {
         UIGraphicsBeginImageContext(_userCheckImage.frame.size);
         [[UIImage imageNamed:@"chk-1"] drawInRect:_userCheckImage.bounds];
-        UIImage *appsimage = UIGraphicsGetImageFromCurrentImageContext();
+        UIImage *checkboxImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        _userCheckImage.image = appsimage;
+        _userCheckImage.image = checkboxImage;
         [_userDefaults setObject:@"YES" forKey:@"KeyToUserData"];
         _userCheckImage.tag = 0;
     } else {
         UIGraphicsBeginImageContext(_userCheckImage.frame.size);
         [[UIImage imageNamed:@"unchk-1"] drawInRect:_userCheckImage.bounds];
-        UIImage *appsimage = UIGraphicsGetImageFromCurrentImageContext();
+        UIImage *checkboxImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        _userCheckImage.image = appsimage;
+        _userCheckImage.image = checkboxImage;
         [_userDefaults setObject:@"NO" forKey:@"KeyToUserData"];
         _userCheckImage.tag = 1;
     }
 }
 
 - (void)startDataUpload {
-    [self blueKaiLogger:_devMode withString:@"***** _siteId" withObject:_siteId];
+    NSString *errorMessage;
+    BOOL     hasError = NO;
 
-    if (_viewController) {
-        if (_siteId) {
-            if (_appVersion) {
-                [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:_keyValDict];
-            } else {
-                [self blueKaiLogger:_devMode withString:@"appVersion parameter is nil" withObject:nil];
+    if (!_viewController) {
+        hasError = YES;
+        errorMessage = @"view parameter is nil";
+    }
 
-                for (int i = 0; i < [[_keyValDict allKeys] count]; i++) {
-                    if (![_remainkeyValDict valueForKey:[_keyValDict allKeys][i]]) {
-                        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
-                        NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
-                        int attempts = [atmt_dictionary[[_keyValDict allKeys][i]] intValue];
+    if (!_siteId) {
+        hasError = YES;
+        errorMessage = @"siteId parameter is nil";
+    }
 
-                        if (attempts == 0) {
-                            dictionary[[_keyValDict allKeys][i]] = [_keyValDict valueForKey:[_keyValDict allKeys][i]];
-                            atmt_dictionary[[_keyValDict allKeys][i]] = @"1";
-                        } else {
-                            if (attempts < 5) {
-                                [atmt_dictionary removeObjectForKey:[_keyValDict allKeys][i]];
-                                atmt_dictionary[[_keyValDict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
-                            } else {
-                                [dictionary removeObjectForKey:[_keyValDict allKeys][i]];
-                                [atmt_dictionary removeObjectForKey:[_keyValDict allKeys][i]];
-                            }
-                        }
+    if (!_appVersion) {
+        hasError = YES;
+        errorMessage = @"appVersion parameter is nil";
+    }
 
-                        [self writeStringToKeyValueFile:[self getKeyValueJSON:dictionary]];
-                        [self writeStringToAttemptsFile:[self getAttemptsJSON:atmt_dictionary]];
-                    }
-                }
-
-//                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            }
-        } else {
-            NSString *errorMsg = _appVersion ? @"siteId parameter is nil" : @"siteId and appVersion parameters are nil";
-            [self blueKaiLogger:_devMode withString:errorMsg withObject:nil];
-
-            for (int i = 0; i < [[_keyValDict allKeys] count]; i++) {
-                if (![_remainkeyValDict valueForKey:[_keyValDict allKeys][i]]) {
-                    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
-                    NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
-                    int attempts = [atmt_dictionary[[_keyValDict allKeys][i]] intValue];
-                    if (attempts == 0) {
-                        dictionary[[_keyValDict allKeys][i]] = [_keyValDict valueForKey:[_keyValDict allKeys][i]];
-                        atmt_dictionary[[_keyValDict allKeys][i]] = @"1";
-                    } else {
-                        if (attempts < 5) {
-                            [atmt_dictionary removeObjectForKey:[_keyValDict allKeys][i]];
-                            atmt_dictionary[[_keyValDict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
-                        } else {
-                            [dictionary removeObjectForKey:[_keyValDict allKeys][i]];
-                            [atmt_dictionary removeObjectForKey:[_keyValDict allKeys][i]];
-                        }
-                    }
-
-                    [self writeStringToKeyValueFile:[self getKeyValueJSON:dictionary]];
-                    [self writeStringToAttemptsFile:[self getAttemptsJSON:atmt_dictionary]];
-                }
-            }
-
-//            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        }
+    if (hasError) {
+        [self blueKaiLogger:_devMode withString:errorMessage withObject:_keyValDict];
     } else {
-        if (_siteId && _appVersion) {
-            [self blueKaiLogger:_devMode withString:@"view parameter is nil" withObject:nil];
-        } else {
-            NSString *errorMsg;
-
-            if (_siteId) {
-                errorMsg = _appVersion ? @"view parameter is nil" : @"view and appVersion parameters are nil";
-                [self blueKaiLogger:_devMode withString:errorMsg withObject:nil];
-            } else {
-                errorMsg = _appVersion ? @"siteId and view parameters are nil" : @"siteId, view and appVersion parameters are nil";
-                [self blueKaiLogger:_devMode withString:errorMsg withObject:nil];
-            }
-        }
-
-        for (int i = 0; i < [[_keyValDict allKeys] count]; i++) {
-            if (![_remainkeyValDict valueForKey:[_keyValDict allKeys][i]]) {
-                NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
-                NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
-                int attempts = [atmt_dictionary[[_keyValDict allKeys][i]] intValue];
-
-                if (attempts == 0) {
-                    dictionary[[_keyValDict allKeys][i]] = [_keyValDict valueForKey:[_keyValDict allKeys][i]];
-                    atmt_dictionary[[_keyValDict allKeys][i]] = @"1";
-                } else {
-                    if (attempts < 5) {
-                        [atmt_dictionary removeObjectForKey:[_keyValDict allKeys][i]];
-                        atmt_dictionary[[_keyValDict allKeys][i]] = [NSString stringWithFormat:@"%d", attempts + 1];
-                    } else {
-                        [dictionary removeObjectForKey:[_keyValDict allKeys][i]];
-                        [atmt_dictionary removeObjectForKey:[_keyValDict allKeys][i]];
-                    }
-                }
-
-                [self writeStringToKeyValueFile:[self getKeyValueJSON:dictionary]];
-                [self writeStringToAttemptsFile:[self getAttemptsJSON:atmt_dictionary]];
-            }
-        }
-
-//        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        _webView.tag = 1;
+        [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:_keyValDict];
     }
 }
+
+- (void)startBackgroundJob:(NSDictionary *)dictionary {
+    if (_remainkeyValDict) {
+        [_remainkeyValDict removeAllObjects];
+    }
+
+    @autoreleasepool {
+        NSMutableString *url = [self constructUrl];
+        [_webUrl appendString:url];
+    }
+
+    _alertShowBool = NO;
+    [self updateWebview:_webUrl];
+}
+
 
 - (void)drawWebFrame:(UIWebView *)webView {
     webView.frame = CGRectMake(10, 10, 300, 390);
@@ -1037,6 +887,37 @@
             _webView.hidden = YES;
         }
     }
+}
+
+- (NSMutableString *)constructUrl {
+    NSString *serverURL = @"://mobileproxy.bluekai.com/";
+    NSMutableString *protocol = [NSMutableString stringWithFormat:@"%@", (_useHttps ? @"https" : @"http")];
+    NSMutableString *endPoint = [NSMutableString stringWithFormat:@"%@", (_devMode ? @"m-sandbox.html" : @"m.html")];
+    NSMutableString *urlString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@%@?site=%@&", protocol, serverURL, endPoint, _siteId]];
+
+    [urlString appendString:[NSString stringWithFormat:@"appVersion=%@", _appVersion]];
+
+    if (_idfa != NULL) {
+        [urlString appendString:[NSString stringWithFormat:@"&idfa=%@", _idfa]];
+    }
+
+    // send the dictionary details to BlueKai server
+    _urlLength = urlString.length;
+
+    int keyCount = [[_keyValDict allKeys] count];
+
+    for (int i = 0; i < keyCount; i++) {
+        NSString *key = [NSString stringWithFormat:@"%@", [_keyValDict allKeys][i]];
+        NSString *value = [NSString stringWithFormat:@"%@", _keyValDict[[_keyValDict allKeys][i]]];
+
+        if ((_urlLength + key.length + value.length + 2) > 255) {
+            [_remainkeyValDict setValue:value forKey:key];
+        } else {
+            [urlString appendString:[NSString stringWithFormat:@"&%@=%@", [self urlEncode:[_keyValDict allKeys][i]], [self urlEncode:_keyValDict[[_keyValDict allKeys][i]]]]];
+        }
+    }
+
+    return urlString;
 }
 
 - (void)blueKaiLogger:(BOOL)devMode withString:(NSString *)string withObject:(NSObject *)object {
