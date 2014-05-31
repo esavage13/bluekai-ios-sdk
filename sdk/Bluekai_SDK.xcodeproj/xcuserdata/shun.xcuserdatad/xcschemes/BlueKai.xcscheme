@@ -26,7 +26,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Release">
+      buildConfiguration = "Debug">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -35,16 +35,6 @@
                BlueprintIdentifier = "D79AF767173A1AA8002E0A0B"
                BuildableName = "BlueKai.xcodeprojTests.xctest"
                BlueprintName = "BlueKai Tests"
-               ReferencedContainer = "container:Bluekai_SDK.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "24F7B6FF192ADADC002D8F99"
-               BuildableName = "BlueKai Tests2.xctest"
-               BlueprintName = "BlueKai Tests2"
                ReferencedContainer = "container:Bluekai_SDK.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -66,7 +56,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       debugDocumentVersioning = "YES">
    </ProfileAction>
    <AnalyzeAction
