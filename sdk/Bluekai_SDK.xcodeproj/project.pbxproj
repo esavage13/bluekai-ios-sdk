@@ -33,7 +33,6 @@
 		24FDF098192560A7004755CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EC173B6CF200B90918 /* UIKit.framework */; };
 		35DBAB3030DB20EB3A87057E /* BlueKai_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */; };
 		D71EF5ED173B6CF200B90918 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71EF5EC173B6CF200B90918 /* UIKit.framework */; };
-		D74FF32E173CC2F900C34EE0 /* btn-sub-del-op.png in Resources */ = {isa = PBXBuildFile; fileRef = D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */; };
 		D79AF75B173A1AA7002E0A0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79AF75A173A1AA7002E0A0B /* Foundation.framework */; };
 		D79AF760173A1AA7002E0A0B /* BlueKai.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D79AF75F173A1AA7002E0A0B /* BlueKai.h */; };
 		D79AF762173A1AA7002E0A0B /* BlueKai.m in Sources */ = {isa = PBXBuildFile; fileRef = D79AF761173A1AA7002E0A0B /* BlueKai.m */; };
@@ -111,7 +110,6 @@
 		35DBA08CD86370BA5E8CBD11 /* BlueKai_Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueKai_Reachability.m; sourceTree = "<group>"; };
 		35DBAB0E3941F731AEDB1939 /* BlueKai_Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueKai_Reachability.h; sourceTree = "<group>"; };
 		D71EF5EC173B6CF200B90918 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sub-del-op.png"; sourceTree = "<group>"; };
 		D79AF75A173A1AA7002E0A0B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D79AF75F173A1AA7002E0A0B /* BlueKai.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlueKai.h; sourceTree = "<group>"; };
 		D79AF761173A1AA7002E0A0B /* BlueKai.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlueKai.m; sourceTree = "<group>"; };
@@ -244,7 +242,6 @@
 		D79AF75D173A1AA7002E0A0B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D74FF32D173CC2F900C34EE0 /* btn-sub-del-op.png */,
 				24FDF09019255EF3004755CD /* BlueKai_SDK-Prefix.pch */,
 				24FDF09119255F4C004755CD /* BlueKai.xcodeproj-Prefix.pch */,
 			);
@@ -383,7 +380,6 @@
 			files = (
 				24FDF08E19255E26004755CD /* BlueKaiTests-Info.plist in Resources */,
 				D79AF776173A1AA8002E0A0B /* InfoPlist.strings in Resources */,
-				D74FF32E173CC2F900C34EE0 /* btn-sub-del-op.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

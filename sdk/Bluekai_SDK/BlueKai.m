@@ -836,10 +836,13 @@
 
 - (void)drawWebFrame:(UIWebView *)webView {
     webView.frame = CGRectMake(10, 10, 300, 390);
-    _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _cancelButton.frame = CGRectMake(281, 9, 30, 30);
+    _cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [_cancelButton setTitle:@"Close" forState:UIControlStateNormal];
+    [[_cancelButton layer] setBorderWidth:1.0f];
+    [[_cancelButton layer] setCornerRadius:8.0f];
+    [[_cancelButton layer] setBorderColor:[UIColor lightGrayColor].CGColor];
+    _cancelButton.frame = CGRectMake(245, 26, 55, 25);
     _cancelButton.tag = 10;
-    [_cancelButton setImage:[UIImage imageNamed:@"btn-sub-del-op"] forState:UIControlStateNormal];
     [_cancelButton addTarget:self action:@selector(Cancel:) forControlEvents:UIControlEventTouchUpInside];
     _cancelButton.hidden = YES;
     [_viewController.view addSubview:_cancelButton];

@@ -42,7 +42,7 @@ Enhancements and new features
 - Show setting screen methods; use the `setOptInPreference` property to set the opt-in preference instead
     - `- (void)showSettingsScreen`
     - `- (void)showSettingsScreenWithBackgroundColor:(UIColor *)color`
-- iOS native graphic elements replace `chk-1.png' and 'unchk-1.png' images
+- Use iOS native graphic elements to replace custom `png` images previously required
     
 
 ## v1.5.0 (05.05.2014)
