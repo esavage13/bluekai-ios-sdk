@@ -335,13 +335,13 @@
                                       [self class],
                                       self,
                                       @{
-                                              @"appVersion": _appVersion,
-                                              @"devMode": _devMode ? @"YES" : @"NO",
-                                              @"idfa": _idfa,
-                                              @"optInPreference": _optInPreference ? @"YES" : @"NO",
-                                              @"siteID": _siteId,
-                                              @"useHTTPS": _useHttps ? @"YES" : @"NO",
-                                              @"view": _viewController
+                                          @"appVersion": _appVersion,
+                                          @"devMode": _devMode ? @"YES" : @"NO",
+                                          @"idfa": _idfa,
+                                          @"optInPreference": _optInPreference ? @"YES" : @"NO",
+                                          @"siteID": _siteId,
+                                          @"useHTTPS": _useHttps ? @"YES" : @"NO",
+                                          @"view": _viewController
                                       }];
 }
 
@@ -379,6 +379,14 @@
 
     // TODO: Turn this back on when we can universally opt-out of BKSID
     // [self saveOptInPrefsOnServer];
+
+    // TODO: Remove when BKSID opt-out is implemented; may need to be deprecated
+    id <BlueKaiOnDataPostedListener> localDelegate = _delegate;
+
+    if ([localDelegate respondsToSelector:@selector(onDataPosted:)]) {
+        [localDelegate onDataPosted:FALSE];
+    }
+    // end TODO
 }
 
 
@@ -508,15 +516,15 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [self blueKaiLogger:_devMode withString:@"Web View Error" withObject:error];
 
+    // to avoid the "Weak receiver may be unpredictably null in ARC mode" warning
+    id <BlueKaiOnDataPostedListener> localDelegate = _delegate;
+
+    if ([localDelegate respondsToSelector:@selector(onDataPosted:)]) {
+        [localDelegate onDataPosted:FALSE];
+    }
+
     if (_numberOfRunningRequests != 0) {
         _numberOfRunningRequests = 0;
-
-        // to avoid the "Weak receiver may be unpredictably null in ARC mode" warning
-        id <BlueKaiOnDataPostedListener> localDelegate = _delegate;
-
-        if ([localDelegate respondsToSelector:@selector(onDataPosted:)]) {
-            [localDelegate onDataPosted:FALSE];
-        }
 
 //        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
@@ -870,7 +878,7 @@
 
     [urlString appendString:[NSString stringWithFormat:@"appVersion=%@", _appVersion]];
 
-    if (_idfa != NULL) {
+    if (_idfa != NULL && [_idfa length] > 0) {
         [urlString appendString:[NSString stringWithFormat:@"&idfa=%@", _idfa]];
     }
 
