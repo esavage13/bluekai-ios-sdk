@@ -154,6 +154,9 @@ following delegate method in `ViewController.m`.
 
 ```objective-c
 - (void)onDataPosted:(BOOL)status {
+    if (statu) {
+        // ... react to data being posted to BlueKai...
+    }
 }
 ```
 
@@ -171,6 +174,11 @@ addition to the site id:
 ## Public Methods
 
 ### Properties
+
+Set a delegate for callbacks; works in conjunction with the `onDataPosted` method
+```objective-c
+@property (nonatomic, weak) id <BlueKaiOnDataPostedListener> delegate;
+```
 
 Set developer mode (YES or NO); provides verbose logging
 ```objective-c
@@ -202,22 +210,23 @@ Use HTTPS transfer protocol
 
 Create the instance for Bluekai SDK with required arguments (with IDFA support).
 ```objective-c
-    - (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withIdfa:(NSString *)idfa withView:(UIViewController *)view withDevMode(BOOL)value
+- (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withIdfa:(NSString *)idfa withView:(UIViewController *)view withDevMode(BOOL)value
 ```
 
 Create the instance for Bluekai SDK with required arguments (without IDFA support). This method is preferred if you do not have an Appple IDFA id.
 ```objective-c
-    - (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value
+- (id)initWithSiteId:(NSString *)siteId withAppVersion:(NSString *)version withView:(UIViewController *)view withDevMode(BOOL)value
 ```
 
 **[DEPRECATED]**
+Init a BlueKai object
 ```objective-c
-    - (id)initWithArgs:(BOOL)value withSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view
+- (id)initWithArgs:(BOOL)value withSiteId:(NSString *)siteID withAppVersion:(NSString *)version withView:(UIViewController *)view
 ```
 
 Convenience constructor to initialize and get instance of BlueKai without arguments
 ```objective-c
-    - (id)init
+- (id)init
 ```
 
 **[DEPRECATED]**
@@ -243,6 +252,7 @@ Method to set user opt-in or opt-out preference
 ```
 
 **[DEPRECATED]**
+Method to set user opt-in or opt-out preference
 ```objective-c
 - (void) setPreference:(BOOL)optIn
 ```
@@ -253,6 +263,7 @@ Set key/value strings and send them to BlueKai server
 ```
 
 **[DEPRECATED]**
+Set key/value strings and send them to BlueKai server
 ```objective-c
 - (void)put:(NSString *)key withValue:(NSString *)value
 ```
@@ -263,10 +274,15 @@ Set key/value strings in a NSDictionary and send them to BlueKai server
 ```
 
 **[DEPRECATED]**
+Set key/value strings in a NSDictionary and send them to BlueKai server
 ```objective-c
 - (void)put:(NSDictionary *)dictionary
 ```
 
+Allows your app to receive a callback from the BlueKai SDK when data has been posted to servers
+```objective-c
+- (void)onDataPosted:(BOOL)status;
+```
 
 ## Updating the SDK 
 

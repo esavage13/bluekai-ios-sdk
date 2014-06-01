@@ -24,6 +24,9 @@
 @interface BlueKai : NSObject <UIWebViewDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate> {
 }
 
+/** Sets a delegate for callbacks from the BlueKai SDK
+* Works in conjunction with the `onDataPosted` method
+*/
 @property (nonatomic, weak) id <BlueKaiOnDataPostedListener> delegate;
 
 /** Sets iOS app version
