@@ -154,7 +154,7 @@ following delegate method in `ViewController.m`.
 
 ```objective-c
 - (void)onDataPosted:(BOOL)status {
-    if (statu) {
+    if (status) {
         // ... react to data being posted to BlueKai...
     }
 }
