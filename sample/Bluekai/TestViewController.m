@@ -70,10 +70,12 @@
 //    }
 
     blueKaiSDK = [[BlueKai alloc] initWithSiteId:configDict[@"siteId"]
-                                  withAppVersion:[[NSBundle mainBundle]
-                      objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                  withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                        withIdfa:configDict[@"idfaId"]
                                         withView:self
                                      withDevMode:[configDict[@"devMode"] boolValue]];
+
+    [blueKaiSDK setUseHttps:[configDict[@"useHttps"] boolValue]];
     blueKaiSDK.delegate = (id) self;
 }
 
@@ -91,8 +93,6 @@
 }
 
 - (void)onDataPosted:(BOOL)status {
-    NSLog(@"testViewController **************** %hhd", status);
-
     if (blueKaiSDK.devMode) {
         NSString *msg = status ? @"\nData sent successfully" : @"\nData could not be sent";
 

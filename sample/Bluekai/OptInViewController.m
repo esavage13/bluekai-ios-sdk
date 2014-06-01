@@ -3,7 +3,10 @@
 
 @implementation OptInViewController {
     BlueKai             *blueKaiSDK;
+    NSArray             *paths;
+    NSFileManager       *fileManager;
     NSMutableDictionary *configDict;
+    NSString            *plistFilePath;
     UIAlertView         *alert;
 }
 
@@ -24,6 +27,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     NSArray *array = [self.view subviews];
+
     for (UIView *view in array) {
         if (![view isKindOfClass:[UIWebView class]]) {
             [view removeFromSuperview];
@@ -36,25 +40,25 @@
                                                object:nil];
 
     self.tabBarController.delegate = self;
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
 
-    BOOL success = [fileManager fileExistsAtPath:plistPath];
+    NSError *error;
+    fileManager = [NSFileManager defaultManager];
+    paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    plistFilePath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
+
+    BOOL success = [fileManager fileExistsAtPath:plistFilePath];
 
     if (!success) {
         // file does not exist; so look into mainBundle
         NSString *defaultPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Configurationfile.plist"];
-            [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
+        [fileManager copyItemAtPath:defaultPath toPath:plistFilePath error:&error];
     }
 
-    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistFilePath];
 
     blueKaiSDK = [[BlueKai alloc] initWithSiteId:configDict[@"siteId"]
-                                  withAppVersion:[[NSBundle mainBundle]
-                      objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                  withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                        withIdfa:configDict[@"idfaId"]
                                         withView:self
                                      withDevMode:[configDict[@"devMode"] boolValue]];
     blueKaiSDK.delegate = (id) self;
@@ -68,8 +72,6 @@
 }
 
 - (void)onDataPosted:(BOOL)status {
-    NSLog(@"optInViewController **************** %hhd", status);
-
     if (blueKaiSDK.devMode) {
         NSString *alertMessage = status ? @"\nData sent successfully" : @"\nData could not be sent";
 

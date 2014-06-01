@@ -1,10 +1,13 @@
 #import "DevSettingsViewController.h"
-#import "TestViewController.h"
+#import "Bluekai.h"
 
 @implementation DevSettingsViewController {
-    NSMutableDictionary    *configDict;
-    NSString               *plistPath;
-    UITapGestureRecognizer *devTap;
+    BlueKai             *blueKaiSDK;
+    NSArray             *paths;
+    NSFileManager       *fileManager;
+    NSMutableDictionary *configDict;
+    NSString            *documentsDirectory;
+    NSString            *plistFilePath;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -21,24 +24,33 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
+    
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
-    BOOL success = [fileManager fileExistsAtPath:plistPath];
+    paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    documentsDirectory = paths[0];
+    fileManager = [NSFileManager defaultManager];
+    plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistFilePath];
+    BOOL success = [fileManager fileExistsAtPath:plistFilePath];
 
     if (!success) {
-        //file does not exist. So look into mainBundle
+        // file does not exist, look into mainBundle
         NSString *defaultPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Configurationfile.plist"];
-        [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
+        [fileManager copyItemAtPath:defaultPath toPath:plistFilePath error:&error];
     }
 
-    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-
     [devModeSwtich setOn:([configDict[@"devMode"] boolValue])];
+    [httpsSwtich setOn:([configDict[@"useHttps"] boolValue])];
 
     siteIdTextfield.text = configDict[@"siteId"];
+    idfaIdTextfield.text = configDict[@"idfaId"];
+
+    blueKaiSDK = [[BlueKai alloc] initWithSiteId:siteIdTextfield.text
+                                  withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                        withIdfa:idfaIdTextfield.text
+                                        withView:self
+                                     withDevMode:[configDict[@"devMode"] boolValue]];
 }
 
 
@@ -48,28 +60,30 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = paths[0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
-    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-    [configDict setValue:textField.text forKey:@"ServerURL"];
-    NSLog(@"%@", configDict);
-    [configDict writeToFile:filePath atomically:YES];
+    configDict[@"siteId"] = siteIdTextfield.text;
+    [configDict writeToFile:plistFilePath atomically:YES];
+    configDict[@"idfaId"] = idfaIdTextfield.text;
+    [configDict writeToFile:plistFilePath atomically:YES];
 }
 
 - (IBAction)devModeStateChanged:(id)sender {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = paths[0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
-    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-
     if ([sender isOn]) {
         configDict[@"devMode"] = @"YES";
     } else {
         configDict[@"devMode"] = @"NO";
     }
     
-    [configDict writeToFile:filePath atomically:YES];
+    [configDict writeToFile:plistFilePath atomically:YES];
+}
+
+- (IBAction)httpsModeStateChanged:(id)sender {
+    if ([sender isOn]) {
+        configDict[@"useHttps"] = @"YES";
+    } else {
+        configDict[@"useHttps"] = @"NO";
+    }
+
+    [configDict writeToFile:plistFilePath atomically:YES];
 }
 
 @end
