@@ -66,7 +66,8 @@
     devMode = YES;
     idfa = @"123ABC";
     siteId = @"2";
-    viewController = [[UIViewController alloc] init];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    viewController = [sb instantiateViewControllerWithIdentifier:@"bkview"];
 
     myKey1 = @"myKey1";
     myKey2 = @"myKey2";
@@ -174,16 +175,18 @@
     XCTAssertTrue([blueKaiSdk useHttps], @"https setting did not change");
 }
 
-/*
-- (void)testCanUpdateWithKeyAndValue
+
+// TODO: Swing back and test these
+/*- (void)testCanUpdateWithKeyAndValue
 {
     // requires Nocilla
-    stubRequest(@"GET", @"http://mobileproxy.bluekai.com/m.html").andReturn(200);
+    //stubRequest(@"GET", @"http://mobileproxy.bluekai.com/m.html").andReturn(200);
     [blueKaiSdk setDevMode:YES];
     [blueKaiSdk setOptInPreference:YES];
     [blueKaiSdk updateWithKey:myKey1 andValue:myValue1];
-}
+}*/
 
+/*
 - (void)testCanUpdateWithDictionaryParams
 {
     // requires Nocilla
