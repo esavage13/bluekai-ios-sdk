@@ -11,10 +11,9 @@
     int _urlLength,
         _numberOfRunningRequests;
 
-    UIButton    *_cancelButton;
-    UIImageView *_userCheckImage;
-    UITapGestureRecognizer *_tap;
-    UIWebView              *_webView;
+    UIButton  *_cancelButton;
+    UISwitch  *_optInSwitch;
+    UIWebView *_webView;
 }
 
 
@@ -47,13 +46,13 @@
         _devMode = value;
         _siteId = siteID;
         _viewController = view;
-        _optInPreference = YES;
+        _userDefaults = [NSUserDefaults standardUserDefaults];
+        _optInPreference = [_userDefaults objectForKey:@"userIsOptIn"] == NULL ? YES : [[_userDefaults valueForKey:@"userIsOptIn"] boolValue];
         _cancelButton = nil;
         _webUrl = [[NSMutableString alloc] init];
         _nonLoadkeyValDict = [[NSMutableDictionary alloc] init];
         _remainkeyValDict = [[NSMutableDictionary alloc] init];
         _webLoaded = NO;
-        _userDefaults = [NSUserDefaults standardUserDefaults];
         _webView = [[UIWebView alloc] init];
         _webView.delegate = self;
         _webView.layer.cornerRadius = 5.0f;
@@ -71,8 +70,8 @@
             [_userDefaults setObject:@"NO" forKey:@"settings"];
         }
 
-        if (![_userDefaults objectForKey:@"KeyToUserData"]) {
-            [_userDefaults setObject:(_optInPreference ? @"YES" : @"NO") forKey:@"KeyToUserData"];
+        if (![_userDefaults objectForKey:@"userIsOptIn"]) {
+            [_userDefaults setObject:(_optInPreference ? @"YES" : @"NO") forKey:@"userIsOptIn"];
         }
 
         [self saveSettings:nil];
@@ -224,11 +223,11 @@
 }
 
 - (void)setOptInPreference:(BOOL)optIn {
-    [self blueKaiLogger:_devMode withString:@"setOptInPreference:OptIn" withObject:(_optInPreference ? @"YES" : @"NO")];
-
     _optInPreference = optIn;
 
-    [_userDefaults setObject:(_optInPreference ? @"YES" : @"NO") forKey:@"KeyToUserData"];
+    [self blueKaiLogger:_devMode withString:@"setOptInPreference:OptIn" withObject:(_optInPreference ? @"YES" : @"NO")];
+
+    [_userDefaults setObject:(_optInPreference ? @"YES" : @"NO") forKey:@"userIsOptIn"];
 
     [self saveSettings:nil];
     // TODO: Turn this back on when we can universally opt-out of BKSID
@@ -244,31 +243,15 @@
 
     _viewController.view.hidden = NO;
     _viewController.view.backgroundColor = bgColor;
-    _userCheckImage = [[UIImageView alloc] initWithFrame:CGRectMake(25, 100, 40, 40)];
 
-    UIGraphicsBeginImageContext(_userCheckImage.frame.size);
-    NSString *userPref = [_userDefaults objectForKey:@"settings"];
+    _optInSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(238, 58, 0, 0)];
+    [_optInSwitch setBackgroundColor:[UIColor whiteColor]];
+    [_optInSwitch.layer setCornerRadius:16];
+    [_optInSwitch setOn:_optInPreference];
+    [_optInSwitch addTarget:self action:@selector(optInPreferenceChanged:) forControlEvents:UIControlEventValueChanged];
+    [_viewController.view addSubview:_optInSwitch];
 
-    if ([userPref isEqualToString:@"YES"] || _optInPreference) {
-        [[UIImage imageNamed:@"chk-1"] drawInRect:_userCheckImage.bounds];
-        [_userDefaults setObject:@"YES" forKey:@"KeyToUserData"];
-        _userCheckImage.tag = 0;
-    } else {
-        [[UIImage imageNamed:@"unchk-1"] drawInRect:_userCheckImage.bounds];
-        [_userDefaults setObject:@"NO" forKey:@"KeyToUserData"];
-        _userCheckImage.tag = 1;
-    }
-
-    UIImage *lblimage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    _userCheckImage.image = lblimage;
-    _userCheckImage.userInteractionEnabled = YES;
-    _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userDataChanged:)];
-    _tap.delegate = self;
-    [_userCheckImage addGestureRecognizer:_tap];
-    [_viewController.view addSubview:_userCheckImage];
-
-    UILabel *usrData_lbl = [[UILabel alloc] initWithFrame:CGRectMake(75, 95, 240, 50)];
+    UILabel *usrData_lbl = [[UILabel alloc] initWithFrame:CGRectMake(20, 48, 240, 50)];
     usrData_lbl.textColor = [UIColor blackColor];
     usrData_lbl.backgroundColor = [UIColor clearColor];
     usrData_lbl.textAlignment = NSTextAlignmentLeft;
@@ -278,7 +261,7 @@
     usrData_lbl.text = @"Allow Bluekai to receive my data";
     [_viewController.view addSubview:usrData_lbl];
 
-    UILabel *tclbl = [[UILabel alloc] initWithFrame:CGRectMake(25, 235, 280, 50)];
+    UILabel *tclbl = [[UILabel alloc] initWithFrame:CGRectMake(18, 234, 280, 50)];
     tclbl.textColor = [UIColor blackColor];
     tclbl.backgroundColor = [UIColor clearColor];
     tclbl.textAlignment = NSTextAlignmentLeft;
@@ -391,7 +374,7 @@
 
 - (IBAction)saveSettings:(id)sender {
 //    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    NSString *userDataValue = [_userDefaults objectForKey:@"KeyToUserData"];
+    NSString *userDataValue = [_userDefaults objectForKey:@"userIsOptIn"];
     [_userDefaults setObject:userDataValue forKey:@"settings"];
 
     // TODO: Turn this back on when we can universally opt-out of BKSID
@@ -509,10 +492,10 @@
         UIWebView *optInWebView = [[UIWebView alloc] init];
         // use mobileproxy for development
         NSString *server = _devMode ? @"http://mobileproxy.bluekai.com/" : @"http://tags.bluekai.com/";
-        NSString *urlPath = [[_userDefaults objectForKey:@"KeyToUserData"] isEqualToString:@"YES"] ? @"clear_ignore" : @"set_ignore";
+        NSString *urlPath = [[_userDefaults objectForKey:@"userIsOptIn"] isEqualToString:@"YES"] ? @"clear_ignore" : @"set_ignore";
         NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@", server, urlPath]];
 
-        [self blueKaiLogger:_devMode withString:@"opt-in preference is set to" withObject:[_userDefaults objectForKey:@"KeyToUserData"]];
+        [self blueKaiLogger:_devMode withString:@"opt-in preference is set to" withObject:[_userDefaults objectForKey:@"userIsOptIn"]];
 //        [self blueKaiLogger:_devMode withString:@"opt-in URL" withObject:url];
 
         [_viewController.view addSubview:optInWebView];
@@ -791,23 +774,13 @@
     return output;
 }
 
-- (void)userDataChanged:(UITapGestureRecognizer *)recognizer {
-    if (_userCheckImage.tag == 1) {
-        UIGraphicsBeginImageContext(_userCheckImage.frame.size);
-        [[UIImage imageNamed:@"chk-1"] drawInRect:_userCheckImage.bounds];
-        UIImage *checkboxImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        _userCheckImage.image = checkboxImage;
-        [_userDefaults setObject:@"YES" forKey:@"KeyToUserData"];
-        _userCheckImage.tag = 0;
+- (void)optInPreferenceChanged:(id)sender {
+    if ([sender isOn]) {
+        [self setOptInPreference:YES];
+        [_userDefaults setObject:@"YES" forKey:@"userIsOptIn"];
     } else {
-        UIGraphicsBeginImageContext(_userCheckImage.frame.size);
-        [[UIImage imageNamed:@"unchk-1"] drawInRect:_userCheckImage.bounds];
-        UIImage *checkboxImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        _userCheckImage.image = checkboxImage;
-        [_userDefaults setObject:@"NO" forKey:@"KeyToUserData"];
-        _userCheckImage.tag = 1;
+        [self setOptInPreference:NO];
+        [_userDefaults setObject:@"NO" forKey:@"userIsOptIn"];
     }
 }
 

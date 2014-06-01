@@ -2,8 +2,10 @@
 
 @interface DevSettingsViewController : UIViewController<UITextFieldDelegate>
 {
-    IBOutlet UIButton    *dev_btn;
-    IBOutlet UITextField *siteId_Txtfield;
+    IBOutlet UISwitch    *devModeSwtich;
+    IBOutlet UITextField *siteIdTextfield;
 }
+
+- (IBAction)devModeStateChanged:(id)sender;
 
 @end

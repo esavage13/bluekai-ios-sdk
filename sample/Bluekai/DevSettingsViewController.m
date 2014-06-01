@@ -36,36 +36,11 @@
 
     configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
 
-    [dev_btn setImage:[UIImage imageNamed:([configDict[@"devMode"] boolValue]) ? @"chk-1" : @"unchk-1"] forState:UIControlStateNormal];
+    [devModeSwtich setOn:([configDict[@"devMode"] boolValue])];
 
-    siteId_Txtfield.text = configDict[@"siteId"];
+    siteIdTextfield.text = configDict[@"siteId"];
 }
 
-- (IBAction)changeDevMode:(id)sender {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = paths[0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
-    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-
-    UIButton *btn = (UIButton *) sender;
-    UIImage *actual_image = btn.currentImage;
-    NSData *present_image = UIImagePNGRepresentation(actual_image);
-    NSData *compare_image = UIImagePNGRepresentation([UIImage imageNamed:@"unchk-1"]);
-
-    if ([present_image isEqual:compare_image]) {
-        [dev_btn setImage:[UIImage imageNamed:@"chk-1"] forState:UIControlStateNormal];
-        //update the plist file
-        configDict[@"devMode"] = @"YES";
-
-    } else {
-        [dev_btn setImage:[UIImage imageNamed:@"unchk-1"] forState:UIControlStateNormal];
-        //update plist file
-
-        [configDict setValue:@"NO" forKey:@"devMode"];
-    }
-
-    [configDict writeToFile:filePath atomically:YES];
-}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -79,6 +54,21 @@
     configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
     [configDict setValue:textField.text forKey:@"ServerURL"];
     NSLog(@"%@", configDict);
+    [configDict writeToFile:filePath atomically:YES];
+}
+
+- (IBAction)devModeStateChanged:(id)sender {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = paths[0];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+
+    if ([sender isOn]) {
+        configDict[@"devMode"] = @"YES";
+    } else {
+        configDict[@"devMode"] = @"NO";
+    }
+    
     [configDict writeToFile:filePath atomically:YES];
 }
 

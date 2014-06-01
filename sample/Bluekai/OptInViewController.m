@@ -47,7 +47,7 @@
     if (!success) {
         // file does not exist; so look into mainBundle
         NSString *defaultPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Configurationfile.plist"];
-        [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
+            [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
     }
 
     configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
