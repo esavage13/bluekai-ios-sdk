@@ -15,6 +15,8 @@ Enhancements and new features
     <BlueKai: 0x85c14a0, {
         appVersion = "4.2.0";
         devMode = YES;
+        idfa = "1234567abc";
+        optInPreference = YES;
         siteID = 2;
         useHTTPS = NO;
         view = "<TestViewController: 0x85ac200>";
