@@ -23,6 +23,9 @@ Enhancements and new features
 - Transition all the setter/getter functions to Objective-C's native `@property` declarations
     - Free `setter` and `getter` functions
     - Do not impact existing functionalities
+- Sample app
+    - Enhance and update UI look & feel
+    - Explose new UI controls from the UI
 
 ### New features
 - Add a new init method to tag on IDFA id: `initWithSiteId:withAppVersion:withIdfa:withView:withDevMode`
@@ -39,6 +42,8 @@ Enhancements and new features
 - Show setting screen methods; use the `setOptInPreference` property to set the opt-in preference instead
     - `- (void)showSettingsScreen`
     - `- (void)showSettingsScreenWithBackgroundColor:(UIColor *)color`
+- iOS native graphic elements replace `chk-1.png' and 'unchk-1.png' images
+    
 
 ## v1.5.0 (05.05.2014)
 -----
