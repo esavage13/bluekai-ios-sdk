@@ -1,4 +1,4 @@
-## v1.6.0 (05.09.2014)
+## v1.6.0 (06.03.2014)
 -----
 Enhancements and new features
 
