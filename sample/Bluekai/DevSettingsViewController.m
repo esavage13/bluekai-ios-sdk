@@ -67,22 +67,12 @@
 }
 
 - (IBAction)devModeStateChanged:(id)sender {
-    if ([sender isOn]) {
-        configDict[@"devMode"] = @"YES";
-    } else {
-        configDict[@"devMode"] = @"NO";
-    }
-    
+    configDict[@"devMode"] = [sender isOn] ? @"YES" : @"NO";
     [configDict writeToFile:plistFilePath atomically:YES];
 }
 
 - (IBAction)httpsModeStateChanged:(id)sender {
-    if ([sender isOn]) {
-        configDict[@"useHttps"] = @"YES";
-    } else {
-        configDict[@"useHttps"] = @"NO";
-    }
-
+    configDict[@"useHttps"] = [sender isOn] ? @"YES" : @"NO";
     [configDict writeToFile:plistFilePath atomically:YES];
 }
 

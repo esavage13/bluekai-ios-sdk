@@ -16,6 +16,10 @@
     UIWebView *_webView;
 }
 
+static NSString *const MOBILE_PROXY_PARTIAL_URL = @"://mobileproxy.bluekai.com/";
+static NSString *const OPTOUT_DEV_URL = @"http://mobileproxy.bluekai.com/";
+static NSString *const OPTOUT_PROD_URL = @"http://tags.bluekai.com/";
+static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consumers_privacyguidelines.php";
 
 #pragma mark - Public Methods
 
@@ -271,13 +275,13 @@
     tclbl.text = @"The BlueKai privacy policy is available";
     [_viewController.view addSubview:tclbl];
 
-    UIButton *Here = [UIButton buttonWithType:UIButtonTypeCustom];
-    Here.frame = CGRectMake(256, 253, 50, 14);
-    [Here setTitle:@"here" forState:UIControlStateNormal];
-    Here.titleLabel.font = [UIFont systemFontOfSize:14];
-    [Here addTarget:self action:@selector(termsConditions:) forControlEvents:UIControlEventTouchUpInside];
-    [Here setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [_viewController.view addSubview:Here];
+    UIButton *hereButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    hereButton.frame = CGRectMake(256, 253, 50, 14);
+    [hereButton setTitle:@"here" forState:UIControlStateNormal];
+    hereButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [hereButton addTarget:self action:@selector(termsConditions:) forControlEvents:UIControlEventTouchUpInside];
+    [hereButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [_viewController.view addSubview:hereButton];
 
     UIButton *savebtn = [UIButton buttonWithType:UIButtonTypeCustom];
     savebtn.frame = CGRectMake(75, 290, 80, 35);
@@ -353,12 +357,10 @@
 #pragma mark - IBActions
 
 - (IBAction)termsConditions:(id)sender {
-    NSString *shareUrlString = [NSString stringWithFormat:@"http://www.bluekai.com/consumers_privacyguidelines.php"];
-
-    NSURL *HereUrl = [[NSURL alloc] initWithString:shareUrlString];
+    NSURL *hereUrl = [[NSURL alloc] initWithString:TERMS_AND_CONDITION_URL];
     //Create the URL object
 
-    [[UIApplication sharedApplication] openURL:HereUrl];
+    [[UIApplication sharedApplication] openURL:hereUrl];
     //Launch Safari with the URL you created
 }
 
@@ -499,7 +501,7 @@
     if (networkStatus != NotReachable) {
         UIWebView *optInWebView = [[UIWebView alloc] init];
         // use mobileproxy for development
-        NSString *server = _devMode ? @"http://mobileproxy.bluekai.com/" : @"http://tags.bluekai.com/";
+        NSString *server = _devMode ? OPTOUT_DEV_URL : OPTOUT_PROD_URL;
         NSString *urlPath = [[_userDefaults objectForKey:@"userIsOptIn"] isEqualToString:@"YES"] ? @"clear_ignore" : @"set_ignore";
         NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@", server, urlPath]];
 
@@ -554,7 +556,7 @@
 
         _webLoaded = NO;
 
-        if (_remainkeyValDict || _nonLoadkeyValDict) {
+        if (_remainkeyValDict != NULL || _nonLoadkeyValDict != NULL) {
             if ([_remainkeyValDict count] != 0 || [_nonLoadkeyValDict count] != 0) {
                 [self loadAnotherRequest];
             }
@@ -620,36 +622,36 @@
             }
 
             NSArray *webViews = [_viewController.view subviews];
-            int web_count = 0;
-            int btn_count = 0;
+            int webCount = 0;
+            int buttonCount = 0;
 
             for (UIView *view in webViews) {
                 if ([view isKindOfClass:[UIWebView class]]) {
-                    web_count++;
+                    webCount++;
                 } else {
                     if ([view isKindOfClass:[UIButton class]]) {
                         if (view.tag == 10) {
-                            btn_count++;
+                            buttonCount++;
                         }
                     }
                 }
             }
 
-            if (web_count > 1) {
+            if (webCount > 1) {
                 for (UIView *view in webViews) {
                     if ([view isKindOfClass:[UIWebView class]]) {
-                        if (web_count >= 2) {
+                        if (webCount >= 2) {
                             [view removeFromSuperview];
-                            web_count--;
+                            webCount--;
                         } else {
                             view.hidden = YES;
                         }
                     } else {
                         if ([view isKindOfClass:[UIButton class]]) {
                             if (view.tag == 10) {
-                                if (btn_count >= 2) {
+                                if (buttonCount >= 2) {
                                     [view removeFromSuperview];
-                                    btn_count--;
+                                    buttonCount--;
                                 } else {
                                     view.hidden = YES;
                                 }
@@ -698,8 +700,9 @@
             }
 
             //Code to send the multiple values for every request.
+            int keysCount = [[_nonLoadkeyValDict allKeys] count];
 
-            for (int i = 0; i < [[_nonLoadkeyValDict allKeys] count]; i++) {
+            for (int i = 0; i < keysCount; i++) {
                 NSString *key = [NSString stringWithFormat:@"%@", [_nonLoadkeyValDict allKeys][i]];
                 NSString *value = [NSString stringWithFormat:@"%@", _nonLoadkeyValDict[[_nonLoadkeyValDict allKeys][i]]];
 
@@ -874,7 +877,7 @@
 }
 
 - (NSMutableString *)constructUrl {
-    NSString *serverURL = @"://mobileproxy.bluekai.com/";
+    NSString *serverURL = MOBILE_PROXY_PARTIAL_URL;
     NSMutableString *protocol = [NSMutableString stringWithFormat:@"%@", (_useHttps ? @"https" : @"http")];
     NSMutableString *endPoint = [NSMutableString stringWithFormat:@"%@", (_devMode ? @"m-sandbox.html" : @"m.html")];
     NSMutableString *urlString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@%@?site=%@&", protocol, serverURL, endPoint, _siteId]];
