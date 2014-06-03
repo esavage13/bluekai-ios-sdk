@@ -1,11 +1,14 @@
 #import "DevSettingsViewController.h"
-#import "TestViewController.h"
+#import "Bluekai.h"
 
-@interface DevSettingsViewController ()
-
-@end
-
-@implementation DevSettingsViewController
+@implementation DevSettingsViewController {
+    BlueKai             *blueKaiSDK;
+    NSArray             *paths;
+    NSFileManager       *fileManager;
+    NSMutableDictionary *configDict;
+    NSString            *documentsDirectory;
+    NSString            *plistFilePath;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -13,6 +16,7 @@
     if (self) {
         self.tabBarItem.title = @"Settings";
     }
+    
     return self;
 }
 
@@ -20,51 +24,35 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
+    
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
-    BOOL success = [fileManager fileExistsAtPath:plistPath];
+    paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    documentsDirectory = paths[0];
+    fileManager = [NSFileManager defaultManager];
+    plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistFilePath];
+    BOOL success = [fileManager fileExistsAtPath:plistFilePath];
 
     if (!success) {
-        //file does not exist. So look into mainBundle
+        // file does not exist, look into mainBundle
         NSString *defaultPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Configurationfile.plist"];
-        [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
+        [fileManager copyItemAtPath:defaultPath toPath:plistFilePath error:&error];
     }
 
-    config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    [devModeSwtich setOn:([configDict[@"devMode"] boolValue])];
+    [httpsSwtich setOn:([configDict[@"useHttps"] boolValue])];
 
-    [dev_btn setImage:[UIImage imageNamed:([config_dict[@"devMode"] boolValue]) ? @"chk-1" : @"unchk-1"] forState:UIControlStateNormal];
+    siteIdTextfield.text = configDict[@"siteId"];
+    idfaIdTextfield.text = configDict[@"idfaId"];
 
-    siteId_Txtfield.text = config_dict[@"siteId"];
+    blueKaiSDK = [[BlueKai alloc] initWithSiteId:siteIdTextfield.text
+                                  withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                        withIdfa:idfaIdTextfield.text
+                                        withView:self
+                                     withDevMode:[configDict[@"devMode"] boolValue]];
 }
 
-- (IBAction)changeDevMode:(id)sender {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = paths[0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
-    config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-
-    UIButton *btn = (UIButton *) sender;
-    UIImage *actual_image = btn.currentImage;
-    NSData *present_image = UIImagePNGRepresentation(actual_image);
-    NSData *compare_image = UIImagePNGRepresentation([UIImage imageNamed:@"unchk-1"]);
-
-    if ([present_image isEqual:compare_image]) {
-        [dev_btn setImage:[UIImage imageNamed:@"chk-1"] forState:UIControlStateNormal];
-        //update the plist file
-        config_dict[@"devMode"] = @"YES";
-
-    } else {
-        [dev_btn setImage:[UIImage imageNamed:@"unchk-1"] forState:UIControlStateNormal];
-        //update plist file
-
-        [config_dict setValue:@"NO" forKey:@"devMode"];
-    }
-
-    [config_dict writeToFile:filePath atomically:YES];
-}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -72,13 +60,20 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = paths[0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"Configurationfile.plist"];
-    config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-    [config_dict setValue:textField.text forKey:@"ServerURL"];
-    NSLog(@"%@", config_dict);
-    [config_dict writeToFile:filePath atomically:YES];
+    configDict[@"siteId"] = siteIdTextfield.text;
+    [configDict writeToFile:plistFilePath atomically:YES];
+    configDict[@"idfaId"] = idfaIdTextfield.text;
+    [configDict writeToFile:plistFilePath atomically:YES];
+}
+
+- (IBAction)devModeStateChanged:(id)sender {
+    configDict[@"devMode"] = [sender isOn] ? @"YES" : @"NO";
+    [configDict writeToFile:plistFilePath atomically:YES];
+}
+
+- (IBAction)httpsModeStateChanged:(id)sender {
+    configDict[@"useHttps"] = [sender isOn] ? @"YES" : @"NO";
+    [configDict writeToFile:plistFilePath atomically:YES];
 }
 
 @end

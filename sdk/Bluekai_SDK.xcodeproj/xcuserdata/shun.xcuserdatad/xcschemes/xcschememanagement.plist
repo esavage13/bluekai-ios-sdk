@@ -14,9 +14,59 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>TestRunnerApp.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>240C9119192C233E00C5633D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>240C9139192C233E00C5633D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>240C9154192C2FE100C5633D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>240C9176192C2FE200C5633D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>245725DB192C38FE00253FDB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>245725FA192C38FF00253FDB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>24F7B6FF192ADADC002D8F99</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>24F7B718192BCDB4002D8F99</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>24F7B737192BCDB4002D8F99</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D79AF756173A1AA7002E0A0B</key>
 		<dict>
 			<key>primary</key>

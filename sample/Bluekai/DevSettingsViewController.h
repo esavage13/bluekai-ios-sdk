@@ -2,12 +2,13 @@
 
 @interface DevSettingsViewController : UIViewController<UITextFieldDelegate>
 {
-    IBOutlet UIButton    *dev_btn;
-    IBOutlet UITextField *siteId_Txtfield;
-
-    NSMutableDictionary    *config_dict;
-    NSString               *plist_path;
-    UITapGestureRecognizer *dev_tap;
+    IBOutlet UISwitch    *devModeSwtich;
+    IBOutlet UISwitch    *httpsSwtich;
+    IBOutlet UITextField *siteIdTextfield;
+    IBOutlet UITextField *idfaIdTextfield;
 }
+
+- (IBAction)devModeStateChanged:(id)sender;
+- (IBAction)httpsModeStateChanged:(id)sender;
 
 @end

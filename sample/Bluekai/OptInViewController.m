@@ -1,17 +1,22 @@
 #import "OptInViewController.h"
+#import "BlueKai.h"
 
-@interface OptInViewController ()
-
-@end
-
-@implementation OptInViewController
+@implementation OptInViewController {
+    BlueKai             *blueKaiSDK;
+    NSArray             *paths;
+    NSFileManager       *fileManager;
+    NSMutableDictionary *configDict;
+    NSString            *plistFilePath;
+    UIAlertView         *alert;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
     if (self) {
         self.tabBarItem.title = @"T&C";
-
     }
+    
     return self;
 }
 
@@ -22,46 +27,58 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     NSArray *array = [self.view subviews];
+
     for (UIView *view in array) {
         if (![view isKindOfClass:[UIWebView class]]) {
             [view removeFromSuperview];
         }
     }
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnteredToForeGround) name:UIApplicationWillEnterForegroundNotification object:nil];
-    self.tabBarController.delegate = self;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *plistPath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appCameToForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
 
-    BOOL success = [fileManager fileExistsAtPath:plistPath];
+    self.tabBarController.delegate = self;
+
+    NSError *error;
+    fileManager = [NSFileManager defaultManager];
+    paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    plistFilePath = [paths[0] stringByAppendingPathComponent:@"Configurationfile.plist"];
+
+    BOOL success = [fileManager fileExistsAtPath:plistFilePath];
 
     if (!success) {
-        //file does not exist. So look into mainBundle
+        // file does not exist; so look into mainBundle
         NSString *defaultPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Configurationfile.plist"];
-        [fileManager copyItemAtPath:defaultPath toPath:plistPath error:&error];
+        [fileManager copyItemAtPath:defaultPath toPath:plistFilePath error:&error];
     }
 
-    config_dict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-    Obj_bluekai = [[BlueKai alloc] initWithSiteId:config_dict[@"siteId"] withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] withView:self withDevMode:[config_dict[@"devMode"] boolValue]];
-    Obj_bluekai.delegate = self;
-    [Obj_bluekai showSettingsScreen];
+    configDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistFilePath];
+
+    blueKaiSDK = [[BlueKai alloc] initWithSiteId:configDict[@"siteId"]
+                                  withAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+                                        withIdfa:configDict[@"idfaId"]
+                                        withView:self
+                                     withDevMode:[configDict[@"devMode"] boolValue]];
+    blueKaiSDK.delegate = (id) self;
+
+    // adds a slight yellow tint to background
+    [blueKaiSDK showSettingsScreenWithBackgroundColor:[UIColor colorWithRed:(246/255.0) green:(247/255.0) blue:(220/255.0) alpha:1.0]];
 }
 
-- (void)appEnteredToForeGround {
-    NSLog(@"Application opened");
-    [Obj_bluekai resume];
+- (void)appCameToForeground {
+    [blueKaiSDK resume];
 }
 
 - (void)onDataPosted:(BOOL)status {
-    if (status) {
-        alert = [[UIAlertView alloc] initWithTitle:nil message:@"\n\nData sent successfully" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [alert show];
-    } else {
-        alert = [[UIAlertView alloc] initWithTitle:nil message:@"\n\nData could not be sent" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
+    if (blueKaiSDK.devMode) {
+        NSString *alertMessage = status ? @"\nData sent successfully" : @"\nData could not be sent";
+
+        alert = [[UIAlertView alloc] initWithTitle:nil message:alertMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
+
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(removeAlert:) userInfo:nil repeats:NO];
 }
 
