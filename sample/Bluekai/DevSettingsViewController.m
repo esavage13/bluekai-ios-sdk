@@ -8,6 +8,7 @@
     NSMutableDictionary *configDict;
     NSString            *documentsDirectory;
     NSString            *plistFilePath;
+    NSBundle            *mainBundle;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -74,6 +75,22 @@
 - (IBAction)httpsModeStateChanged:(id)sender {
     configDict[@"useHttps"] = [sender isOn] ? @"YES" : @"NO";
     [configDict writeToFile:plistFilePath atomically:YES];
+}
+
+- (IBAction)redirectButtonClicked:(id)sender {
+    mainBundle = [NSBundle mainBundle];
+    NSArray* cfBundleURLTypes = [mainBundle objectForInfoDictionaryKey:@"CFBundleURLTypes"];
+    
+    if ([cfBundleURLTypes isKindOfClass:[NSArray class]] && [cfBundleURLTypes lastObject]) {
+        NSDictionary* cfBundleURLTypes0 = [cfBundleURLTypes objectAtIndex:0];
+        if ([cfBundleURLTypes0 isKindOfClass:[NSDictionary class]]) {
+            NSArray* cfBundleURLSchemes = [cfBundleURLTypes0 objectForKey:@"CFBundleURLSchemes"];
+            if ([cfBundleURLSchemes isKindOfClass:[NSArray class]]) {
+                NSString *url = [NSString stringWithFormat:@"http://mobileproxy.bluekai.com/redirect.html?__appUrlScheme=%@&someKey=someVal", cfBundleURLSchemes[0]]; // should return "BlueKaiSampleApp"
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            }
+        }
+    }
 }
 
 @end
