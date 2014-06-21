@@ -24,6 +24,9 @@
 @interface BlueKai : NSObject <UIWebViewDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate> {
 }
 
+/** Sets a delegate for callbacks from the BlueKai SDK
+ * Works in conjunction with the `onDataPosted` method
+ */
 @property (nonatomic, weak) id <BlueKaiOnDataPostedListener> delegate;
 
 /** Sets iOS app version
@@ -143,12 +146,16 @@
 
 /** Displays BlueKai Optout screen
  *
+ * Deprecated; use the "setOptInPreference" property instead
+ *
  * Displays a view to allow user to optout of tracking by BlueKai
  *
  */
 - (void)showSettingsScreen;
 
 /** Displays BlueKai Optout screen with option to set background color
+ *
+ * Deprecated; use the "setOptInPreference" property instead
  *
  * Same functionality as `showSettingsScreen` with option to set custom background color
  *

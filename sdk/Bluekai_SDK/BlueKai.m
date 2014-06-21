@@ -262,7 +262,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     usrData_lbl.numberOfLines = 0;
     usrData_lbl.lineBreakMode = NSLineBreakByWordWrapping;
     usrData_lbl.font = [UIFont systemFontOfSize:14];
-    usrData_lbl.text = @"Allow Bluekai to receive my data";
+    usrData_lbl.text = @"Allow BlueKai to receive my data";
     [_viewController.view addSubview:usrData_lbl];
 
     UILabel *tclbl = [[UILabel alloc] initWithFrame:CGRectMake(18, 234, 280, 50)];
