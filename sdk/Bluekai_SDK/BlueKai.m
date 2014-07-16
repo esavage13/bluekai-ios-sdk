@@ -58,6 +58,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
         _remainkeyValDict = [[NSMutableDictionary alloc] init];
         _webLoaded = NO;
         _webView = [[UIWebView alloc] init];
+        _webView.scrollView.scrollsToTop = NO;
         _webView.delegate = self;
         _webView.layer.cornerRadius = 5.0f;
         _webView.layer.borderColor = [[UIColor grayColor] CGColor];

@@ -1,3 +1,13 @@
+## v1.6.5 (07.16.2014)
+-----
+Minor update
+
+### Bug fixes
+- Init web view scroll behaviour with `scrollsToTop = NO`.
+  This will enable application to set appropriate scrolling setting in its own view.
+
+  https://developer.apple.com/library/ios/documentation/uikit/reference/uiscrollview_class/Reference/UIScrollView.html#//apple_ref/occ/instp/UIScrollView/scrollsToTop  
+
 ## v1.6.0 (06.03.2014)
 -----
 Enhancements and new features
