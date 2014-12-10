@@ -3,6 +3,8 @@
 
 http://bluekai.github.io/bluekai-ios-sdk-static-libs.zip
 
+http://bluekai.github.io/bluekai-ios-sdk-static-libs-arm64.zip (64-bit)
+
 ### Obtain BlueKai site ID
 
 For any demo projects a site id of `2` can be used.
