@@ -8,7 +8,7 @@
     BOOL _alertShowBool,
          _webLoaded;
 
-    int _urlLength,
+    unsigned long _urlLength,
         _numberOfRunningRequests;
 
     UIButton  *_cancelButton;
@@ -701,7 +701,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
             }
 
             //Code to send the multiple values for every request.
-            int keysCount = [[_nonLoadkeyValDict allKeys] count];
+            NSUInteger keysCount = [[_nonLoadkeyValDict allKeys] count];
 
             for (int i = 0; i < keysCount; i++) {
                 NSString *key = [NSString stringWithFormat:@"%@", [_nonLoadkeyValDict allKeys][i]];
@@ -765,7 +765,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     NSMutableString *output = [NSMutableString string];
 
     const unsigned char *source = (const unsigned char *) [string UTF8String];
-    int sourceLen = strlen((const char *) source);
+    unsigned long sourceLen = strlen((const char *) source);
 
     for (int i = 0; i < sourceLen; ++i) {
         const unsigned char thisChar = source[i];
@@ -892,7 +892,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     // send the dictionary details to BlueKai server
     _urlLength = urlString.length;
 
-    int keyCount = [[_keyValDict allKeys] count];
+    NSUInteger keyCount = [[_keyValDict allKeys] count];
 
     for (int i = 0; i < keyCount; i++) {
         NSString *key = [NSString stringWithFormat:@"%@", [_keyValDict allKeys][i]];
