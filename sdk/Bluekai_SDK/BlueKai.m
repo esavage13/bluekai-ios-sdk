@@ -28,6 +28,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     if (self = [super init]) {
         _appVersion = nil;
         _viewController = nil;
+        _useDirectHTTPCalls = YES;
         _siteId = nil;
         _idfa = nil;
         _useHttps = NO;
@@ -39,26 +40,6 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     return self;
 }
 
-- (void) addWebView {
-    _webLoaded = NO;
-    _useDirectHTTPCalls = NO; // using web view-based communication
-    _webView = [[UIWebView alloc] init];
-    _webView.scrollView.scrollsToTop = NO;
-    _webView.delegate = self;
-    _webView.layer.cornerRadius = 5.0f;
-    _webView.layer.borderColor = [[UIColor grayColor] CGColor];
-    _webView.layer.borderWidth = 4.0f;
-    [_viewController.view addSubview:_webView];
-    
-    if (_devMode) {
-        [self drawWebFrame:_webView];
-    } else {
-        _webView.frame = CGRectMake(10, 10, 1, 1);
-    }
-    _webView.hidden = YES;
-
-}
-
 - (id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version withIdfa:(NSString *)idfa withView:(UIViewController *)view withDevMode:(BOOL)value {
     [self blueKaiLogger:_devMode withString:@"init siteId " withObject:siteID];
     [self blueKaiLogger:_devMode withString:@"init appVersion " withObject:version];
@@ -66,17 +47,13 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     [self blueKaiLogger:_devMode withString:@"init DevMode " withObject:(value ? @"YES" : @"NO")];
 
     if (self = [super init]) {
+        [self baseInitializaton];
         _appVersion = version;
         _idfa = idfa;
         _devMode = value;
         _siteId = siteID;
         _viewController = view;
-        _userDefaults = [NSUserDefaults standardUserDefaults];
-        _optInPreference = [_userDefaults objectForKey:@"userIsOptIn"] == NULL ? YES : [[_userDefaults valueForKey:@"userIsOptIn"] boolValue];
         _cancelButton = nil;
-        _webUrl = [[NSMutableString alloc] init];
-        _nonLoadkeyValDict = [[NSMutableDictionary alloc] init];
-        _remainkeyValDict = [[NSMutableDictionary alloc] init];
         [self addWebView];
         
         if (![_userDefaults objectForKey:@"settings"]) {
@@ -139,18 +116,16 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
        withUserAgent:(NSString *)userAgent
          withDevMode:(BOOL)devMode {
     if (self = [super init]) {
+        [self baseInitializaton];
         _appVersion = version;
         _idfa = idfa;
         _devMode = devMode;
         _siteId = siteID;
         _useDirectHTTPCalls = YES;
         _userAgent = userAgent;
-        _userDefaults = [NSUserDefaults standardUserDefaults];
-        _optInPreference = [_userDefaults objectForKey:@"userIsOptIn"] == NULL ? YES : [[_userDefaults valueForKey:@"userIsOptIn"] boolValue];
+        
         _cancelButton = nil;
-        _webUrl = [[NSMutableString alloc] init];
-        _nonLoadkeyValDict = [[NSMutableDictionary alloc] init];
-        _remainkeyValDict = [[NSMutableDictionary alloc] init];
+        
         _webLoaded = NO;
         
         if (![_userDefaults objectForKey:@"settings"]) {
@@ -958,5 +933,54 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
         }
     }
 }
+
+- (void) addWebView {
+    _webLoaded = NO;
+    _useDirectHTTPCalls = NO; // using web view-based communication
+    _webView = [[UIWebView alloc] init];
+    _webView.scrollView.scrollsToTop = NO;
+    _webView.delegate = self;
+    _webView.layer.cornerRadius = 5.0f;
+    _webView.layer.borderColor = [[UIColor grayColor] CGColor];
+    _webView.layer.borderWidth = 4.0f;
+    _webView.tag = 1;
+    [_viewController.view addSubview:_webView];
+    
+    if (_devMode) {
+        [self drawWebFrame:_webView];
+    } else {
+        _webView.frame = CGRectMake(10, 10, 1, 1);
+    }
+    _webView.hidden = YES;
+    
+}
+
+- (void) baseInitializaton {
+    _userDefaults = [NSUserDefaults standardUserDefaults];
+    _optInPreference = [_userDefaults objectForKey:@"userIsOptIn"] == NULL ? YES : [[_userDefaults valueForKey:@"userIsOptIn"] boolValue];
+    _webUrl = [[NSMutableString alloc] init];
+    _nonLoadkeyValDict = [[NSMutableDictionary alloc] init];
+    _remainkeyValDict = [[NSMutableDictionary alloc] init];
+    _dataParamsDict = [[NSMutableDictionary alloc] init];
+    
+}
+
+- (void) addDataParam:(NSString *)type WithKey:(NSString *)key AndValue:(NSString *)value {
+    NSMutableArray *params = [_dataParamsDict valueForKey:type];
+    if(params == NULL){
+        params = [[NSMutableArray alloc] init];
+        [_dataParamsDict setObject:params forKey:type];
+    }
+    if( value != NULL) {
+        [params addObject:[self urlEncode:[NSString stringWithFormat:@"%@=%@", key, value]]];
+    } else {
+        [params addObject:key];
+    }
+}
+
+- (void) addBlueKaiParamWithKey:(NSString *)key AndValue:(NSString *)value {
+    [self addDataParam:@"phint" WithKey:[NSString stringWithFormat:@"__bk_%@", key] AndValue:value];
+}
+
 
 @end
