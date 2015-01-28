@@ -18,7 +18,8 @@
 
 static NSString *const MOBILE_PROXY_PARTIAL_URL = @"://mobileproxy.bluekai.com/";
 static NSString *const OPTOUT_DEV_URL = @"http://mobileproxy.bluekai.com/";
-static NSString *const OPTOUT_PROD_URL = @"http://tags.bluekai.com/";
+static NSString *const BLUEKAI_DATA_URL = @"http://tags.bluekai.com/";
+static NSString *const BLUEKAI_DATA_URL_SECURE = @"https://stags.bluekai.com/";
 static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consumers_privacyguidelines.php";
 
 #pragma mark - Public Methods
@@ -36,6 +37,26 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     }
 
     return self;
+}
+
+- (void) addWebView {
+    _webLoaded = NO;
+    _useDirectHTTPCalls = NO; // using web view-based communication
+    _webView = [[UIWebView alloc] init];
+    _webView.scrollView.scrollsToTop = NO;
+    _webView.delegate = self;
+    _webView.layer.cornerRadius = 5.0f;
+    _webView.layer.borderColor = [[UIColor grayColor] CGColor];
+    _webView.layer.borderWidth = 4.0f;
+    [_viewController.view addSubview:_webView];
+    
+    if (_devMode) {
+        [self drawWebFrame:_webView];
+    } else {
+        _webView.frame = CGRectMake(10, 10, 1, 1);
+    }
+    _webView.hidden = YES;
+
 }
 
 - (id)initWithSiteId:(NSString *)siteID withAppVersion:(NSString *)version withIdfa:(NSString *)idfa withView:(UIViewController *)view withDevMode:(BOOL)value {
@@ -56,21 +77,8 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
         _webUrl = [[NSMutableString alloc] init];
         _nonLoadkeyValDict = [[NSMutableDictionary alloc] init];
         _remainkeyValDict = [[NSMutableDictionary alloc] init];
-        _webLoaded = NO;
-        _webView = [[UIWebView alloc] init];
-        _webView.scrollView.scrollsToTop = NO;
-        _webView.delegate = self;
-        _webView.layer.cornerRadius = 5.0f;
-        _webView.layer.borderColor = [[UIColor grayColor] CGColor];
-        _webView.layer.borderWidth = 4.0f;
-        [_viewController.view addSubview:_webView];
-
-        if (_devMode) {
-            [self drawWebFrame:_webView];
-        } else {
-            _webView.frame = CGRectMake(10, 10, 1, 1);
-        }
-
+        [self addWebView];
+        
         if (![_userDefaults objectForKey:@"settings"]) {
             [_userDefaults setObject:@"NO" forKey:@"settings"];
         }
@@ -81,7 +89,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
 
         [self saveSettings:nil];
 
-        _webView.hidden = YES;
+        
 
         // check the dictionary for previous values
         NSString *filePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
@@ -104,7 +112,6 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
 
         if ([[_keyValDict allKeys] count] > 1) {
             _numberOfRunningRequests = -1;
-//            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
             NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
 
@@ -126,6 +133,82 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     return [self initWithSiteId:siteID withAppVersion:version withIdfa:nil withView:view withDevMode:devMode];
 }
 
+- (id)initDirectWithSiteId:(NSString *)siteID
+      withAppVersion:(NSString *)version
+            withIdfa:(NSString *)idfa
+       withUserAgent:(NSString *)userAgent
+         withDevMode:(BOOL)devMode {
+    if (self = [super init]) {
+        _appVersion = version;
+        _idfa = idfa;
+        _devMode = devMode;
+        _siteId = siteID;
+        _useDirectHTTPCalls = YES;
+        _userAgent = userAgent;
+        _userDefaults = [NSUserDefaults standardUserDefaults];
+        _optInPreference = [_userDefaults objectForKey:@"userIsOptIn"] == NULL ? YES : [[_userDefaults valueForKey:@"userIsOptIn"] boolValue];
+        _cancelButton = nil;
+        _webUrl = [[NSMutableString alloc] init];
+        _nonLoadkeyValDict = [[NSMutableDictionary alloc] init];
+        _remainkeyValDict = [[NSMutableDictionary alloc] init];
+        _webLoaded = NO;
+        
+        if (![_userDefaults objectForKey:@"settings"]) {
+            [_userDefaults setObject:@"NO" forKey:@"settings"];
+        }
+        
+        if (![_userDefaults objectForKey:@"userIsOptIn"]) {
+            [_userDefaults setObject:(_optInPreference ? @"YES" : @"NO") forKey:@"userIsOptIn"];
+        }
+        
+        [self saveSettings:nil];
+        
+        // check the dictionary for previous values
+        NSString *filePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+        NSString *fileName = @"user_data.bk";
+        NSString *fileAtPath = [filePath stringByAppendingPathComponent:fileName];
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:fileAtPath]) {
+            [[NSFileManager defaultManager] createFileAtPath:fileAtPath contents:nil attributes:nil];
+        }
+        
+        NSString *atmt_filePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+        NSString *atmt_fileName = @"attempts.bk";
+        NSString *atmt_fileAtPath = [atmt_filePath stringByAppendingPathComponent:atmt_fileName];
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:atmt_fileAtPath]) {
+            [[NSFileManager defaultManager] createFileAtPath:atmt_fileAtPath contents:nil attributes:nil];
+        }
+        
+        _keyValDict = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
+        
+        if ([[_keyValDict allKeys] count] > 1) {
+            _numberOfRunningRequests = -1;
+            BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
+            NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+            
+            if (networkStatus != NotReachable) {
+                _webLoaded = YES;
+                _webView.tag = 1;
+                [self startDataUpload];
+            } else {
+                _alertShowBool = YES;
+                [self webView:nil didFailLoadWithError:nil];
+            }
+        }
+    }
+    
+    return self;
+
+}
+
+- (id)initDirectWithSiteId:(NSString *)siteID
+      withAppVersion:(NSString *)version
+            withIdfa:(NSString *)idfa
+         withDevMode:(BOOL)devMode{
+    return [self initDirectWithSiteId:siteID withAppVersion:version withIdfa:idfa withUserAgent:NULL withDevMode:devMode];
+}
+
 - (void)setViewController:(UIViewController *)view {
     [self blueKaiLogger:_devMode withString:@"setViewController" withObject:view];
 
@@ -141,20 +224,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
             _webUrl = [[NSMutableString alloc] init];
         }
 
-        _webView = [[UIWebView alloc] init];
-        _webView.delegate = self;
-        _webView.layer.cornerRadius = 5.0f;
-        _webView.layer.borderColor = [[UIColor grayColor] CGColor];
-        _webView.layer.borderWidth = 4.0f;
-        [_viewController.view addSubview:_webView];
-
-        if(_devMode) {
-            [self drawWebFrame:_webView];
-        } else {
-            _webView.frame = CGRectMake(1, 1, 1, 1);
-        }
-
-        _webView.hidden = YES;
+        [self addWebView];
         [self resume];
     }
 }
@@ -376,7 +446,6 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
 }
 
 - (IBAction)saveSettings:(id)sender {
-//    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     NSString *userDataValue = [_userDefaults objectForKey:@"userIsOptIn"];
     [_userDefaults setObject:userDataValue forKey:@"settings"];
 
@@ -502,12 +571,11 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     if (networkStatus != NotReachable) {
         UIWebView *optInWebView = [[UIWebView alloc] init];
         // use mobileproxy for development
-        NSString *server = _devMode ? OPTOUT_DEV_URL : OPTOUT_PROD_URL;
+        NSString *server = _devMode ? OPTOUT_DEV_URL : BLUEKAI_DATA_URL;
         NSString *urlPath = [[_userDefaults objectForKey:@"userIsOptIn"] isEqualToString:@"YES"] ? @"clear_ignore" : @"set_ignore";
         NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@", server, urlPath]];
 
         [self blueKaiLogger:_devMode withString:@"opt-in preference is set to" withObject:[_userDefaults objectForKey:@"userIsOptIn"]];
-//        [self blueKaiLogger:_devMode withString:@"opt-in URL" withObject:url];
 
         [_viewController.view addSubview:optInWebView];
         [optInWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
@@ -528,8 +596,6 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
 
     if (_numberOfRunningRequests != 0) {
         _numberOfRunningRequests = 0;
-
-//        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
         for (int i = 0; i < [[_keyValDict allKeys] count]; i++) {
             if (![_remainkeyValDict valueForKey:[_keyValDict allKeys][i]]) {
@@ -566,7 +632,9 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
 }
 
 - (void)updateWebview:(NSString *)url {
-    [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    if (!_useDirectHTTPCalls) {
+        [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    }
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
@@ -585,7 +653,6 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
             if (_webView.tag == 1) {
                 //Delete the key and value pairs from database after sent to server.
                 for (int k = 0; k < [_keyValDict count]; k++) {
-//                    if (![_remainkeyValDict valueForKey:[_keyValDict allKeys][k]]) {
                     if ([_remainkeyValDict valueForKey:[_keyValDict allKeys][k]] != NULL) {
                         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getKeyValueDictionary:[self readStringFromKeyValueFile]]];
                         NSMutableDictionary *atmt_dictionary = [[NSMutableDictionary alloc] initWithDictionary:[self getAttemptsDictionary:[self readStringFromAttemptsFile]]];
@@ -607,7 +674,6 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
             }
 
             _webLoaded = NO;
-//            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
             if ([localDelegate respondsToSelector:@selector(onDataPosted:)]) {
                 [localDelegate onDataPosted:TRUE];
@@ -670,21 +736,11 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
 
     if ([_remainkeyValDict count] == 0) {
         if ([_nonLoadkeyValDict count] != 0) {
-            _webView = [[UIWebView alloc] init];
-            _webView.delegate = self;
-            _webView.layer.cornerRadius = 5.0f;
-            _webView.layer.borderColor = [[UIColor grayColor] CGColor];
-            _webView.layer.borderWidth = 4.0f;
-            _webView.hidden = YES;
-            [_viewController.view addSubview:_webView];
-
-            if (_devMode) {
-                [self drawWebFrame:_webView];
-            } else {
-                _webView.frame = CGRectMake(10, 10, 1, 1);
+            
+            if (!_useDirectHTTPCalls) {
+                [self addWebView];
             }
-
-            _webLoaded = NO;
+            
 
             if (_keyValDict) {
                 [_keyValDict removeAllObjects];
@@ -717,7 +773,6 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
                 [_nonLoadkeyValDict removeObjectForKey:[_keyValDict allKeys][j]];
             }
 
-//            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self startDataUpload];
         } else {
             _nonLoadkeyValDict = nil;
@@ -726,20 +781,8 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
             _webUrl = nil;
         }
     } else {
-        _webView = [[UIWebView alloc] init];
-        _webView.delegate = self;
-        _webView.layer.cornerRadius = 5.0f;
-        _webView.layer.borderColor = [[UIColor grayColor] CGColor];
-        _webView.layer.borderWidth = 4.0f;
+        [self addWebView];
         _webView.tag = 1;
-        _webView.hidden = YES;
-        [_viewController.view addSubview:_webView];
-
-        if (_devMode) {
-            [self drawWebFrame:_webView];
-        } else {
-            _webView.frame = CGRectMake(10, 10, 1, 1);
-        }
 
         if (_keyValDict) {
             [_keyValDict removeAllObjects];
@@ -756,7 +799,6 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
         }
 
         _numberOfRunningRequests = -1;
-//        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         [self startDataUpload];
     }
 }
@@ -800,7 +842,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     NSString *errorMessage;
     BOOL     hasError = NO;
 
-    if (!_viewController) {
+    if (!_useDirectHTTPCalls && !_viewController) {
         hasError = YES;
         errorMessage = @"view parameter is nil";
     }
@@ -860,7 +902,6 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
         _numberOfRunningRequests = -1;
         _webLoaded = YES;
 
-//        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         BlueKai_Reachability *networkReachability = [BlueKai_Reachability reachabilityForInternetConnection];
         NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
 

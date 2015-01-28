@@ -60,6 +60,12 @@
 */
 @property (nonatomic) NSString *siteId;
 
+/** Sets User Agent string used for request to BlueKai
+ *
+ * @param userAgent, this is a default user agent that can be obtained from UIWebView or Mobile browser
+ */
+@property (nonatomic) NSString *userAgent;
+
 /** Sets HTTPS transfer protocol
 *
 * @param BOOL, sets HTTPS; defaults to "NO"
@@ -71,6 +77,12 @@
 * @param ViewController, set the ViewController instance as view to get notification on the data posting status
 */
 @property (nonatomic) UIViewController *viewController;
+
+/** Sets a preference towards direct HTTP calls vs Web View
+ *
+ * @param useDirectHTTPCalls
+ */
+@property (nonatomic) BOOL useDirectHTTPCalls;
 
 /** Init BlueKai SDK
 *
@@ -111,6 +123,36 @@
         withSiteId:(NSString *)siteID
     withAppVersion:(NSString *)version
           withView:(UIViewController *)view;
+
+/** Init BlueKai with IDFA and no web view
+ *
+ * Create the instance for BlueKai SDK with required arguments and IDFA
+ *
+ * @param siteId, contact your BlueKai rep for this id; required
+ * @param appVersion, version of your iOS application; required
+ * @param idfa, IDFA (identifier for advertising) advertiser id from Apple, required
+ * @param devMode, BOOL value to toggle on/off verbose logging; defaults to "NO"; optional
+ */
+- (id)initDirectWithSiteId:(NSString *)siteID
+      withAppVersion:(NSString *)version
+            withIdfa:(NSString *)idfa
+         withDevMode:(BOOL)devMode;
+
+/** Init BlueKai with IDFA and no web view
+ *
+ * Create the instance for BlueKai SDK with required arguments and IDFA
+ *
+ * @param siteId, contact your BlueKai rep for this id; required
+ * @param appVersion, version of your iOS application; required
+ * @param idfa, IDFA (identifier for advertising) advertiser id from Apple, required
+ * @param userAgent, browser user agent string (default user agent from Safari or UIWebView), optional
+ * @param devMode, BOOL value to toggle on/off verbose logging; defaults to "NO"; optional
+ */
+- (id)initDirectWithSiteId:(NSString *)siteID
+      withAppVersion:(NSString *)version
+            withIdfa:(NSString *)idfa
+            withUserAgent:(NSString *)userAgent
+         withDevMode:(BOOL)devMode;
 
 /** Sets URL params as a key/value pair
 *
