@@ -22,6 +22,7 @@
 @end
 
 @interface BlueKai : NSObject <UIWebViewDelegate, UIGestureRecognizerDelegate, NSURLConnectionDelegate> {
+    NSMutableData* receivedData;
 }
 
 /** Sets a delegate for callbacks from the BlueKai SDK
@@ -171,6 +172,8 @@
 */
 - (void)put:(NSString *)key
   withValue:(NSString *)value;
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
 
 /** Sets URL params by using NSDictionary
 *

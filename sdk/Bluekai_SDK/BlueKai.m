@@ -606,6 +606,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     }
 }
 
+
 - (void)updateWebview:(NSString *)url {
     if (!_useDirectHTTPCalls) {
         [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
@@ -859,12 +860,37 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
         [request setHTTPMethod:@"GET"];
         
         [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
         [connection start];
     } else {
         [self updateWebview:_webUrl];
     }
 }
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    // Append the new data to receivedData.
+    // receivedData is an instance variable declared elsewhere.
+    [receivedData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    // A response has been received, this is where we initialize the instance var you created
+    // so that we can append data to it in the didReceiveData method
+    // Furthermore, this method is called each time there is a redirect so reinitializing it
+    // also serves to clear it
+    receivedData = [[NSMutableData alloc] init];
+    int statusCode = [(NSHTTPURLResponse*)response statusCode];
+
+    [self blueKaiLogger:_devMode withString: [NSString stringWithFormat:@"Response code: %d", statusCode] withObject:NULL];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    // The request has failed for some reason!
+    // Check the error var
+    [self blueKaiLogger:_devMode withString: [NSString stringWithFormat:@"Failed with error"] withObject:error];
+}
+
 
 
 - (void)drawWebFrame:(UIWebView *)webView {
@@ -948,6 +974,8 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     }
     
     if(_useDirectHTTPCalls) {
+        [urlString appendString:[NSString stringWithFormat:@"&%@",[self getDataParam:@"phint" WithKey:@"bkrid" AndValue:[self getBkrid]]]];
+        [urlString appendString:[NSString stringWithFormat:@"&%@",[self getDataParam:@"phint" WithKey:@"r" AndValue:[self getRequestId]]]];
         [urlString appendString:@"&ret=json"];
     }
 
@@ -1009,6 +1037,24 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
 
 - (NSString*) getBlueKaiParamWithKey:(NSString *)key AndValue:(NSString *)value  {
     return [self getDataParam:@"phint" WithKey:[NSString stringWithFormat:@"__bk_%@", key] AndValue:value];
+}
+
+- (NSString*) getBkrid {
+    NSString *bkrid = [_userDefaults objectForKey:@"bkrid"];
+    
+    if (bkrid == NULL) {
+        unsigned int r = arc4random_uniform(2147483647);
+        NSString * newBkrid = [NSString stringWithFormat:@"%d", r];
+        [_userDefaults setObject:newBkrid forKey:@"bkrid"];
+        return newBkrid;
+    }
+    return bkrid;
+    
+}
+
+- (NSString*) getRequestId {
+    NSUInteger r = arc4random_uniform(99999999);
+    return [NSString stringWithFormat:@"%lu", (unsigned long)r];
 }
 
 
