@@ -860,6 +860,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
         [request setHTTPMethod:@"GET"];
         
         [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:_userAgent forHTTPHeaderField:@"User-Agent"];
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
         [connection start];
     } else {
