@@ -851,7 +851,19 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     }
 
     _alertShowBool = NO;
-    [self updateWebview:_webUrl];
+    if(_useDirectHTTPCalls){
+        [self blueKaiLogger:_devMode withString:@"Sending URL directly to tags" withObject:_webUrl];
+        NSURL *directUrl = [NSURL URLWithString:[_webUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:directUrl];
+        [request setHTTPMethod:@"GET"];
+        
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+        [connection start];
+    } else {
+        [self updateWebview:_webUrl];
+    }
 }
 
 
@@ -894,15 +906,23 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
 }
 
 - (NSMutableString *)constructUrl {
-    NSString *serverURL = MOBILE_PROXY_PARTIAL_URL;
-    NSMutableString *protocol = [NSMutableString stringWithFormat:@"%@", (_useHttps ? @"https" : @"http")];
-    NSMutableString *endPoint = [NSMutableString stringWithFormat:@"%@", (_devMode ? @"m-sandbox.html" : @"m.html")];
-    NSMutableString *urlString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@%@?site=%@&", protocol, serverURL, endPoint, _siteId]];
+    
+    NSMutableString *urlString;
+    if(_useDirectHTTPCalls){
+        urlString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@site/%@/?", (_useHttps ? BLUEKAI_DATA_URL_SECURE : BLUEKAI_DATA_URL), _siteId]];
+    } else {
+        NSString *serverURL = MOBILE_PROXY_PARTIAL_URL;
+        NSMutableString *protocol = [NSMutableString stringWithFormat:@"%@", (_useHttps ? @"https" : @"http")];
+        NSMutableString *endPoint = [NSMutableString stringWithFormat:@"%@", (_devMode ? @"m-sandbox.html" : @"m.html")];
+        
+        urlString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@%@?site=%@&", protocol, serverURL, endPoint, _siteId]];
+    }
 
-    [urlString appendString:[NSString stringWithFormat:@"appVersion=%@", _appVersion]];
+    [urlString appendString:[self getDataParam:@"phint" WithKey:@"appVersion" AndValue:_appVersion]];
+    
 
     if (_idfa != NULL && [_idfa length] > 0) {
-        [urlString appendString:[NSString stringWithFormat:@"&idfa=%@", _idfa]];
+        [urlString appendString:[NSString stringWithFormat:@"&%@",[self getDataParam:@"phint" WithKey:@"idfa" AndValue:_idfa]]];
     }
 
     // send the dictionary details to BlueKai server
@@ -911,14 +931,24 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     NSUInteger keyCount = [[_keyValDict allKeys] count];
 
     for (int i = 0; i < keyCount; i++) {
+
+        
         NSString *key = [NSString stringWithFormat:@"%@", [_keyValDict allKeys][i]];
         NSString *value = [NSString stringWithFormat:@"%@", _keyValDict[[_keyValDict allKeys][i]]];
 
         if ((_urlLength + key.length + value.length + 2) > 255) {
             [_remainkeyValDict setValue:value forKey:key];
         } else {
-            [urlString appendString:[NSString stringWithFormat:@"&%@=%@", [self urlEncode:[_keyValDict allKeys][i]], [self urlEncode:_keyValDict[[_keyValDict allKeys][i]]]]];
+            [urlString appendString:[NSString stringWithFormat:@"&%@",
+                                     [self getDataParam:@"phint"
+                                                WithKey:[self urlEncode:[_keyValDict allKeys][i]]
+                                               AndValue:[self urlEncode:_keyValDict[[_keyValDict allKeys][i]]]]]];
+            _urlLength = urlString.length;
         }
+    }
+    
+    if(_useDirectHTTPCalls) {
+        [urlString appendString:@"&ret=json"];
     }
 
     return urlString;
@@ -965,21 +995,20 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     
 }
 
-- (void) addDataParam:(NSString *)type WithKey:(NSString *)key AndValue:(NSString *)value {
-    NSMutableArray *params = [_dataParamsDict valueForKey:type];
-    if(params == NULL){
-        params = [[NSMutableArray alloc] init];
-        [_dataParamsDict setObject:params forKey:type];
-    }
-    if( value != NULL) {
-        [params addObject:[self urlEncode:[NSString stringWithFormat:@"%@=%@", key, value]]];
+- (NSString*) getDataParam:(NSString *)type WithKey:(NSString *)key AndValue:(NSString *)value {
+    if(_useDirectHTTPCalls) {
+        if( value != NULL) {
+            return [NSString stringWithFormat:@"%@=%@", type, [self urlEncode:[NSString stringWithFormat:@"%@=%@", key, value]]];
+        } else {
+            return [NSString stringWithFormat:@"%@=%@", type, key];
+        }
     } else {
-        [params addObject:key];
+        return value != NULL ? [NSString stringWithFormat:@"%@=%@", key, value] : key;
     }
 }
 
-- (void) addBlueKaiParamWithKey:(NSString *)key AndValue:(NSString *)value {
-    [self addDataParam:@"phint" WithKey:[NSString stringWithFormat:@"__bk_%@", key] AndValue:value];
+- (NSString*) getBlueKaiParamWithKey:(NSString *)key AndValue:(NSString *)value  {
+    return [self getDataParam:@"phint" WithKey:[NSString stringWithFormat:@"__bk_%@", key] AndValue:value];
 }
 
 
