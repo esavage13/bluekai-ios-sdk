@@ -180,7 +180,7 @@
 /*- (void)testCanUpdateWithKeyAndValue
 {
     // requires Nocilla
-    //stubRequest(@"GET", @"http://tags.bluekai.com/m.html").andReturn(200);
+    //stubRequest(@"GET", @"http://mobileproxy.bluekai.com/m.html").andReturn(200);
     [blueKaiSdk setDevMode:YES];
     [blueKaiSdk setOptInPreference:YES];
     [blueKaiSdk updateWithKey:myKey1 andValue:myValue1];
@@ -190,7 +190,7 @@
 - (void)testCanUpdateWithDictionaryParams
 {
     // requires Nocilla
-    stubRequest(@"GET", @"http://tags.bluekai.com/m.html").andReturn(200);
+    stubRequest(@"GET", @"http://mobileproxy.bluekai.com/m.html").andReturn(200);
     NSDictionary *keyValsDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:myValue1, myKey1,
                                                                                    myValue2, myKey2, nil];
     [blueKaiSdk setDevMode:YES];
@@ -324,17 +324,17 @@
 {
     BlueKai *bksdk1 = [[BlueKai alloc] initWithSiteId:siteId withAppVersion:appVersion withView:viewController withDevMode:NO];
     NSMutableString *url1 = [bksdk1 constructUrl];
-    NSString *expectedUrl1 = [NSString stringWithFormat:@"http://tags.bluekai.com/m.html?site=%@&appVersion=%@&myKey2=myValue2&myKey1=myValue1", siteId, appVersion];
+    NSString *expectedUrl1 = [NSString stringWithFormat:@"http://mobileproxy.bluekai.com/m.html?site=%@&appVersion=%@&myKey2=myValue2&myKey1=myValue1", siteId, appVersion];
     XCTAssertTrue([expectedUrl1 isEqualToString:url1], @"URL strings should match");
 
     BlueKai *bksdk2 = [[BlueKai alloc] initWithSiteId:siteId withAppVersion:appVersion withIdfa:idfa withView:viewController withDevMode:NO];
     NSMutableString *url2 = [bksdk2 constructUrl];
-    NSString *expectedUrl2 = [NSString stringWithFormat:@"http://tags.bluekai.com/m.html?site=%@&appVersion=%@&idfa=%@&myKey2=myValue2&myKey1=myValue1", siteId, appVersion, idfa];
+    NSString *expectedUrl2 = [NSString stringWithFormat:@"http://mobileproxy.bluekai.com/m.html?site=%@&appVersion=%@&idfa=%@&myKey2=myValue2&myKey1=myValue1", siteId, appVersion, idfa];
     XCTAssertTrue([expectedUrl2 isEqualToString:url2], @"URL strings should match");
 
     BlueKai *bksdk3 = [[BlueKai alloc] initWithSiteId:siteId withAppVersion:appVersion withIdfa:idfa withView:viewController withDevMode:YES];
     NSMutableString *url3 = [bksdk3 constructUrl];
-    NSString *expectedUrl3 = [NSString stringWithFormat:@"http://tags.bluekai.com/m-sandbox.html?site=%@&appVersion=%@&idfa=%@&myKey2=myValue2&myKey1=myValue1", siteId, appVersion, idfa];
+    NSString *expectedUrl3 = [NSString stringWithFormat:@"http://mobileproxy.bluekai.com/m-sandbox.html?site=%@&appVersion=%@&idfa=%@&myKey2=myValue2&myKey1=myValue1", siteId, appVersion, idfa];
     XCTAssertTrue([expectedUrl3 isEqualToString:url3], @"URL strings should match");
 }
 

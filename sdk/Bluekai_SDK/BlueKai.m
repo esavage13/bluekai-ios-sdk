@@ -16,8 +16,8 @@
     UIWebView *_webView;
 }
 
-static NSString *const MOBILE_PROXY_PARTIAL_URL = @"://tags.bluekai.com/";
-static NSString *const OPTOUT_DEV_URL = @"http://tags.bluekai.com/";
+static NSString *const MOBILE_PROXY_PARTIAL_URL = @"://mobileproxy.bluekai.com/";
+static NSString *const OPTOUT_DEV_URL = @"http://mobileproxy.bluekai.com/";
 static NSString *const OPTOUT_PROD_URL = @"http://tags.bluekai.com/";
 static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consumers_privacyguidelines.php";
 
@@ -501,7 +501,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
 
     if (networkStatus != NotReachable) {
         UIWebView *optInWebView = [[UIWebView alloc] init];
-        // use tags for development
+        // use mobileproxy for development
         NSString *server = _devMode ? OPTOUT_DEV_URL : OPTOUT_PROD_URL;
         NSString *urlPath = [[_userDefaults objectForKey:@"userIsOptIn"] isEqualToString:@"YES"] ? @"clear_ignore" : @"set_ignore";
         NSMutableString *url = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@", server, urlPath]];
