@@ -8,7 +8,7 @@
     BOOL _alertShowBool,
          _webLoaded;
 
-    int _urlLength,
+    NSInteger _urlLength,
         _numberOfRunningRequests;
 
     UIButton  *_cancelButton;
@@ -701,7 +701,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
             }
 
             //Code to send the multiple values for every request.
-            int keysCount = [[_nonLoadkeyValDict allKeys] count];
+            NSInteger keysCount = [[_nonLoadkeyValDict allKeys] count];
 
             for (int i = 0; i < keysCount; i++) {
                 NSString *key = [NSString stringWithFormat:@"%@", [_nonLoadkeyValDict allKeys][i]];
@@ -765,7 +765,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     NSMutableString *output = [NSMutableString string];
 
     const unsigned char *source = (const unsigned char *) [string UTF8String];
-    int sourceLen = strlen((const char *) source);
+    size_t sourceLen = strlen((const char *) source);
 
     for (int i = 0; i < sourceLen; ++i) {
         const unsigned char thisChar = source[i];
@@ -819,11 +819,11 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
         [self blueKaiLogger:_devMode withString:errorMessage withObject:_keyValDict];
     } else {
         _webView.tag = 1;
-        [NSThread detachNewThreadSelector:@selector(startBackgroundJob:) toTarget:self withObject:_keyValDict];
+        [self makeRequest];
     }
 }
 
-- (void)startBackgroundJob:(NSDictionary *)dictionary {
+- (void)makeRequest {
     if (_remainkeyValDict) {
         [_remainkeyValDict removeAllObjects];
     }
@@ -892,7 +892,7 @@ static NSString *const TERMS_AND_CONDITION_URL = @"http://www.bluekai.com/consum
     // send the dictionary details to BlueKai server
     _urlLength = urlString.length;
 
-    int keyCount = [[_keyValDict allKeys] count];
+    NSInteger keyCount = [[_keyValDict allKeys] count];
 
     for (int i = 0; i < keyCount; i++) {
         NSString *key = [NSString stringWithFormat:@"%@", [_keyValDict allKeys][i]];

@@ -33,7 +33,7 @@
 *
 * @param version, version of your iOS application
 */
-@property (nonatomic) NSString *appVersion;
+@property (nonatomic, copy) NSString *appVersion;
 
 /** Sets development mode
 *
@@ -44,7 +44,7 @@
 /** Sets Apple IDFA id
 * @param idfa, IDFA (Identifier for Advertising) id from Apple
 */
-@property (nonatomic) NSString *idfa;
+@property (nonatomic, copy) NSString *idfa;
 
 /** Sets user opt-in preference
 *
@@ -58,7 +58,7 @@
 *
 * @param id, contact your BlueKai rep for this id
 */
-@property (nonatomic) NSString *siteId;
+@property (nonatomic, copy) NSString *siteId;
 
 /** Sets HTTPS transfer protocol
 *
@@ -70,7 +70,7 @@
 *
 * @param ViewController, set the ViewController instance as view to get notification on the data posting status
 */
-@property (nonatomic) UIViewController *viewController;
+@property (nonatomic, weak) UIViewController *viewController;
 
 /** Init BlueKai SDK
 *
